@@ -1,0 +1,12 @@
+.users h1 {
+  display: inline;
+}
+
+.users-title {
+  display: flex;
+  align-items: center;
+}
+
+.users-title button {
+  margin-left: 1em;
+}

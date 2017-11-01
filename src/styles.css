@@ -1,0 +1,41 @@
+/* You can add global styles to this file, and also import other style files */
+body {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.clickable {
+  outline: none;
+  border: 1px solid #ddd;
+  border-radius: .1em;
+  margin: .5em 0;
+  padding: .2em .4em;
+  cursor: pointer;
+}
+
+.clickable:hover {
+  background: rgba(128, 128, 128, .1);
+}
+
+.clickable:active {
+  background: rgba(128, 128, 128, .2);
+}
+
+button {
+  outline: none;
+  border: 1px solid #ddd;
+  border-radius: .1em;
+  margin: 0;
+  padding: .4em .6em;
+  cursor: pointer;
+  background: none;
+  font-size: 1em;
+  font-weight: bold;
+}
+
+button:hover {
+  background: rgba(128, 128, 128, .1);
+}
+
+button:active {
+  background: rgba(128, 128, 128, .2);
+}
