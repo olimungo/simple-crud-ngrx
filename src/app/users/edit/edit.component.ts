@@ -8,18 +8,33 @@ import { User } from '../user.entity';
   styleUrls: ['./edit.component.css']
 })
 export class UserEditComponent implements OnInit {
-  @Input() user: User;
+  @Input() set user(value: User) {
+    this.originalUser = value ? value : null;
+    this.firstname = value ? value.firstname : null;
+    this.lastname = value ? value.lastname : null;
+  }
+
   @Output() save = new EventEmitter<User>();
   @Output() cancel = new EventEmitter<any>();
   @Output() delete = new EventEmitter<string>();
 
+  firstname: string;
+  lastname: string;
+
+  private originalUser: User;
+
   constructor() { }
 
   ngOnInit() {
+    if (!this.user) {
+      this.user = { id: '', firstname: '', lastname: '' };
+    }
   }
 
   _save() {
-    this.save.emit(this.user);
+    this.originalUser.firstname = this.firstname;
+    this.originalUser.lastname = this.lastname;
+    this.save.emit(this.originalUser);
   }
 
   _cancel() {
@@ -27,6 +42,6 @@ export class UserEditComponent implements OnInit {
   }
 
   _delete() {
-    this.delete.emit(this.user.id);
+    this.delete.emit(this.originalUser.id);
   }
 }

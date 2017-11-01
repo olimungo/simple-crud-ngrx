@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { ActivatedRoute } from '@angular/router';
 
 import 'rxjs/add/operator/do';
@@ -13,20 +14,23 @@ import { User } from './user.entity';
   styleUrls: ['./users.component.css']
 })
 export class UsersComponent implements OnInit {
-  users: Observable<User[]>;
+  users: User[];
   selectedUser: User;
 
   constructor(private route: ActivatedRoute, private usersService: UsersService) { }
 
   ngOnInit() {
-    this.users = this.usersService.list();
+    this.usersService.retrieve().subscribe(users => {
+      this.users = users;
 
-    this.route.params.subscribe(params => {
-      const id = params['id'];
+      this.route.params.subscribe(params => {
+        const id = params['id'];
 
-      if (id) {
-        this.usersService.get(id).subscribe(user => this.selectedUser = user);
-      }
+        if (id) {
+          const filteredUsers = this.users.filter(user => user.id === id);
+          this.selectedUser = filteredUsers.length ? filteredUsers[0] : null;
+        }
+      });
     });
   }
 
@@ -36,9 +40,10 @@ export class UsersComponent implements OnInit {
 
   save(user: User) {
     if (!user.id) {
-      this.usersService.add(user).subscribe(_ => this.users = this.usersService.list());
+      this.addUser(user);
+      this.usersService.create(user).subscribe();
     } else {
-      this.usersService.save(user).subscribe(_ => this.users = this.usersService.list());
+      this.usersService.update(user).subscribe();
     }
 
     this.selectedUser = null;
@@ -46,16 +51,25 @@ export class UsersComponent implements OnInit {
 
   cancel() {
     this.selectedUser = null;
-    this.users.do(users => console.log(users));
   }
 
   delete(id: string) {
-    this.usersService.delete(id).subscribe(_ => this.users = this.usersService.list());
-
+    this.deleteUser(id);
+    this.usersService.delete(id).subscribe();
     this.selectedUser = null;
   }
 
   add() {
     this.selectedUser = <User>{};
+  }
+
+  private addUser(user: User) {
+    const index = this.users.findIndex(u => u.lastname + u.firstname > user.lastname + user.firstname);
+    this.users.splice(index, 0, user);
+  }
+
+  private deleteUser(id: string) {
+    const index = this.users.findIndex(user => user.id === id);
+    this.users.splice(index, 1);
   }
 }

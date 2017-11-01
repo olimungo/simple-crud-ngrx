@@ -1,11 +1,11 @@
 <div class="users">
   <div class="users-title">
     <h1>Users</h1>
-    <button (click)="add()">Add</button>
+    <button [hidden]="selectedUser" (click)="add()">Add</button>
   </div>
   
-  <feat-users-list *ngIf="!selectedUser" [users]="users | async" (userSelected)="edit($event)"></feat-users-list>
-  <feat-user-edit *ngIf="selectedUser" [user]="selectedUser"
+  <feat-users-list #usersList [hidden]="selectedUser" [users]="users" (userSelected)="edit($event)"></feat-users-list>
+  <feat-user-edit [hidden]="!selectedUser" [user]="selectedUser"
     (save)="save($event)" (cancel)="cancel()" (delete)="delete($event)"></feat-user-edit>
 </div>
 
