@@ -1,0 +1,3 @@
+<div class="movies-list">
+  <feat-movie-card *ngFor="let movie of movies" [movie]="movie" (click)="edit(movie.id)"></feat-movie-card>
+</div>
