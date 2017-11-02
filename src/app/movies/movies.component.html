@@ -1,3 +1,10 @@
-<p>
-  movies works!
-</p>
+<div class="movies">
+  <div class="movies-title">
+    <h1>Movies</h1>
+    <button [hidden]="selectedMovie | async" (click)="add()">Add</button>
+  </div>
+
+  <feat-movies-list [hidden]="selectedMovie | async" [movies]="movies | async" (movieSelected)="edit($event)"></feat-movies-list>
+  <feat-movie-edit [hidden]="!(selectedMovie | async)" [movie]="selectedMovie | async" (save)="save($event)" (cancel)="cancel()"
+    (delete)="delete($event)"></feat-movie-edit>
+</div>

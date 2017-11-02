@@ -1,0 +1,12 @@
+.movies h1 {
+  display: inline;
+}
+
+.movies-title {
+  display: flex;
+  align-items: center;
+}
+
+.movies-title button {
+  margin-left: 1em;
+}

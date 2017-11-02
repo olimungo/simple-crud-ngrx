@@ -16,6 +16,8 @@ import { MoviesModule } from './movies/movies.module';
 
 import { usersReducer } from './users/users.reducer';
 import { UsersService } from './users/users.service';
+import { moviesReducer } from './movies/movies.reducer';
+import { MoviesService } from './movies/movies.service';
 
 @NgModule({
   declarations: [
@@ -25,12 +27,13 @@ import { UsersService } from './users/users.service';
     BrowserModule,
     AppRoutingModule,
     StoreModule.forRoot({
-      users: usersReducer
+      users: usersReducer,
+      movies: moviesReducer
     }),
     StoreDevtoolsModule.instrument({
       maxAge: 10
     }),
-    EffectsModule.forRoot([UsersService]),
+    EffectsModule.forRoot([UsersService, MoviesService]),
     CoreModule,
     SharedModule,
     UsersModule,
