@@ -1,75 +1,66 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { ActivatedRoute } from '@angular/router';
+import { Store } from '@ngrx/store';
 
-import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/take';
 
-import { UsersService } from './users.service';
+import * as UsersActions from './users.actions';
+import * as UsersReducer from './users.reducer';
+
 import { User } from './user.entity';
 
 @Component({
-  selector: 'app-users',
+  selector: 'feat-users',
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.css']
 })
 export class UsersComponent implements OnInit {
-  users: User[];
-  selectedUser: User;
+  users: Observable<User[]>;
+  selectedUser: Observable<User>;
+  loading: Observable<boolean>;
 
-  constructor(private route: ActivatedRoute, private usersService: UsersService) { }
+  constructor(private route: ActivatedRoute, private location: Location, private store: Store<UsersReducer.State>) {
+    this.users = this.store.select(UsersReducer.getUsers);
+    this.selectedUser = this.store.select(UsersReducer.getSelectedUser);
+    this.loading = this.store.select(UsersReducer.getLoading);
+    this.store.dispatch(new UsersActions.SetUrl(this.location.path()));
+
+    this.store.select(UsersReducer.getUrl).subscribe(url => this.location.go(url));
+  }
 
   ngOnInit() {
-    this.usersService.retrieve().subscribe(users => {
-      this.users = users;
+    this.store.dispatch(new UsersActions.GetList());
 
-      this.route.params.subscribe(params => {
-        const id = params['id'];
-
-        if (id) {
-          const filteredUsers = this.users.filter(user => user.id === id);
-          this.selectedUser = filteredUsers.length ? filteredUsers[0] : null;
-        }
-      });
+    this.route.params.subscribe(params => {
+      if (params['id']) {
+        this.store.dispatch(new UsersActions.Edit(params['id']));
+      }
     });
   }
 
-  edit(user: User) {
-    this.selectedUser = user;
+  edit(id: string) {
+    this.store.dispatch(new UsersActions.Edit(id));
   }
 
   save(user: User) {
-    if (!user.id) {
-      this.addUser(user);
-      this.usersService.create(user).subscribe();
+    if (user.id) {
+      this.store.dispatch(new UsersActions.Update(user));
     } else {
-      this.usersService.update(user).subscribe();
+      this.store.dispatch(new UsersActions.Create(user));
     }
-
-    this.selectedUser = null;
   }
 
   cancel() {
-    this.selectedUser = null;
+    this.store.dispatch(new UsersActions.Cancel());
   }
 
   delete(id: string) {
-    this.deleteUser(id);
-    this.usersService.delete(id).subscribe();
-    this.selectedUser = null;
+    this.store.dispatch(new UsersActions.Delete(id));
   }
 
   add() {
-    this.selectedUser = <User>{};
-  }
-
-  private addUser(user: User) {
-    const index = this.users.findIndex(u => u.lastname + u.firstname > user.lastname + user.firstname);
-    this.users.splice(index, 0, user);
-  }
-
-  private deleteUser(id: string) {
-    const index = this.users.findIndex(user => user.id === id);
-    this.users.splice(index, 1);
+    this.store.dispatch(new UsersActions.Add());
   }
 }

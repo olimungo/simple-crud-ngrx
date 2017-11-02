@@ -1,39 +1,119 @@
+import { createSelector, createFeatureSelector } from '@ngrx/store';
+
 import * as UsersActions from './users.actions';
 import { User } from './user.entity';
 
 export type Action = UsersActions.All;
 
-interface UsersState {
+export interface State {
   users: User[];
+  selectedUserId: string;
   selectedUser: User;
+  loading: boolean;
+  url: string;
 }
 
-const defaultState: UsersState = {
+const defaultState: State = {
   users: [],
-  selectedUser: null
+  selectedUserId: null,
+  selectedUser: null,
+  loading: false,
+  url: null
 };
 
-const newState = (state, newData) => {
-  return Object.assign({}, state, newData);
-};
-
-export function usersReducer(state: UsersState = defaultState, action: Action) {
-  console.log(action.type, state);
+export function usersReducer(state: State = defaultState, action: UsersActions.All) {
+  let user: User = null;
 
   switch (action.type) {
-    case UsersActions.LIST:
-    return newState(state, { selectedUser: action.payload }); 
+    case UsersActions.SET_URL:
+      return { ...state, url: action.payload };
+    case UsersActions.GET_LIST:
+      return { ...state, loading: true };
+    case UsersActions.LIST_RETRIEVED:
+      if (state.selectedUserId) {
+        user = action.payload.find(u => u.id === state.selectedUserId);
+      }
+
+      return { ...state, users: action.payload, loading: false, selectedUser: user, selectedUserId: null };
+    case UsersActions.ADD:
+      return { ...state, selectedUser: <User>{} };
     case UsersActions.EDIT:
-      return newState(state, { selectedUser: action.payload });
-    // case PostActions.UPVOTE:
-    //   return newState(state, { likes: state.likes + 1 });
-    // case PostActions.DOWNVOTE:
-    //   return newState(state, { likes: state.likes - 1 });
-    // case PostActions.RESET:
-    //   return newState(state, defaultState);
+      let selectedUserId = null;
+      user = state.users.find(u => u.id === action.payload);
+
+      if (!user) {
+        selectedUserId = action.payload;
+        user = null;
+      }
+
+      return { ...state, selectedUser: user, url: addIdToUrl(state.url, action.payload), selectedUserId: selectedUserId };
+    case UsersActions.CREATE:
+      return {
+        ...state, selectedUser: null, users: addUser(state.users, action.payload),
+        url: removeIdFromUrl(state.url, state.selectedUser.id)
+      };
+    case UsersActions.UPDATE:
+      return { ...state, selectedUser: null, url: removeIdFromUrl(state.url, state.selectedUser.id) };
+    case UsersActions.CANCEL:
+      return { ...state, selectedUser: null, url: removeIdFromUrl(state.url, state.selectedUser.id) };
+    case UsersActions.DELETE:
+      return {
+        ...state, selectedUser: null, users: deleteUser(state.users, action.payload),
+        url: removeIdFromUrl(state.url, state.selectedUser.id)
+      };
     default:
       return state;
   }
-
 }
+
+const getUser = (users: User[], id: string) => {
+  return users.find(user => user.id === id);
+};
+
+const addUser = (users: User[], user: User) => {
+  const newUsers = <User[]>[];
+  let userInserted = false;
+
+  users.forEach(u => {
+    if (u.lastname + u.firstname > user.lastname + user.firstname && !userInserted) {
+      userInserted = true;
+      newUsers.push(user);
+    }
+
+    newUsers.push(u);
+  });
+
+  return newUsers;
+};
+
+const deleteUser = (users: User[], id: string) => {
+  const newUsers = <User[]>[];
+
+  users.forEach(u => {
+    if (u.id !== id) {
+      newUsers.push(u);
+    }
+  });
+
+  return newUsers;
+};
+
+const addIdToUrl = (url: string, id: string) => {
+  if (url.indexOf(`/${id}`) > -1) {
+    return url;
+  }
+
+  return `${url}/${id}`;
+};
+
+const removeIdFromUrl = (url: string, id: string) => {
+  return url.replace(`/${id}`, '');
+};
+
+export const selectUsers = createFeatureSelector<State>('users');
+
+export const getUsers = createSelector(selectUsers, (state: State) => state.users);
+export const getSelectedUser = createSelector(selectUsers, (state: State) => state.selectedUser);
+export const getLoading = createSelector(selectUsers, (state: State) => state.loading);
+export const getUrl = createSelector(selectUsers, (state: State) => state.url);
 

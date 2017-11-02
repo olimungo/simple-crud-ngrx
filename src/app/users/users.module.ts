@@ -10,7 +10,6 @@ import { UsersComponent } from './users.component';
 import { UsersListComponent } from './list/list.component';
 import { UserCardComponent } from './card/card.component';
 import { UserEditComponent } from './edit/edit.component';
-import { UsersService } from './users.service';
 
 @NgModule({
   imports: [
@@ -20,7 +19,6 @@ import { UsersService } from './users.service';
     SharedModule,
     UsersRoutingModule
   ],
-  declarations: [UsersComponent, UsersListComponent, UserCardComponent, UserEditComponent],
-  providers: [UsersService]
+  declarations: [UsersComponent, UsersListComponent, UserCardComponent, UserEditComponent]
 })
 export class UsersModule { }

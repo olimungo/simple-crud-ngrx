@@ -1,12 +1,10 @@
 <div class="users">
   <div class="users-title">
     <h1>Users</h1>
-    <button [hidden]="selectedUser" (click)="add()">Add</button>
+    <button [hidden]="selectedUser | async" (click)="add()">Add</button>
   </div>
-  
-  <feat-users-list #usersList [hidden]="selectedUser" [users]="users" (userSelected)="edit($event)"></feat-users-list>
-  <feat-user-edit [hidden]="!selectedUser" [user]="selectedUser"
-    (save)="save($event)" (cancel)="cancel()" (delete)="delete($event)"></feat-user-edit>
+
+  <feat-users-list [hidden]="selectedUser | async" [users]="users | async" (userSelected)="edit($event)"></feat-users-list>
+  <feat-user-edit [hidden]="!(selectedUser | async)" [user]="selectedUser | async" (save)="save($event)" (cancel)="cancel()"
+    (delete)="delete($event)"></feat-user-edit>
 </div>
-
-

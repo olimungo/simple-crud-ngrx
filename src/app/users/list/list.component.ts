@@ -9,7 +9,7 @@ import { User } from '../user.entity';
 })
 export class UsersListComponent implements OnInit {
   @Input() users: User[];
-  @Output() userSelected = new EventEmitter<User>();
+  @Output() userSelected = new EventEmitter<string>();
 
 
   constructor() { }
@@ -17,8 +17,7 @@ export class UsersListComponent implements OnInit {
   ngOnInit() {
   }
 
-  edit(user: User) {
-    this.userSelected.emit(user);
+  edit(id: string) {
+    this.userSelected.emit(id);
   }
-
 }
