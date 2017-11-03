@@ -63,4 +63,8 @@ export class MoviesComponent implements OnInit {
   add() {
     this.store.dispatch(new MoviesActions.Add());
   }
+
+  patternChange(pattern: string) {
+    this.store.dispatch(new MoviesActions.Filter(pattern));
+  }
 }

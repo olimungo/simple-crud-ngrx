@@ -64,4 +64,8 @@ export class UsersComponent implements OnInit {
   add() {
     this.store.dispatch(new UsersActions.Add());
   }
+
+  patternChange(pattern: string) {
+    this.store.dispatch(new UsersActions.Filter(pattern));
+  }
 }

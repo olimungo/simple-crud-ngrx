@@ -7,6 +7,7 @@ export type Action = UsersActions.All;
 
 export interface State {
   users: User[];
+  allUsers: User[];
   selectedUserId: string;
   selectedUser: User;
   loading: boolean;
@@ -15,6 +16,7 @@ export interface State {
 
 const defaultState: State = {
   users: [],
+  allUsers: [],
   selectedUserId: null,
   selectedUser: null,
   loading: false,
@@ -34,7 +36,7 @@ export function usersReducer(state: State = defaultState, action: UsersActions.A
         user = action.payload.find(u => u.id === state.selectedUserId);
       }
 
-      return { ...state, users: action.payload, loading: false, selectedUser: user, selectedUserId: null };
+      return { ...state, users: action.payload, allUsers: action.payload, loading: false, selectedUser: user, selectedUserId: null };
     case UsersActions.ADD:
       return { ...state, selectedUser: <User>{} };
     case UsersActions.EDIT:
@@ -61,6 +63,12 @@ export function usersReducer(state: State = defaultState, action: UsersActions.A
         ...state, selectedUser: null, users: deleteUser(state.users, action.payload),
         url: removeIdFromUrl(state.url, state.selectedUser.id)
       };
+    case UsersActions.FILTER:
+      return { ...state, users: state.allUsers.filter(u => {
+        const full = (u.lastname + ' ' + u.firstname).toUpperCase();
+        const pattern = (action.payload).toUpperCase();
+        return full.indexOf(pattern) > -1;
+      })};
     default:
       return state;
   }

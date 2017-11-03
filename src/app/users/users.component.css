@@ -12,7 +12,6 @@
   margin-left: 1em;
 }
 
-/* feat-user-edit {
-  display: flex;
-  justify-content: center;
-} */
+.users-search-bar {
+  margin-bottom: 2em;
+}

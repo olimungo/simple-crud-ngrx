@@ -7,6 +7,7 @@ export type Action = MoviesActions.All;
 
 export interface State {
   movies: Movie[];
+  allMovies: Movie[];
   selectedMovieId: string;
   selectedMovie: Movie;
   loading: boolean;
@@ -15,6 +16,7 @@ export interface State {
 
 const defaultState: State = {
   movies: [],
+  allMovies: [],
   selectedMovieId: null,
   selectedMovie: null,
   loading: false,
@@ -34,7 +36,7 @@ export function moviesReducer(state: State = defaultState, action: MoviesActions
         movie = action.payload.find(u => u.id === state.selectedMovieId);
       }
 
-      return { ...state, movies: action.payload, loading: false, selectedMovie: movie, selectedMovieId: null };
+      return { ...state, movies: action.payload, allMovies: action.payload, loading: false, selectedMovie: movie, selectedMovieId: null };
     case MoviesActions.ADD:
       return { ...state, selectedMovie: <Movie>{} };
     case MoviesActions.EDIT:
@@ -60,6 +62,14 @@ export function moviesReducer(state: State = defaultState, action: MoviesActions
       return {
         ...state, selectedMovie: null, movies: deleteMovie(state.movies, action.payload),
         url: removeIdFromUrl(state.url, state.selectedMovie.id)
+      };
+    case MoviesActions.FILTER:
+      return {
+        ...state, movies: state.allMovies.filter(m => {
+          const full = (m.title + ' ' + m.genre + ' ' + m.year + ' ' + m.director).toUpperCase();
+          const pattern = action.payload.toUpperCase();
+          return full.indexOf(pattern) > -1;
+        })
       };
     default:
       return state;

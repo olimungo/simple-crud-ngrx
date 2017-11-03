@@ -2,10 +2,16 @@
   <div class="users-title">
     <h1>Users</h1>
   </div>
-  
-  <feat-user-edit [hidden]="!(selectedUser | async)" [user]="selectedUser | async" (save)="save($event)" (cancel)="cancel()"
-  (delete)="delete($event)"></feat-user-edit>
-  <feat-users-list [hidden]="selectedUser | async" [users]="users | async" (userSelected)="edit($event)"></feat-users-list>
 
-  <button class="action-button" [hidden]="selectedUser | async" (click)="add()"><i class="fa fa-plus"></i></button>
+  <div class="users-search-bar">
+    <shr-search-bar [hidden]="selectedUser | async" (patternChange)="patternChange($event)"></shr-search-bar>
+  </div>
+
+  <feat-users-list [hidden]="selectedUser | async" [users]="users | async" (userSelected)="edit($event)"></feat-users-list>
+  <feat-user-edit [hidden]="!(selectedUser | async)" [user]="selectedUser | async" (save)="save($event)" (cancel)="cancel()"
+    (delete)="delete($event)"></feat-user-edit>
+
+  <button class="action-button" [hidden]="selectedUser | async" (click)="add()">
+    <i class="fa fa-plus"></i>
+  </button>
 </div>

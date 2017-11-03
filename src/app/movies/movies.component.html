@@ -3,9 +3,15 @@
     <h1>Movies</h1>
   </div>
 
+  <div class="movies-search-bar">
+    <shr-search-bar [hidden]="selectedUser | async" (patternChange)="patternChange($event)"></shr-search-bar>
+  </div>
+
   <feat-movies-list [hidden]="selectedMovie | async" [movies]="movies | async" (movieSelected)="edit($event)"></feat-movies-list>
   <feat-movie-edit [hidden]="!(selectedMovie | async)" [movie]="selectedMovie | async" (save)="save($event)" (cancel)="cancel()"
     (delete)="delete($event)"></feat-movie-edit>
 
-    <button class="action-button" [hidden]="selectedMovie | async" (click)="add()"><i class="fa fa-plus"></i></button>
+  <button class="action-button" [hidden]="selectedMovie | async" (click)="add()">
+    <i class="fa fa-plus"></i>
+  </button>
 </div>

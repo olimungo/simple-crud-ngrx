@@ -11,6 +11,7 @@ export const CREATE = '[Users] Create';
 export const UPDATE = '[Users] Update';
 export const CANCEL = '[Users] Cancel';
 export const DELETE = '[Users] Delete';
+export const FILTER = '[Users] Filter';
 export const NO_ACTION = '[Users] No action';
 
 export class SetUrl implements Action {
@@ -61,6 +62,12 @@ export class Delete implements Action {
   constructor(public payload: string) { }
 }
 
+export class Filter implements Action {
+  readonly type = FILTER;
+
+  constructor(public payload: string) { }
+}
+
 export class NoAction implements Action {
   readonly type = NO_ACTION;
 }
@@ -75,5 +82,6 @@ export type All
   | Edit
   | Cancel
   | Delete
+  | Filter
   | NoAction;
 
