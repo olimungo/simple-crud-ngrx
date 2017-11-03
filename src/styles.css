@@ -34,10 +34,15 @@ body {
   margin: .5em 0;
   padding: .2em .4em;
   cursor: pointer;
+  background: #fff;
 }
 
 .clickable:hover {
-  background: rgba(128, 128, 128, .1);
+  background: rgba(254, 254, 254, .1);
+}
+
+.clickable:active {
+  background: rgba(190, 190, 190, .1);
 }
 
 button {
@@ -65,4 +70,26 @@ input {
   padding: .5em .8em;
   border: solid 1px #ddd;
   border-radius: 4px;
+}
+
+.action-button {
+  position: fixed;
+  bottom: 2em;
+  right: 2em;
+  border-radius: 50%;
+  width: 4em;
+  height: 4em;
+  color: #fff;
+  font-weight: normal;
+  border: none;
+  background: #d23f31;
+  box-shadow: 0 0 4px rgba(0,0,0,.14), 0 4px 8px rgba(0,0,0,.28);
+}
+
+.action-button:hover {
+  background: #c5372a;
+}
+
+.action-button:active {
+  background: #a3291e;
 }
