@@ -5,6 +5,7 @@
 .movies-title {
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 .movies-title button {

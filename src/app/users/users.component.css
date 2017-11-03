@@ -5,6 +5,7 @@
 .users-title {
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 .users-title button {

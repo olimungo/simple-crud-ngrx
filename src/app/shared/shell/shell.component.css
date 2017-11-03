@@ -1,14 +1,16 @@
 .shell {
+  width: 100%;
+  overflow: hidden;
 }
 
-.shell-router {
-  border-width: 1px;
-  cursor: pointer;
-  font-size: 1.5em;
+.shell-content {
+  position: fixed;
+  top: 4em;
+  bottom: 0;
   width: 100%;
-  height: 100%;
-  position: absolute;
-  display: -webkit-flex;
-  display: flex;
   overflow: auto;
+}
+
+.shell-container {
+  margin: 0 1em;
 }

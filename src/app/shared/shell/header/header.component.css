@@ -1,16 +1,56 @@
 .shell-header {
-  margin: 0;
+  color: #fff;
 }
 
 .shell-header:before {
+  background: #4285f4;
   box-shadow: 0 0 4px rgba(0,0,0,.14), 0 4px 8px rgba(0,0,0,.28);
   content: "";
   height: 4em;
   left: -2%;
   position: fixed;
   width: 104%;
+  z-index: -1;
 }
 
-.shell-header .fa-shield {
+.shell-header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 4em;
+  margin: 0 1.3em;
+}
+
+.shell-header-content .group {
+  display: flex;
+  align-items: center;
+}
+
+.shell-header .fa {
   font-size: 2em;
+}
+
+.shell-header-title {
+  margin-left: 1em;
+  font-size: 1.3em;
+}
+
+.shell-header-clickable {
+  border-radius: 50%;
+  width: 1.8em;
+  height: 1.8em;
+  cursor: pointer;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.shell-header-clickable:hover {
+  background: rgba(255, 255, 255, .1);
+}
+
+
+.shell-header-clickable:active {
+  background: rgba(255, 255, 255, .2);
 }
