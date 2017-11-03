@@ -1,4 +1,9 @@
 .user-edit {
+  display: flex;
+  justify-content: center;
+}
+
+.user-edit-container {
   border: solid 1px #ddd;
   padding: 1.5em 1.5em 1em 1.5em;
   background: #fff;

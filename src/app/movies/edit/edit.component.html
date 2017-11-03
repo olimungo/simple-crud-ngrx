@@ -1,25 +1,27 @@
 <div class="movie-edit">
-  <form (ngSubmit)="submit()" #form="ngForm">
-    <div class="form-group">
-      <label for="title">Title</label>
-      <input type="text" id="title" name="title" required [(ngModel)]="title">
-    </div>
+  <div class="movie-edit-container">
+    <form (ngSubmit)="submit()" #form="ngForm">
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" id="title" name="title" required [(ngModel)]="title">
+      </div>
 
-    <div class="form-group">
-      <label for="genre">Genre</label>
-      <input type="text" id="genre" name="genre" required [(ngModel)]="genre">
-    </div>
+      <div class="form-group">
+        <label for="genre">Genre</label>
+        <input type="text" id="genre" name="genre" required [(ngModel)]="genre">
+      </div>
 
-    <div class="form-group">
-      <label for="year">Year</label>
-      <input type="text" id="year" name="year" required [(ngModel)]="year">
-    </div>
+      <div class="form-group">
+        <label for="year">Year</label>
+        <input type="text" id="year" name="year" required [(ngModel)]="year">
+      </div>
 
-    <div class="form-group">
-      <label for="director">Director</label>
-      <input type="text" id="director" name="director" required [(ngModel)]="director">
-    </div>
-  </form>
+      <div class="form-group">
+        <label for="director">Director</label>
+        <input type="text" id="director" name="director" required [(ngModel)]="director">
+      </div>
+    </form>
 
-  <shr-crud-buttons (save)="_save()" (cancel)="_cancel()" (delete)="_delete()"></shr-crud-buttons>
+    <shr-crud-buttons (save)="_save()" (cancel)="_cancel()" (delete)="_delete()"></shr-crud-buttons>
+  </div>
 </div>

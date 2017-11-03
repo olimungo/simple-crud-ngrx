@@ -22,15 +22,10 @@ export class UsersComponent implements OnInit {
   selectedUser: Observable<User>;
   loading: Observable<boolean>;
 
-  initDone = false;
-
   constructor(private route: ActivatedRoute, private location: Location, private store: Store<UsersReducer.State>) {
-    this.selectedUser = Observable.of(null);
   }
 
   ngOnInit() {
-    // this.initDone = true;
-
     this.users = this.store.select(UsersReducer.getUsers);
     this.selectedUser = this.store.select(UsersReducer.getSelectedUser);
     this.loading = this.store.select(UsersReducer.getLoading);

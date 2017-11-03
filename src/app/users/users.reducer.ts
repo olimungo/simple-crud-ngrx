@@ -83,6 +83,10 @@ const addUser = (users: User[], user: User) => {
     newUsers.push(u);
   });
 
+  if (!userInserted) {
+    newUsers.push(user);
+  }
+
   return newUsers;
 };
 

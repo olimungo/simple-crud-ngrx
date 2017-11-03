@@ -1,15 +1,17 @@
 <div class="user-edit">
-  <form (ngSubmit)="submit()" #form="ngForm">
-    <div class="form-group">
-      <label for="firstname">Firstname</label>
-      <input type="text" id="firstname" name="firstname" required [(ngModel)]="firstname">
-    </div>
+  <div class="user-edit-container">
+    <form (ngSubmit)="submit()" #form="ngForm">
+      <div class="form-group">
+        <label for="firstname">Firstname</label>
+        <input type="text" id="firstname" name="firstname" required [(ngModel)]="firstname">
+      </div>
 
-    <div class="form-group">
-      <label for="lastname">Lastname</label>
-      <input type="text" id="lastname" name="lastname" required [(ngModel)]="lastname">
-    </div>
-  </form>
+      <div class="form-group">
+        <label for="lastname">Lastname</label>
+        <input type="text" id="lastname" name="lastname" required [(ngModel)]="lastname">
+      </div>
+    </form>
 
-  <shr-crud-buttons (save)="_save()" (cancel)="_cancel()" (delete)="_delete()"></shr-crud-buttons>
+    <shr-crud-buttons (save)="_save()" (cancel)="_cancel()" (delete)="_delete()"></shr-crud-buttons>
+  </div>
 </div>

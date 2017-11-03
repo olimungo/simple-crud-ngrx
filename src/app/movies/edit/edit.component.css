@@ -1,4 +1,9 @@
 .movie-edit {
+  display: flex;
+  justify-content: center;
+}
+
+.movie-edit-container {
   border: solid 1px #ddd;
   padding: 1.5em 1.5em 1em 1.5em;
   background: #fff;

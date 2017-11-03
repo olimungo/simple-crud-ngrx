@@ -83,6 +83,10 @@ const addMovie = (movies: Movie[], movie: Movie) => {
     newMovies.push(u);
   });
 
+  if (!movieInserted) {
+    newMovies.push(movie);
+  }
+
   return newMovies;
 };
 
