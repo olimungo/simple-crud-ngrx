@@ -11,3 +11,8 @@
 .users-title button {
   margin-left: 1em;
 }
+
+feat-user-edit {
+  display: flex;
+  justify-content: center;
+}

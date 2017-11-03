@@ -1,0 +1,21 @@
+.movie-edit {
+  border: solid 1px #ddd;
+  padding: 1.5em 1.5em 1em 1.5em;
+  background: #fff;
+  border-radius: 4px;
+}
+
+.movie-edit form {
+  margin-bottom: 1.5em;
+}
+
+.movie-edit label {
+  display: inline-block;
+  font-weight: bold;
+  width: 5em;
+}
+
+.movie-edit input {
+  width: 25em;
+  margin: 0 0 1em 1em;
+}

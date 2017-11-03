@@ -1,0 +1,14 @@
+.crud-buttons {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.crud-buttons button {
+  margin: 0 .3em;
+}
+.crud-button-delete {
+  background: #dc3545;
+  border: #dc3545;
+  color: #fff;
+  font-weight: normal;
+}

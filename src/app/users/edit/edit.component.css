@@ -1,0 +1,19 @@
+.user-edit {
+  border: solid 1px #ddd;
+  padding: 1.5em 1.5em 1em 1.5em;
+  background: #fff;
+  border-radius: 4px;
+}
+
+.user-edit form {
+  margin-bottom: 1.5em;
+}
+
+.user-edit label {
+  font-weight: bold;
+}
+
+.user-edit input {
+  width: 15em;
+  margin: 0 0 1em 1em;
+}

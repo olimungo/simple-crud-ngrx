@@ -30,7 +30,7 @@ body {
 .clickable {
   outline: none;
   border: 1px solid #ddd;
-  border-radius: .1em;
+  border-radius: .3em;
   margin: .5em 0;
   padding: .2em .4em;
   cursor: pointer;
@@ -58,4 +58,11 @@ button:hover {
 
 button:active {
   background: rgba(128, 128, 128, .2);
+}
+
+input {
+  font-size: 1em;
+  padding: .5em .8em;
+  border: solid 1px #ddd;
+  border-radius: 4px;
 }

@@ -11,3 +11,8 @@
 .movies-title button {
   margin-left: 1em;
 }
+
+feat-movie-edit {
+  display: flex;
+  justify-content: center;
+}

@@ -5,6 +5,6 @@
   </div>
 
   <feat-users-list [hidden]="selectedUser | async" [users]="users | async" (userSelected)="edit($event)"></feat-users-list>
-  <feat-user-edit [hidden]="!(selectedUser | async)" [user]="selectedUser | async" (save)="save($event)" (cancel)="cancel()"
+  <feat-user-edit [hidden]="true" [user]="selectedUser | async" (save)="save($event)" (cancel)="cancel()"
     (delete)="delete($event)"></feat-user-edit>
 </div>
