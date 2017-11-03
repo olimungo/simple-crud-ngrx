@@ -10,6 +10,7 @@ import { AppComponent } from './app.component';
 
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
+import { HomeModule } from './home/home.module';
 import { UsersModule } from './users/users.module';
 import { CompaniesModule } from './companies/companies.module';
 import { MoviesModule } from './movies/movies.module';
@@ -36,6 +37,7 @@ import { MoviesService } from './movies/movies.service';
     EffectsModule.forRoot([UsersService, MoviesService]),
     CoreModule,
     SharedModule,
+    HomeModule,
     UsersModule,
     CompaniesModule,
     MoviesModule

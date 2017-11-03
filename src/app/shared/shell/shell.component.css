@@ -1,0 +1,14 @@
+.shell {
+}
+
+.shell-router {
+  border-width: 1px;
+  cursor: pointer;
+  font-size: 1.5em;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  display: -webkit-flex;
+  display: flex;
+  overflow: auto;
+}
