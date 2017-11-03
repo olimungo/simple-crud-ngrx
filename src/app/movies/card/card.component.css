@@ -5,7 +5,7 @@
 .movie-card {
   padding: 1em;
   background: #fff;
-  width: 20em;
+  width: 30em;
 }
 
 .movie-card-title {
@@ -13,8 +13,13 @@
 }
 
 .movie-card-genre {
+  display: inline-block;
   font-size: .7em;
-  color: #2e77ef;
+  background: #aaa;
+  color: #fff;
+  border-radius: 6px;
+  padding: .3em .8em .2em .8em;
+  margin-top: .6em;
 }
 
 .movie-card-year {

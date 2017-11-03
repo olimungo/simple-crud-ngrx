@@ -16,4 +16,8 @@ export class ShellHeaderComponent implements OnInit {
   goHome() {
     this.router.navigate(['/home']);
   }
+
+  goProfile() {
+    this.router.navigate(['/profile']);
+  }
 }

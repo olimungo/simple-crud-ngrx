@@ -26,8 +26,12 @@
   align-items: center;
 }
 
-.shell-header .fa {
+.shell-header .fa-address-card {
   font-size: 2em;
+}
+
+.shell-header .fa-ellipsis-v {
+  font-size: 1.4em;
 }
 
 .shell-header-title {
