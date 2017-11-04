@@ -9,7 +9,7 @@ import { Movie } from '../movie.entity';
 })
 export class MovieEditComponent implements OnInit {
   @Input() set movie(value: Movie) {
-    this.originalMovie = value ? value : null;
+    this.id = value ? value.id : null;
     this.title = value ? value.title : null;
     this.genre = value ? value.genre : null;
     this.year = value ? value.year : null;
@@ -20,12 +20,11 @@ export class MovieEditComponent implements OnInit {
   @Output() cancel = new EventEmitter<any>();
   @Output() delete = new EventEmitter<string>();
 
+  id: string;
   title: string;
   genre: string;
   year: number;
   director: string;
-
-  private originalMovie: Movie;
 
   constructor() { }
 
@@ -33,11 +32,7 @@ export class MovieEditComponent implements OnInit {
   }
 
   _save() {
-    this.originalMovie.title = this.title;
-    this.originalMovie.genre = this.genre;
-    this.originalMovie.year = this.year;
-    this.originalMovie.director = this.director;
-    this.save.emit(this.originalMovie);
+    this.save.emit({ id: this.id, title: this.title, genre: this.genre, year: this.year, director: this.director });
   }
 
   _cancel() {
@@ -45,6 +40,6 @@ export class MovieEditComponent implements OnInit {
   }
 
   _delete() {
-    this.delete.emit(this.originalMovie.id);
+    this.delete.emit(this.id);
   }
 }

@@ -24,44 +24,41 @@ const defaultState: State = {
 };
 
 export function moviesReducer(state: State = defaultState, action: MoviesActions.All) {
-  let movie: Movie = null;
-
   switch (action.type) {
     case MoviesActions.SET_URL:
       return { ...state, url: action.payload };
     case MoviesActions.GET_LIST:
       return { ...state, loading: true };
     case MoviesActions.LIST_RETRIEVED:
-      if (state.selectedMovieId) {
-        movie = action.payload.find(u => u.id === state.selectedMovieId);
-      }
+      const movies = (action.payload).sort(sortMovies);
 
-      return { ...state, movies: action.payload, allMovies: action.payload, loading: false, selectedMovie: movie, selectedMovieId: null };
+      return {
+        ...state, movies: movies, allMovies: movies, loading: false,
+        selectedMovie: getMovie(movies, state.selectedMovieId), selectedMovieId: null
+      };
     case MoviesActions.ADD:
       return { ...state, selectedMovie: <Movie>{} };
     case MoviesActions.EDIT:
-      let selectedMovieId = null;
-      movie = state.movies.find(u => u.id === action.payload);
-
-      if (!movie) {
-        selectedMovieId = action.payload;
-        movie = null;
-      }
-
-      return { ...state, selectedMovie: movie, url: addIdToUrl(state.url, action.payload), selectedMovieId: selectedMovieId };
-    case MoviesActions.CREATE:
       return {
-        ...state, selectedMovie: null, movies: addMovie(state.movies, action.payload),
-        url: removeIdFromUrl(state.url, state.selectedMovie.id)
+        ...state, selectedMovie: getMovie(state.allMovies, action.payload), url: addIdToUrl(state.url, action.payload),
+        selectedMovieId: geSelectedMovieId(state.allMovies, action.payload)
       };
+    case MoviesActions.CREATE:
+    return {
+      ...state, selectedMovie: null, movies: addMovie(state.movies, action.payload), allMovies: addMovie(state.allMovies, action.payload),
+      url: removeIdFromUrl(state.url, state.selectedMovie.id)
+    };
     case MoviesActions.UPDATE:
-      return { ...state, selectedMovie: null, url: removeIdFromUrl(state.url, state.selectedMovie.id) };
+      return {
+        ...state, movies: updateMovie(state.movies, action.payload), allMovies: updateMovie(state.allMovies, action.payload),
+        selectedMovie: null, url: removeIdFromUrl(state.url, state.selectedMovie.id)
+      };
     case MoviesActions.CANCEL:
       return { ...state, selectedMovie: null, url: removeIdFromUrl(state.url, state.selectedMovie.id) };
     case MoviesActions.DELETE:
       return {
         ...state, selectedMovie: null, movies: deleteMovie(state.movies, action.payload),
-        url: removeIdFromUrl(state.url, state.selectedMovie.id)
+        allMovies: deleteMovie(state.allMovies, action.payload), url: removeIdFromUrl(state.url, state.selectedMovie.id)
       };
     case MoviesActions.FILTER:
       return {
@@ -76,40 +73,29 @@ export function moviesReducer(state: State = defaultState, action: MoviesActions
   }
 }
 
+const geSelectedMovieId = (movies: Movie[], id: string) => {
+  return movies ? null : id;
+};
+
 const getMovie = (movies: Movie[], id: string) => {
-  return movies.find(movie => movie.id === id);
+  return movies ? movies.find(movie => movie.id === id) : null;
 };
 
 const addMovie = (movies: Movie[], movie: Movie) => {
-  const newMovies = <Movie[]>[];
-  let movieInserted = false;
+  return ([...movies, movie]).sort(sortMovies);
+};
 
-  movies.forEach(u => {
-    if (u.title > movie.title && !movieInserted) {
-      movieInserted = true;
-      newMovies.push(movie);
-    }
-
-    newMovies.push(u);
-  });
-
-  if (!movieInserted) {
-    newMovies.push(movie);
-  }
-
-  return newMovies;
+const updateMovie = (movies: Movie[], movie: Movie) => {
+  return addMovie(deleteMovie(movies, movie.id), movie);
 };
 
 const deleteMovie = (movies: Movie[], id: string) => {
-  const newMovies = <Movie[]>[];
+  const index = movies.findIndex(movie => movie.id === id);
+  return movies.slice(0, index).concat(movies.slice(index + 1));
+};
 
-  movies.forEach(u => {
-    if (u.id !== id) {
-      newMovies.push(u);
-    }
-  });
-
-  return newMovies;
+const sortMovies = (a: Movie, b: Movie) => {
+  return a.title > b.title ? 1 : -1;
 };
 
 const addIdToUrl = (url: string, id: string) => {

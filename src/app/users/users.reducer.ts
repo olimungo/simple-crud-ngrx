@@ -32,21 +32,27 @@ export function usersReducer(state: State = defaultState, action: UsersActions.A
     case UsersActions.LIST_RETRIEVED:
       const users = (action.payload).sort(sortUsers);
 
-      return { ...state, users: users, allUsers: users, loading: false,
-        selectedUser: getUser(users, state.selectedUserId), selectedUserId: null };
+      return {
+        ...state, users: users, allUsers: users, loading: false,
+        selectedUser: getUser(users, state.selectedUserId), selectedUserId: null
+      };
     case UsersActions.ADD:
       return { ...state, selectedUser: <User>{} };
     case UsersActions.EDIT:
-      return { ...state, selectedUser: getUser(state.allUsers, action.payload), url: addIdToUrl(state.url, action.payload),
-        selectedUserId: geSelectedUserId(state.allUsers, action.payload) };
+      return {
+        ...state, selectedUser: getUser(state.allUsers, action.payload), url: addIdToUrl(state.url, action.payload),
+        selectedUserId: geSelectedUserId(state.allUsers, action.payload)
+      };
     case UsersActions.CREATE:
       return {
         ...state, selectedUser: null, users: addUser(state.users, action.payload), allUsers: addUser(state.allUsers, action.payload),
         url: removeIdFromUrl(state.url, state.selectedUser.id)
       };
     case UsersActions.UPDATE:
-      return { ...state, users: updateUser(state.users, action.payload), allUsers: updateUser(state.allUsers, action.payload),
-        selectedUser: null, url: removeIdFromUrl(state.url, state.selectedUser.id) };
+      return {
+        ...state, users: updateUser(state.users, action.payload), allUsers: updateUser(state.allUsers, action.payload),
+        selectedUser: null, url: removeIdFromUrl(state.url, state.selectedUser.id)
+      };
     case UsersActions.CANCEL:
       return { ...state, selectedUser: null, url: removeIdFromUrl(state.url, state.selectedUser.id) };
     case UsersActions.DELETE:
@@ -55,11 +61,13 @@ export function usersReducer(state: State = defaultState, action: UsersActions.A
         url: removeIdFromUrl(state.url, state.selectedUser.id)
       };
     case UsersActions.FILTER:
-      return { ...state, users: state.allUsers.filter(u => {
-        const full = (u.lastname + ' ' + u.firstname).toUpperCase();
-        const pattern = (action.payload).toUpperCase();
-        return full.indexOf(pattern) > -1;
-      })};
+      return {
+        ...state, users: state.allUsers.filter(u => {
+          const full = (u.lastname + ' ' + u.firstname).toUpperCase();
+          const pattern = (action.payload).toUpperCase();
+          return full.indexOf(pattern) > -1;
+        })
+      };
     default:
       return state;
   }
@@ -74,7 +82,7 @@ const getUser = (users: User[], id: string) => {
 };
 
 const addUser = (users: User[], user: User) => {
-  return ([ ...users, user]).sort(sortUsers);
+  return ([...users, user]).sort(sortUsers);
 };
 
 const updateUser = (users: User[], user: User) => {
@@ -84,6 +92,10 @@ const updateUser = (users: User[], user: User) => {
 const deleteUser = (users: User[], id: string) => {
   const index = users.findIndex(user => user.id === id);
   return users.slice(0, index).concat(users.slice(index + 1));
+};
+
+const sortUsers = (a: User, b: User) => {
+  return a.lastname + a.firstname > b.lastname + b.firstname ? 1 : -1;
 };
 
 const addIdToUrl = (url: string, id: string) => {
@@ -96,10 +108,6 @@ const addIdToUrl = (url: string, id: string) => {
 
 const removeIdFromUrl = (url: string, id: string) => {
   return url.replace(`/${id}`, '');
-};
-
-const sortUsers = (a: User, b: User) => {
-  return a.lastname + a.firstname > b.lastname + b.firstname ? 1 : -1;
 };
 
 export const selectUsers = createFeatureSelector<State>('users');

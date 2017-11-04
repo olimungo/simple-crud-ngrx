@@ -37,7 +37,6 @@ export class MoviesService {
         return this.http.get(`${environment.backEnd}/movies`).delay(1000).map(movies => movies.json());
       }
     })
-    .map((result: Movie[]) => result.sort((a, b) => a.title > b.title  ? 1 : -1))
     .map(movies => {
       this.movies = Observable.of(movies);
       return new movieActions.ListRetrieved(movies);

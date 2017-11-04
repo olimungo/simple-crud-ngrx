@@ -24,15 +24,10 @@ export class UserEditComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-    if (!this.user) {
-      this.user = { id: '', firstname: '', lastname: '' };
-    }
-  }
+  ngOnInit() { }
 
   _save() {
-    const user: User = { id: this.id, firstname: this.firstname, lastname: this.lastname };
-    this.save.emit(user);
+    this.save.emit({ id: this.id, firstname: this.firstname, lastname: this.lastname });
   }
 
   _cancel() {
