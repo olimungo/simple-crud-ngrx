@@ -12,6 +12,7 @@ export const UPDATE = '[Users] Update';
 export const CANCEL = '[Users] Cancel';
 export const DELETE = '[Users] Delete';
 export const FILTER = '[Users] Filter';
+export const SAVE_SCROLL_POSITION = '[Users] Save scroll position';
 export const NO_ACTION = '[Users] No action';
 
 export class GetList implements Action {
@@ -66,6 +67,12 @@ export class Filter implements Action {
   constructor(public payload: string) { }
 }
 
+export class SaveScrollPosition implements Action {
+  readonly type = SAVE_SCROLL_POSITION;
+
+  constructor(public payload: number) { }
+}
+
 export class NoAction implements Action {
   readonly type = NO_ACTION;
 }
@@ -81,5 +88,6 @@ export type All
   | Cancel
   | Delete
   | Filter
+  | SaveScrollPosition
   | NoAction;
 

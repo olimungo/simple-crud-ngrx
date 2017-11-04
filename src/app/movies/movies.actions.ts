@@ -13,6 +13,7 @@ export const UPDATE = '[Movies] Update';
 export const CANCEL = '[Movies] Cancel';
 export const DELETE = '[Movies] Delete';
 export const FILTER = '[Movies] Filter';
+export const SAVE_SCROLL_POSITION = '[Movies] Save scroll position';
 export const NO_ACTION = '[Movies] No action';
 
 export class SetUrl implements Action {
@@ -73,6 +74,12 @@ export class Filter implements Action {
   constructor(public payload: string) { }
 }
 
+export class SaveScrollPosition implements Action {
+  readonly type = SAVE_SCROLL_POSITION;
+
+  constructor(public payload: number) { }
+}
+
 export class NoAction implements Action {
   readonly type = NO_ACTION;
 }
@@ -89,5 +96,6 @@ export type All
   | Cancel
   | Delete
   | Filter
+  | SaveScrollPosition
   | NoAction;
 

@@ -23,3 +23,11 @@
   justify-content: center;
   margin-top: 15em;
 }
+
+.users-list-cards {
+  position: absolute;
+  top: 9em;
+  bottom: 0;
+  overflow: auto;
+  padding: 0 1em;
+}

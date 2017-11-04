@@ -13,7 +13,9 @@
     </div>
   </div>
 
-  <feat-user-card *ngFor="let user of users | async" [user]="user" (click)="edit(user.id)"></feat-user-card>
+  <div #scroll class="users-list-cards">
+    <feat-user-card *ngFor="let user of users | async" [user]="user" (click)="edit(user.id)"></feat-user-card>
+  </div>
 
   <button class="action-button" (click)="add()">
     <i class="fa fa-plus"></i>

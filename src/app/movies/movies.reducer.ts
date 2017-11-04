@@ -12,6 +12,7 @@ export interface State {
   selectedMovie: Movie;
   loading: boolean;
   filterPattern: string;
+  scrollPosition: number;
 }
 
 const defaultState: State = {
@@ -20,7 +21,8 @@ const defaultState: State = {
   selectedMovieId: null,
   selectedMovie: null,
   loading: false,
-  filterPattern: ''
+  filterPattern: '',
+  scrollPosition: 0
 };
 
 export function moviesReducer(state: State = defaultState, action: MoviesActions.All) {
@@ -61,6 +63,8 @@ export function moviesReducer(state: State = defaultState, action: MoviesActions
       };
     case MoviesActions.FILTER:
       return { ...state, filterPattern: action.payload, movies: filterMovies(state.allMovies, action.payload) };
+    case MoviesActions.SAVE_SCROLL_POSITION:
+      return { ...state, scrollPosition: action.payload };
     default:
       return state;
   }
@@ -105,4 +109,5 @@ export const getMoviesCount = createSelector(selectMovies, (state: State) => sta
 export const getSelectedMovie = createSelector(selectMovies, (state: State) => state.selectedMovie);
 export const getLoading = createSelector(selectMovies, (state: State) => state.loading);
 export const getFilterPattern = createSelector(selectMovies, (state: State) => state.filterPattern);
+export const getScrollPosition = createSelector(selectMovies, (state: State) => state.scrollPosition);
 

@@ -12,6 +12,7 @@ export interface State {
   selectedUser: User;
   loading: boolean;
   filterPattern: string;
+  scrollPosition: number;
 }
 
 const defaultState: State = {
@@ -20,7 +21,8 @@ const defaultState: State = {
   selectedUserId: null,
   selectedUser: null,
   loading: false,
-  filterPattern: ''
+  filterPattern: '',
+  scrollPosition: 0
 };
 
 export function usersReducer(state: State = defaultState, action: UsersActions.All) {
@@ -56,6 +58,8 @@ export function usersReducer(state: State = defaultState, action: UsersActions.A
       };
     case UsersActions.FILTER:
       return { ...state, filterPattern: action.payload, users: filterUsers(state.allUsers, action.payload) };
+    case UsersActions.SAVE_SCROLL_POSITION:
+      return { ...state, scrollPosition: action.payload };
     default:
       return state;
   }
@@ -100,3 +104,4 @@ export const getUsersCount = createSelector(selectUsers, (state: State) => state
 export const getSelectedUser = createSelector(selectUsers, (state: State) => state.selectedUser);
 export const getLoading = createSelector(selectUsers, (state: State) => state.loading);
 export const getFilterPattern = createSelector(selectUsers, (state: State) => state.filterPattern);
+export const getScrollPosition = createSelector(selectUsers, (state: State) => state.scrollPosition);

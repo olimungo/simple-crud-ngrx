@@ -13,7 +13,9 @@
     </div>
   </div>
 
-  <feat-movie-card *ngFor="let movie of movies | async" [movie]="movie" (click)="edit(movie.id)"></feat-movie-card>
+  <div #scroll class="movies-list-cards">
+    <feat-movie-card *ngFor="let movie of movies | async" [movie]="movie" (click)="edit(movie.id)"></feat-movie-card>
+  </div>
 
   <button class="action-button" (click)="add()">
     <i class="fa fa-plus"></i>
