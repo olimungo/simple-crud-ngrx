@@ -27,7 +27,7 @@ export function usersReducer(state: State = defaultState, action: UsersActions.A
   switch (action.type) {
     case UsersActions.SET_URL:
       return { ...state, url: action.payload };
-    case UsersActions.GET_LIST:
+    case UsersActions.GET_LIST_FORCED:
       return { ...state, loading: true };
     case UsersActions.LIST_RETRIEVED:
       const users = (action.payload).sort(sortUsers);
@@ -61,13 +61,7 @@ export function usersReducer(state: State = defaultState, action: UsersActions.A
         url: removeIdFromUrl(state.url, state.selectedUser.id)
       };
     case UsersActions.FILTER:
-      return {
-        ...state, users: state.allUsers.filter(u => {
-          const full = (u.lastname + ' ' + u.firstname).toUpperCase();
-          const pattern = (action.payload).toUpperCase();
-          return full.indexOf(pattern) > -1;
-        })
-      };
+      return { ...state, movies: filterUsers(state.allUsers, action.payload) };
     default:
       return state;
   }
@@ -92,6 +86,13 @@ const updateUser = (users: User[], user: User) => {
 const deleteUser = (users: User[], id: string) => {
   const index = users.findIndex(user => user.id === id);
   return users.slice(0, index).concat(users.slice(index + 1));
+};
+
+const filterUsers = (users: User[], pattern: string) => {
+  return users.filter(user => {
+    const fullString = (user.firstname + ' ' + user.lastname).toUpperCase();
+    return fullString.indexOf(pattern.toUpperCase()) > -1;
+  });
 };
 
 const sortUsers = (a: User, b: User) => {

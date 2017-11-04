@@ -14,8 +14,8 @@ import * as userActions from './users.actions';
 export type Action = userActions.All;
 
 @Injectable()
-export class UsersService {
-  private users: Observable<User[]>;
+export class UsersEffects {
+  private usersLoaded = false;
 
   constructor(private actions: Actions, private http: Http) { }
 
@@ -30,15 +30,21 @@ export class UsersService {
 
   @Effect()
   retrieve: Observable<Action> = this.actions.ofType(userActions.GET_LIST)
-    .mergeMap(() => {
-      if (this.users) {
-        return this.users;
+    .map(() => {
+      if (!this.usersLoaded) {
+        return new userActions.GetListForced();
       } else {
-        return this.http.get(`${environment.backEnd}/users`).delay(1000).map(users => users.json());
+        return new userActions.NoAction();
       }
-    })
+    });
+
+  @Effect()
+  retrieveForced: Observable<Action> = this.actions.ofType(userActions.GET_LIST_FORCED)
+    .mergeMap(() => this.http.get(`${environment.backEnd}/users`))
+    .delay(1000)
+    .map(users => users.json())
     .map(users => {
-      this.users = Observable.of(users);
+      this.usersLoaded = true;
       return new userActions.ListRetrieved(users);
     });
 

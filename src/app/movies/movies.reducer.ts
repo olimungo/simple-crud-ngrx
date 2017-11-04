@@ -27,7 +27,7 @@ export function moviesReducer(state: State = defaultState, action: MoviesActions
   switch (action.type) {
     case MoviesActions.SET_URL:
       return { ...state, url: action.payload };
-    case MoviesActions.GET_LIST:
+    case MoviesActions.GET_LIST_FORCED:
       return { ...state, loading: true };
     case MoviesActions.LIST_RETRIEVED:
       const movies = (action.payload).sort(sortMovies);
@@ -44,10 +44,10 @@ export function moviesReducer(state: State = defaultState, action: MoviesActions
         selectedMovieId: geSelectedMovieId(state.allMovies, action.payload)
       };
     case MoviesActions.CREATE:
-    return {
-      ...state, selectedMovie: null, movies: addMovie(state.movies, action.payload), allMovies: addMovie(state.allMovies, action.payload),
-      url: removeIdFromUrl(state.url, state.selectedMovie.id)
-    };
+      return {
+        ...state, selectedMovie: null, movies: addMovie(state.movies, action.payload), allMovies: addMovie(state.allMovies, action.payload),
+        url: removeIdFromUrl(state.url, state.selectedMovie.id)
+      };
     case MoviesActions.UPDATE:
       return {
         ...state, movies: updateMovie(state.movies, action.payload), allMovies: updateMovie(state.allMovies, action.payload),
@@ -61,13 +61,7 @@ export function moviesReducer(state: State = defaultState, action: MoviesActions
         allMovies: deleteMovie(state.allMovies, action.payload), url: removeIdFromUrl(state.url, state.selectedMovie.id)
       };
     case MoviesActions.FILTER:
-      return {
-        ...state, movies: state.allMovies.filter(m => {
-          const full = (m.title + ' ' + m.genre + ' ' + m.year + ' ' + m.director).toUpperCase();
-          const pattern = action.payload.toUpperCase();
-          return full.indexOf(pattern) > -1;
-        })
-      };
+      return { ...state, movies: filterMovies(state.allMovies, action.payload) };
     default:
       return state;
   }
@@ -92,6 +86,13 @@ const updateMovie = (movies: Movie[], movie: Movie) => {
 const deleteMovie = (movies: Movie[], id: string) => {
   const index = movies.findIndex(movie => movie.id === id);
   return movies.slice(0, index).concat(movies.slice(index + 1));
+};
+
+const filterMovies = (movies: Movie[], pattern: string) => {
+  return movies.filter(movie => {
+    const fullString = (movie.title + ' ' + movie.genre + ' ' + movie.year + ' ' + movie.director).toUpperCase();
+    return fullString.indexOf(pattern.toUpperCase()) > -1;
+  });
 };
 
 const sortMovies = (a: Movie, b: Movie) => {

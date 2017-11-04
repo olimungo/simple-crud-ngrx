@@ -4,6 +4,7 @@ import { Movie } from './movie.entity';
 
 export const SET_URL = '[Movies] Set URL';
 export const GET_LIST = '[Movies] Get list';
+export const GET_LIST_FORCED = '[Movies] list forced';
 export const LIST_RETRIEVED = '[Movies] List retrieved';
 export const ADD = '[Movies] Add';
 export const EDIT = '[Movies] Edit';
@@ -22,6 +23,10 @@ export class SetUrl implements Action {
 
 export class GetList implements Action {
   readonly type = GET_LIST;
+}
+
+export class GetListForced implements Action {
+  readonly type = GET_LIST_FORCED;
 }
 
 export class ListRetrieved implements Action {
@@ -75,6 +80,7 @@ export class NoAction implements Action {
 export type All
   = SetUrl
   | GetList
+  | GetListForced
   | ListRetrieved
   | Add
   | Create

@@ -14,8 +14,8 @@ import * as movieActions from './movies.actions';
 export type Action = movieActions.All;
 
 @Injectable()
-export class MoviesService {
-  private movies: Observable<Movie[]>;
+export class MoviesEffects {
+  private moviesLoaded = false;
 
   constructor(private actions: Actions, private http: Http) { }
 
@@ -30,15 +30,21 @@ export class MoviesService {
 
   @Effect()
   retrieve: Observable<Action> = this.actions.ofType(movieActions.GET_LIST)
-    .mergeMap(() => {
-      if (this.movies) {
-        return this.movies;
+    .map(() => {
+      if (!this.moviesLoaded) {
+        return new movieActions.GetListForced();
       } else {
-        return this.http.get(`${environment.backEnd}/movies`).delay(1000).map(movies => movies.json());
+        return new movieActions.NoAction();
       }
-    })
+    });
+
+  @Effect()
+  retrieveForced: Observable<Action> = this.actions.ofType(movieActions.GET_LIST_FORCED)
+    .mergeMap(() => this.http.get(`${environment.backEnd}/movies`)
+    .delay(1000))
+    .map(movies => movies.json())
     .map(movies => {
-      this.movies = Observable.of(movies);
+      this.moviesLoaded = true;
       return new movieActions.ListRetrieved(movies);
     });
 

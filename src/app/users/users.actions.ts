@@ -4,6 +4,7 @@ import { User } from './user.entity';
 
 export const SET_URL = '[Users] Set URL';
 export const GET_LIST = '[Users] Get list';
+export const GET_LIST_FORCED = '[Users] Get list forced';
 export const LIST_RETRIEVED = '[Users] List retrieved';
 export const ADD = '[Users] Add';
 export const EDIT = '[Users] Edit';
@@ -22,6 +23,10 @@ export class SetUrl implements Action {
 
 export class GetList implements Action {
   readonly type = GET_LIST;
+}
+
+export class GetListForced implements Action {
+  readonly type = GET_LIST_FORCED;
 }
 
 export class ListRetrieved implements Action {
@@ -75,6 +80,7 @@ export class NoAction implements Action {
 export type All
   = SetUrl
   | GetList
+  | GetListForced
   | ListRetrieved
   | Add
   | Create
