@@ -1,5 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
+import { Store } from '@ngrx/store';
+
+import 'rxjs/add/operator/take';
+
+import * as MoviesActions from '../../../movies/movies.actions';
+import * as MoviesReducer from '../../../movies/movies.reducer';
+import * as UsersActions from '../../../users/users.actions';
+import * as UsersReducer from '../../../users/users.reducer';
 
 @Component({
   selector: 'shr-shell-header',
@@ -7,8 +16,27 @@ import { Router } from '@angular/router';
   styleUrls: ['./header.component.css']
 })
 export class ShellHeaderComponent implements OnInit {
+  moviesCount: Observable<string>;
+  usersCount: Observable<string>;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router,
+    private storeUsers: Store<UsersReducer.State>,
+    private storeMovies: Store<MoviesReducer.State>) {
+    this.usersCount = this.storeUsers.select(UsersReducer.getUsersCount);
+    this.moviesCount = this.storeMovies.select(MoviesReducer.getMoviesCount);
+
+    this.storeUsers.select(UsersReducer.getUsers).take(1).subscribe(users => {
+      if (!users) {
+        this.storeUsers.dispatch(new UsersActions.GetList());
+      }
+    });
+
+    this.storeMovies.select(MoviesReducer.getMovies).take(1).subscribe(movies => {
+      if (!movies) {
+        this.storeMovies.dispatch(new MoviesActions.GetList());
+      }
+    });
+  }
 
   ngOnInit() {
   }

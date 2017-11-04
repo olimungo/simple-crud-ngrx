@@ -26,11 +26,15 @@
   align-items: center;
 }
 
+.shell-header-content .gap-left {
+  margin-left: 1em;
+}
+
 .shell-header .fa-address-card {
   font-size: 2em;
 }
 
-.shell-header .fa-ellipsis-v {
+.shell-header .fa-ellipsis-v, .shell-header .fa-users, .shell-header .fa-film {
   font-size: 1.4em;
 }
 
@@ -54,7 +58,10 @@
   background: rgba(255, 255, 255, .1);
 }
 
-
 .shell-header-clickable:active {
   background: rgba(255, 255, 255, .2);
+}
+
+.shell-header-notifications {
+  display: flex;
 }

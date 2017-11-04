@@ -93,3 +93,21 @@ input {
 .action-button:active {
   background: #a3291e;
 }
+
+.tag {
+  display: inline-block;
+  font-size: .7em;
+  background: #aaa;
+  color: #fff;
+  border-radius: 6px;
+  padding: .3em .8em .2em .8em;
+  margin-top: .6em;
+}
+
+.tag-red {
+  background: #D23F35;
+  align-self: flex-start;
+  position: relative;
+  left: -1em;
+  top: -.5em;
+}

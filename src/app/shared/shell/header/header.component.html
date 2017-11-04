@@ -2,11 +2,29 @@
   <div class="shell-header-content">
     <div class="group">
       <i class="fa fa-address-card shell-header-clickable" (click)="goHome()"></i>
-      <div class="shell-header-title">Simple<b>CRUD</b></div>
+      <div class="shell-header-title">Simple
+        <b>CRUD</b>
+      </div>
+    </div>
+
+    <div class="shell-header-notifications">
+      <div [hidden]="!(usersCount | async)">
+        <div class="group">
+          <i class="fa fa-users shell-header-clickable"></i>
+          <div class="tag tag-red">{{ usersCount | async }}</div>
+        </div>
+      </div>
+
+      <div [hidden]="!(moviesCount | async)">
+        <div class="group gap-left">
+          <i class="fa fa-film shell-header-clickable"></i>
+          <div class="tag tag-red">{{ moviesCount | async }}</div>
+        </div>
+      </div>
     </div>
 
     <div class="group">
-        <i class="fa fa-ellipsis-v shell-header-clickable" (click)="goProfile()"></i>
-      </div>
+      <i class="fa fa-ellipsis-v shell-header-clickable" (click)="goProfile()"></i>
+    </div>
   </div>
 </div>

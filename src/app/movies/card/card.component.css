@@ -11,16 +11,6 @@
   font-weight: bold;
 }
 
-.movie-card-genre {
-  display: inline-block;
-  font-size: .7em;
-  background: #aaa;
-  color: #fff;
-  border-radius: 6px;
-  padding: .3em .8em .2em .8em;
-  margin-top: .6em;
-}
-
 .movie-card-year {
   font-size: .8em;
 }

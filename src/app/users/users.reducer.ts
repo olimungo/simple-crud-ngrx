@@ -125,6 +125,7 @@ const removeIdFromUrl = (url: string, id: string) => {
 export const selectUsers = createFeatureSelector<State>('users');
 
 export const getUsers = createSelector(selectUsers, (state: State) => state.users);
+export const getUsersCount = createSelector(selectUsers, (state: State) => state.allUsers ? state.allUsers.length.toString() : null);
 export const getSelectedUser = createSelector(selectUsers, (state: State) => state.selectedUser);
 export const getLoading = createSelector(selectUsers, (state: State) => state.loading);
 export const getUrl = createSelector(selectUsers, (state: State) => state.url);
