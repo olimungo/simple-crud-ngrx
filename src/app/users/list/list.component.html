@@ -1,3 +1,21 @@
 <div class="users-list">
-  <feat-user-card *ngFor="let user of users" [user]="user" (click)="edit(user.id)"></feat-user-card>
+  <div class="users-list-title">
+    <h1>Users</h1>
+  </div>
+
+  <div class="users-list-search-bar">
+    <shr-search-bar [pattern]="pattern" (patternChange)="patternChange($event)"></shr-search-bar>
+  </div>
+
+  <div [hidden]="!(loading | async)">
+    <div class="users-list-spinner">
+      <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
+    </div>
+  </div>
+
+  <feat-user-card *ngFor="let user of users | async" [user]="user" (click)="edit(user.id)"></feat-user-card>
+
+  <button class="action-button" (click)="add()">
+    <i class="fa fa-plus"></i>
+  </button>
 </div>

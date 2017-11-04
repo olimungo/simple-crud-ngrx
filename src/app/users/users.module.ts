@@ -7,7 +7,6 @@ import { EffectsModule } from '@ngrx/effects';
 import { SharedModule } from '../shared/shared.module';
 
 import { UsersRoutingModule } from './users-routing.module';
-import { UsersComponent } from './users.component';
 import { UsersListComponent } from './list/list.component';
 import { UserCardComponent } from './card/card.component';
 import { UserEditComponent } from './edit/edit.component';
@@ -24,6 +23,6 @@ import { UsersEffects } from './users.effects';
     SharedModule,
     UsersRoutingModule
   ],
-  declarations: [UsersComponent, UsersListComponent, UserCardComponent, UserEditComponent]
+  declarations: [UsersListComponent, UserCardComponent, UserEditComponent]
 })
 export class UsersModule { }

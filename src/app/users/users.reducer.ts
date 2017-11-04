@@ -11,7 +11,7 @@ export interface State {
   selectedUserId: string;
   selectedUser: User;
   loading: boolean;
-  url: string;
+  filterPattern: string;
 }
 
 const defaultState: State = {
@@ -20,13 +20,11 @@ const defaultState: State = {
   selectedUserId: null,
   selectedUser: null,
   loading: false,
-  url: null
+  filterPattern: ''
 };
 
 export function usersReducer(state: State = defaultState, action: UsersActions.All) {
   switch (action.type) {
-    case UsersActions.SET_URL:
-      return { ...state, url: action.payload };
     case UsersActions.GET_LIST_FORCED:
       return { ...state, loading: true };
     case UsersActions.LIST_RETRIEVED:
@@ -40,28 +38,24 @@ export function usersReducer(state: State = defaultState, action: UsersActions.A
       return { ...state, selectedUser: <User>{} };
     case UsersActions.EDIT:
       return {
-        ...state, selectedUser: getUser(state.allUsers, action.payload), url: addIdToUrl(state.url, action.payload),
-        selectedUserId: geSelectedUserId(state.allUsers, action.payload)
+        ...state, selectedUser: getUser(state.allUsers, action.payload), selectedUserId: geSelectedUserId(state.allUsers, action.payload)
       };
     case UsersActions.CREATE:
       return {
-        ...state, selectedUser: null, users: addUser(state.users, action.payload), allUsers: addUser(state.allUsers, action.payload),
-        url: removeIdFromUrl(state.url, state.selectedUser.id)
+        ...state, selectedUser: null, users: addUser(state.users, action.payload), allUsers: addUser(state.allUsers, action.payload)
       };
     case UsersActions.UPDATE:
       return {
-        ...state, users: updateUser(state.users, action.payload), allUsers: updateUser(state.allUsers, action.payload),
-        selectedUser: null, url: removeIdFromUrl(state.url, state.selectedUser.id)
+        ...state, users: updateUser(state.users, action.payload), allUsers: updateUser(state.allUsers, action.payload)
       };
     case UsersActions.CANCEL:
-      return { ...state, selectedUser: null, url: removeIdFromUrl(state.url, state.selectedUser.id) };
+      return { ...state, selectedUser: null };
     case UsersActions.DELETE:
       return {
-        ...state, selectedUser: null, users: deleteUser(state.users, action.payload), allUsers: deleteUser(state.allUsers, action.payload),
-        url: removeIdFromUrl(state.url, state.selectedUser.id)
+        ...state, selectedUser: null, users: deleteUser(state.users, action.payload), allUsers: deleteUser(state.allUsers, action.payload)
       };
     case UsersActions.FILTER:
-      return { ...state, movies: filterUsers(state.allUsers, action.payload) };
+      return { ...state, filterPattern: action.payload, users: filterUsers(state.allUsers, action.payload) };
     default:
       return state;
   }
@@ -99,23 +93,10 @@ const sortUsers = (a: User, b: User) => {
   return a.lastname + a.firstname > b.lastname + b.firstname ? 1 : -1;
 };
 
-const addIdToUrl = (url: string, id: string) => {
-  if (url.indexOf(`/${id}`) > -1) {
-    return url;
-  }
-
-  return `${url}/${id}`;
-};
-
-const removeIdFromUrl = (url: string, id: string) => {
-  return url.replace(`/${id}`, '');
-};
-
 export const selectUsers = createFeatureSelector<State>('users');
 
 export const getUsers = createSelector(selectUsers, (state: State) => state.users);
 export const getUsersCount = createSelector(selectUsers, (state: State) => state.allUsers ? state.allUsers.length.toString() : null);
 export const getSelectedUser = createSelector(selectUsers, (state: State) => state.selectedUser);
 export const getLoading = createSelector(selectUsers, (state: State) => state.loading);
-export const getUrl = createSelector(selectUsers, (state: State) => state.url);
-
+export const getFilterPattern = createSelector(selectUsers, (state: State) => state.filterPattern);

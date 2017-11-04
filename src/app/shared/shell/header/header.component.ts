@@ -24,18 +24,8 @@ export class ShellHeaderComponent implements OnInit {
     private storeMovies: Store<MoviesReducer.State>) {
     this.usersCount = this.storeUsers.select(UsersReducer.getUsersCount);
     this.moviesCount = this.storeMovies.select(MoviesReducer.getMoviesCount);
-
-    this.storeUsers.select(UsersReducer.getUsers).take(1).subscribe(users => {
-      if (!users) {
-        // this.storeUsers.dispatch(new UsersActions.GetList());
-      }
-    });
-
-    this.storeMovies.select(MoviesReducer.getMovies).take(1).subscribe(movies => {
-      if (!movies) {
-        // this.storeMovies.dispatch(new MoviesActions.GetList());
-      }
-    });
+    // this.storeUsers.dispatch(new UsersActions.GetList());
+    // this.storeMovies.dispatch(new MoviesActions.GetList());
   }
 
   ngOnInit() {

@@ -3,3 +3,23 @@
   flex-direction: column;
   align-items: center;
 }
+
+.users-list h1 {
+  display: inline;
+}
+
+.users-list-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.users-list-search-bar {
+  margin-bottom: 2em;
+}
+
+.users-list-spinner {
+  display: flex;
+  justify-content: center;
+  margin-top: 15em;
+}

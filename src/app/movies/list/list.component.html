@@ -1,3 +1,21 @@
 <div class="movies-list">
-  <feat-movie-card *ngFor="let movie of movies" [movie]="movie" (click)="edit(movie.id)"></feat-movie-card>
+  <div class="movies-list-title">
+    <h1>Movies</h1>
+  </div>
+
+  <div class="movies-list-search-bar">
+    <shr-search-bar [pattern]="pattern" (patternChange)="patternChange($event)"></shr-search-bar>
+  </div>
+
+  <div [hidden]="!(loading | async)">
+    <div class="movies-list-spinner">
+      <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
+    </div>
+  </div>
+
+  <feat-movie-card *ngFor="let movie of movies | async" [movie]="movie" (click)="edit(movie.id)"></feat-movie-card>
+
+  <button class="action-button" (click)="add()">
+    <i class="fa fa-plus"></i>
+  </button>
 </div>

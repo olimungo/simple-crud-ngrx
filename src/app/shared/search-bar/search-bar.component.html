@@ -1,4 +1,4 @@
 <div class="search-bar">
-  <input #pattern type="text" (keyup)="change(pattern.value)">
+  <input #input type="text" (keyup)="change(input.value)" [value]="pattern">
   <i class="fa fa-search"></i>
 </div>

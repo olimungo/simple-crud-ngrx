@@ -1,4 +1,8 @@
 <div class="movie-edit">
+  <div class="movie-edit-title">
+    <h1>Edit movie</h1>
+  </div>
+
   <div class="movie-edit-container">
     <form (ngSubmit)="submit()" #form="ngForm">
       <div class="form-group">
@@ -22,6 +26,6 @@
       </div>
     </form>
 
-    <shr-crud-buttons (save)="_save()" (cancel)="_cancel()" (delete)="_delete()"></shr-crud-buttons>
+    <shr-crud-buttons (save)="save()" (cancel)="cancel()" (delete)="delete()"></shr-crud-buttons>
   </div>
 </div>

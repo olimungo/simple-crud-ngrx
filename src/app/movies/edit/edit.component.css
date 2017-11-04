@@ -1,5 +1,16 @@
 .movie-edit {
   display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.movies-edit h1 {
+  display: inline;
+}
+
+.movies-edit-title {
+  display: flex;
+  align-items: center;
   justify-content: center;
 }
 
@@ -15,12 +26,12 @@
 }
 
 .movie-edit label {
-  display: inline-block;
   font-weight: bold;
   width: 5em;
+  display: inline-block;
 }
 
 .movie-edit input {
-  width: 25em;
+  width: 20em;
   margin: 0 0 1em 1em;
 }

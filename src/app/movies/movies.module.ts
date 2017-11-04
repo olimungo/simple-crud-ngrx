@@ -7,7 +7,6 @@ import { EffectsModule } from '@ngrx/effects';
 import { SharedModule } from '../shared/shared.module';
 
 import { MoviesRoutingModule } from './movies-routing.module';
-import { MoviesComponent } from './movies.component';
 import { MoviesListComponent } from './list/list.component';
 import { MovieEditComponent } from './edit/edit.component';
 import { MovieCardComponent } from './card/card.component';
@@ -24,6 +23,6 @@ import { MoviesEffects } from './movies.effects';
     SharedModule,
     MoviesRoutingModule
   ],
-  declarations: [MoviesComponent, MoviesListComponent, MovieEditComponent, MovieCardComponent]
+  declarations: [MoviesListComponent, MovieEditComponent, MovieCardComponent]
 })
 export class MoviesModule { }

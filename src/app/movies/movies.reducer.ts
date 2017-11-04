@@ -11,7 +11,7 @@ export interface State {
   selectedMovieId: string;
   selectedMovie: Movie;
   loading: boolean;
-  url: string;
+  filterPattern: string;
 }
 
 const defaultState: State = {
@@ -20,7 +20,7 @@ const defaultState: State = {
   selectedMovieId: null,
   selectedMovie: null,
   loading: false,
-  url: null
+  filterPattern: ''
 };
 
 export function moviesReducer(state: State = defaultState, action: MoviesActions.All) {
@@ -40,28 +40,27 @@ export function moviesReducer(state: State = defaultState, action: MoviesActions
       return { ...state, selectedMovie: <Movie>{} };
     case MoviesActions.EDIT:
       return {
-        ...state, selectedMovie: getMovie(state.allMovies, action.payload), url: addIdToUrl(state.url, action.payload),
+        ...state, selectedMovie: getMovie(state.allMovies, action.payload),
         selectedMovieId: geSelectedMovieId(state.allMovies, action.payload)
       };
     case MoviesActions.CREATE:
       return {
-        ...state, selectedMovie: null, movies: addMovie(state.movies, action.payload), allMovies: addMovie(state.allMovies, action.payload),
-        url: removeIdFromUrl(state.url, state.selectedMovie.id)
+        ...state, selectedMovie: null, movies: addMovie(state.movies, action.payload), allMovies: addMovie(state.allMovies, action.payload)
       };
     case MoviesActions.UPDATE:
       return {
         ...state, movies: updateMovie(state.movies, action.payload), allMovies: updateMovie(state.allMovies, action.payload),
-        selectedMovie: null, url: removeIdFromUrl(state.url, state.selectedMovie.id)
+        selectedMovie: null
       };
     case MoviesActions.CANCEL:
-      return { ...state, selectedMovie: null, url: removeIdFromUrl(state.url, state.selectedMovie.id) };
+      return { ...state, selectedMovie: null };
     case MoviesActions.DELETE:
       return {
         ...state, selectedMovie: null, movies: deleteMovie(state.movies, action.payload),
-        allMovies: deleteMovie(state.allMovies, action.payload), url: removeIdFromUrl(state.url, state.selectedMovie.id)
+        allMovies: deleteMovie(state.allMovies, action.payload)
       };
     case MoviesActions.FILTER:
-      return { ...state, movies: filterMovies(state.allMovies, action.payload) };
+      return { ...state, filterPattern: action.payload, movies: filterMovies(state.allMovies, action.payload) };
     default:
       return state;
   }
@@ -99,23 +98,11 @@ const sortMovies = (a: Movie, b: Movie) => {
   return a.title > b.title ? 1 : -1;
 };
 
-const addIdToUrl = (url: string, id: string) => {
-  if (url.indexOf(`/${id}`) > -1) {
-    return url;
-  }
-
-  return `${url}/${id}`;
-};
-
-const removeIdFromUrl = (url: string, id: string) => {
-  return url.replace(`/${id}`, '');
-};
-
 export const selectMovies = createFeatureSelector<State>('movies');
 
 export const getMovies = createSelector(selectMovies, (state: State) => state.movies);
 export const getMoviesCount = createSelector(selectMovies, (state: State) => state.allMovies ? state.allMovies.length.toString() : '');
 export const getSelectedMovie = createSelector(selectMovies, (state: State) => state.selectedMovie);
 export const getLoading = createSelector(selectMovies, (state: State) => state.loading);
-export const getUrl = createSelector(selectMovies, (state: State) => state.url);
+export const getFilterPattern = createSelector(selectMovies, (state: State) => state.filterPattern);
 

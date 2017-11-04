@@ -2,7 +2,6 @@ import { Store, Action } from '@ngrx/store';
 
 import { User } from './user.entity';
 
-export const SET_URL = '[Users] Set URL';
 export const GET_LIST = '[Users] Get list';
 export const GET_LIST_FORCED = '[Users] Get list forced';
 export const LIST_RETRIEVED = '[Users] List retrieved';
@@ -14,12 +13,6 @@ export const CANCEL = '[Users] Cancel';
 export const DELETE = '[Users] Delete';
 export const FILTER = '[Users] Filter';
 export const NO_ACTION = '[Users] No action';
-
-export class SetUrl implements Action {
-  readonly type = SET_URL;
-
-  constructor(public payload: string) { }
-}
 
 export class GetList implements Action {
   readonly type = GET_LIST;
@@ -78,8 +71,7 @@ export class NoAction implements Action {
 }
 
 export type All
-  = SetUrl
-  | GetList
+  = GetList
   | GetListForced
   | ListRetrieved
   | Add
