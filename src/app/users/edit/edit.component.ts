@@ -9,7 +9,7 @@ import { User } from '../user.entity';
 })
 export class UserEditComponent implements OnInit {
   @Input() set user(value: User) {
-    this.originalUser = value ? value : null;
+    this.id = value ? value.id : null;
     this.firstname = value ? value.firstname : null;
     this.lastname = value ? value.lastname : null;
   }
@@ -18,10 +18,9 @@ export class UserEditComponent implements OnInit {
   @Output() cancel = new EventEmitter<any>();
   @Output() delete = new EventEmitter<string>();
 
+  id: string;
   firstname: string;
   lastname: string;
-
-  private originalUser: User;
 
   constructor() { }
 
@@ -32,9 +31,8 @@ export class UserEditComponent implements OnInit {
   }
 
   _save() {
-    this.originalUser.firstname = this.firstname;
-    this.originalUser.lastname = this.lastname;
-    this.save.emit(this.originalUser);
+    const user: User = { id: this.id, firstname: this.firstname, lastname: this.lastname };
+    this.save.emit(user);
   }
 
   _cancel() {
@@ -42,6 +40,6 @@ export class UserEditComponent implements OnInit {
   }
 
   _delete() {
-    this.delete.emit(this.originalUser.id);
+    this.delete.emit(this.id);
   }
 }

@@ -4,8 +4,6 @@ import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 
-import 'rxjs/add/operator/take';
-
 import * as MoviesActions from './movies.actions';
 import * as MoviesReducer from './movies.reducer';
 
@@ -26,16 +24,9 @@ export class MoviesComponent implements OnInit {
     this.selectedMovie = this.store.select(MoviesReducer.getSelectedMovie);
     this.loading = this.store.select(MoviesReducer.getLoading);
     this.store.dispatch(new MoviesActions.SetUrl(this.location.path()));
+    this.store.dispatch(new MoviesActions.GetList());
 
     this.store.select(MoviesReducer.getUrl).subscribe(url => this.location.go(url));
-
-    this.movies.take(1).subscribe(movies => {
-      if (!movies) {
-        this.store.dispatch(new MoviesActions.GetList());
-      } else {
-        this.patternChange('');
-      }
-    });
   }
 
   ngOnInit() {

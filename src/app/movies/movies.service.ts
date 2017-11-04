@@ -5,6 +5,7 @@ import { environment } from '../../environments/environment';
 import { Effect, Actions } from '@ngrx/effects';
 
 import 'rxjs/add/operator/map';
+import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/delay';
 
@@ -14,6 +15,8 @@ export type Action = movieActions.All;
 
 @Injectable()
 export class MoviesService {
+  private movies: Observable<Movie[]>;
+
   constructor(private actions: Actions, private http: Http) { }
 
   @Effect()
@@ -27,11 +30,16 @@ export class MoviesService {
 
   @Effect()
   retrieve: Observable<Action> = this.actions.ofType(movieActions.GET_LIST)
-    .delay(2000)
-    .mergeMap(() => this.http.get(`${environment.backEnd}/movies`))
-    .map(result => result.json())
+    .mergeMap(() => {
+      if (this.movies) {
+        return this.movies;
+      } else {
+        return this.http.get(`${environment.backEnd}/movies`).delay(1000).map(movies => movies.json());
+      }
+    })
     .map((result: Movie[]) => result.sort((a, b) => a.title > b.title  ? 1 : -1))
     .map(movies => {
+      this.movies = Observable.of(movies);
       return new movieActions.ListRetrieved(movies);
     });
 

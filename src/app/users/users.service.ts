@@ -5,6 +5,7 @@ import { environment } from '../../environments/environment';
 import { Effect, Actions } from '@ngrx/effects';
 
 import 'rxjs/add/operator/map';
+import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/delay';
 
@@ -14,6 +15,8 @@ export type Action = userActions.All;
 
 @Injectable()
 export class UsersService {
+  private users: Observable<User[]>;
+
   constructor(private actions: Actions, private http: Http) { }
 
   @Effect()
@@ -27,11 +30,15 @@ export class UsersService {
 
   @Effect()
   retrieve: Observable<Action> = this.actions.ofType(userActions.GET_LIST)
-    .delay(2000)
-    .mergeMap(() => this.http.get(`${environment.backEnd}/users`))
-    .map(result => result.json())
-    .map((result: User[]) => result.sort((a, b) => a.lastname + a.firstname > b.lastname + b.firstname ? 1 : -1))
+    .mergeMap(() => {
+      if (this.users) {
+        return this.users;
+      } else {
+        return this.http.get(`${environment.backEnd}/users`).delay(1000).map(users => users.json());
+      }
+    })
     .map(users => {
+      this.users = Observable.of(users);
       return new userActions.ListRetrieved(users);
     });
 

@@ -4,8 +4,6 @@ import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 
-import 'rxjs/add/operator/take';
-
 import * as UsersActions from './users.actions';
 import * as UsersReducer from './users.reducer';
 
@@ -26,16 +24,9 @@ export class UsersComponent implements OnInit {
     this.selectedUser = this.store.select(UsersReducer.getSelectedUser);
     this.loading = this.store.select(UsersReducer.getLoading);
     this.store.dispatch(new UsersActions.SetUrl(this.location.path()));
+    this.store.dispatch(new UsersActions.GetList());
 
     this.store.select(UsersReducer.getUrl).subscribe(url => this.location.go(url));
-
-    this.users.take(1).subscribe(users => {
-      if (!users) {
-        this.store.dispatch(new UsersActions.GetList());
-      } else {
-        this.patternChange('');
-      }
-    });
   }
 
   ngOnInit() {
