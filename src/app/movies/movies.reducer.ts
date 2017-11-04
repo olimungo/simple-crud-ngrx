@@ -15,8 +15,8 @@ export interface State {
 }
 
 const defaultState: State = {
-  movies: [],
-  allMovies: [],
+  movies: null,
+  allMovies: null,
   selectedMovieId: null,
   selectedMovie: null,
   loading: false,

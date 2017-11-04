@@ -15,3 +15,9 @@
 .movies-search-bar {
   margin-bottom: 2em;
 }
+
+.movies-spinner {
+  display: flex;
+  justify-content: center;
+  margin-top: 15em;
+}

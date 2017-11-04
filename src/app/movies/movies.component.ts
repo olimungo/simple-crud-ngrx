@@ -28,11 +28,17 @@ export class MoviesComponent implements OnInit {
     this.store.dispatch(new MoviesActions.SetUrl(this.location.path()));
 
     this.store.select(MoviesReducer.getUrl).subscribe(url => this.location.go(url));
+
+    this.movies.take(1).subscribe(movies => {
+      if (!movies) {
+        this.store.dispatch(new MoviesActions.GetList());
+      } else {
+        this.patternChange('');
+      }
+    });
   }
 
   ngOnInit() {
-    this.store.dispatch(new MoviesActions.GetList());
-
     this.route.params.subscribe(params => {
       if (params['id']) {
         this.store.dispatch(new MoviesActions.Edit(params['id']));

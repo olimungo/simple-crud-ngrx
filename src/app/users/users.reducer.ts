@@ -15,8 +15,8 @@ export interface State {
 }
 
 const defaultState: State = {
-  users: [],
-  allUsers: [],
+  users: null,
+  allUsers: null,
   selectedUserId: null,
   selectedUser: null,
   loading: false,

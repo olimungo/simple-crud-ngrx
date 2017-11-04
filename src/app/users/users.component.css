@@ -15,3 +15,9 @@
 .users-search-bar {
   margin-bottom: 2em;
 }
+
+.users-spinner {
+  display: flex;
+  justify-content: center;
+  margin-top: 15em;
+}

@@ -7,6 +7,12 @@
     <shr-search-bar [hidden]="selectedUser | async" (patternChange)="patternChange($event)"></shr-search-bar>
   </div>
 
+  <div [hidden]="!(loading | async)">
+      <div class="users-spinner">
+        <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
+      </div>
+    </div>
+
   <feat-users-list [hidden]="selectedUser | async" [users]="users | async" (userSelected)="edit($event)"></feat-users-list>
   <feat-user-edit [hidden]="!(selectedUser | async)" [user]="selectedUser | async" (save)="save($event)" (cancel)="cancel()"
     (delete)="delete($event)"></feat-user-edit>

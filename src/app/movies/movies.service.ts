@@ -6,6 +6,7 @@ import { Effect, Actions } from '@ngrx/effects';
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
+import 'rxjs/add/operator/delay';
 
 import { Movie } from './movie.entity';
 import * as movieActions from './movies.actions';
@@ -26,6 +27,7 @@ export class MoviesService {
 
   @Effect()
   retrieve: Observable<Action> = this.actions.ofType(movieActions.GET_LIST)
+    .delay(2000)
     .mergeMap(() => this.http.get(`${environment.backEnd}/movies`))
     .map(result => result.json())
     .map((result: Movie[]) => result.sort((a, b) => a.title > b.title  ? 1 : -1))
