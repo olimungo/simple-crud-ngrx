@@ -1,9 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import { StoreModule } from '@ngrx/store';
+import { StoreModule, MetaReducer, ActionReducerMap } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { storeFreeze } from 'ngrx-store-freeze';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,8 +16,22 @@ import { UsersModule } from './users/users.module';
 import { CompaniesModule } from './companies/companies.module';
 import { MoviesModule } from './movies/movies.module';
 
-import { usersReducer } from './users/users.reducer';
-import { moviesReducer } from './movies/movies.reducer';
+import * as fromUsers from './users/users.reducer';
+import * as fromMovies from './movies/movies.reducer';
+
+import { environment } from '../environments/environment';
+
+export interface State {
+  users: fromUsers.State;
+  movies: fromMovies.State;
+}
+
+export const reducers: ActionReducerMap<State> = {
+  users: fromUsers.usersReducer,
+  movies: fromMovies.moviesReducer,
+};
+
+export const metaReducers: MetaReducer<State>[] = !environment.production ? [storeFreeze] : [];
 
 @NgModule({
   declarations: [
@@ -25,10 +40,7 @@ import { moviesReducer } from './movies/movies.reducer';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    StoreModule.forRoot({
-      users: usersReducer,
-      movies: moviesReducer
-    }),
+    StoreModule.forRoot(reducers, { metaReducers }),
     StoreDevtoolsModule.instrument({
       maxAge: 10
     }),

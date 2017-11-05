@@ -32,7 +32,7 @@ export function moviesReducer(state: State = defaultState, action: MoviesActions
     case MoviesActions.GET_LIST_FORCED:
       return { ...state, loading: true };
     case MoviesActions.LIST_RETRIEVED:
-      const movies = (action.payload).sort(sortMovies);
+      const movies = sortMovies(action.payload);
 
       return {
         ...state, movies: movies, allMovies: movies, loading: false,
@@ -79,7 +79,7 @@ const getMovie = (movies: Movie[], id: string) => {
 };
 
 const addMovie = (movies: Movie[], movie: Movie) => {
-  return ([...movies, movie]).sort(sortMovies);
+  return ([...movies, movie]).sort(compareMovies);
 };
 
 const updateMovie = (movies: Movie[], movie: Movie) => {
@@ -98,7 +98,11 @@ const filterMovies = (movies: Movie[], pattern: string) => {
   });
 };
 
-const sortMovies = (a: Movie, b: Movie) => {
+const sortMovies = (movies: Movie[]) => {
+  return [...movies].sort(compareMovies);
+};
+
+const compareMovies = (a: Movie, b: Movie) => {
   return a.title > b.title ? 1 : -1;
 };
 

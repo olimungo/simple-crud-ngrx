@@ -30,7 +30,7 @@ export function usersReducer(state: State = defaultState, action: UsersActions.A
     case UsersActions.GET_LIST_FORCED:
       return { ...state, loading: true };
     case UsersActions.LIST_RETRIEVED:
-      const users = (action.payload).sort(sortUsers);
+      const users = sortUsers(action.payload);
 
       return {
         ...state, users: users, allUsers: users, loading: false,
@@ -74,7 +74,7 @@ const getUser = (users: User[], id: string) => {
 };
 
 const addUser = (users: User[], user: User) => {
-  return ([...users, user]).sort(sortUsers);
+  return ([...users, user]).sort(compareUsers);
 };
 
 const updateUser = (users: User[], user: User) => {
@@ -93,7 +93,11 @@ const filterUsers = (users: User[], pattern: string) => {
   });
 };
 
-const sortUsers = (a: User, b: User) => {
+const sortUsers = (users: User[]) => {
+  return [...users].sort(compareUsers);
+};
+
+const compareUsers = (a: User, b: User) => {
   return a.lastname + a.firstname > b.lastname + b.firstname ? 1 : -1;
 };
 
