@@ -1,4 +1,4 @@
-# SimpleCrud with ngrx
+# SimpleCRUD with ngrx
 
 This project is a simple CRUD (Create, Retrieve Update and Delete) implementation using ngrx (Redux implementation for Angular using Observables).
 
