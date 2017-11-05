@@ -10,7 +10,7 @@ The following tools have to be installed:
 
 - node and npm: check `https://nodejs.org`
 - angular-cli: `npm install -g @angular-cli`
-- json-server: `npm install -g json-server`
+- json-server: `npm install -g json-server`
 
 ## Back-end
 
