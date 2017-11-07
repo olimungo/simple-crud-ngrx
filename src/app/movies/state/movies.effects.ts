@@ -1,66 +1,55 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { environment } from '../../../environments/environment';
 import { Effect, Actions } from '@ngrx/effects';
 
 import 'rxjs/add/operator/map';
-import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/delay';
 
-import { Movie } from '../movie.entity';
-import * as movieActions from './movies.actions';
-export type Action = movieActions.All;
+import { MoviesService } from '../movies.service';
+
+import * as MovieActions from './movies.actions';
+export type Action = MovieActions.All;
 
 @Injectable()
-export class effects {
+export class Effects {
   private moviesLoaded = false;
 
-  constructor(private actions: Actions, private http: Http) { }
+  constructor(private actions: Actions, private http: Http, private moviesService: MoviesService) { }
 
   @Effect()
-  create: Observable<Action> = this.actions.ofType(movieActions.CREATE)
-    .map((action: movieActions.Create) => action.payload)
-    .mergeMap(movie => {
-      movie.id = new Date().getTime().toString();
-      return this.http.post(`${environment.backEnd}/movies`, movie);
-    })
-    .map(() => new movieActions.NoAction());
+  create: Observable<Action> = this.actions.ofType(MovieActions.CREATE)
+    .map((action: MovieActions.Create) => action.payload)
+    .mergeMap(movie => this.moviesService.create(movie))
+    .map(movie => new MovieActions.CreateDone(movie));
 
   @Effect()
-  retrieve: Observable<Action> = this.actions.ofType(movieActions.GET_LIST)
+  retrieve: Observable<Action> = this.actions.ofType(MovieActions.GET_LIST)
     .map(() => {
       if (!this.moviesLoaded) {
-        return new movieActions.GetListForced();
+        return new MovieActions.GetListForced();
       } else {
-        return new movieActions.NoAction();
+        return new MovieActions.NoAction();
       }
     });
 
   @Effect()
-  retrieveForced: Observable<Action> = this.actions.ofType(movieActions.GET_LIST_FORCED)
-    .mergeMap(() => this.http.get(`${environment.backEnd}/movies`)
-    .delay(1000))
-    .map(movies => movies.json())
+  retrieveForced: Observable<Action> = this.actions.ofType(MovieActions.GET_LIST_FORCED)
+    .mergeMap(() => this.moviesService.retrieve())
+    .delay(1000)
     .map(movies => {
       this.moviesLoaded = true;
-      return new movieActions.ListRetrieved(movies);
+      return new MovieActions.ListRetrieved(movies);
     });
 
-  @Effect()
-  update: Observable<Action> = this.actions.ofType(movieActions.UPDATE)
-    .map((action: movieActions.Update) => action.payload)
-    .mergeMap(movie => {
-      return this.http.put(`${environment.backEnd}/movies/${movie.id}`, movie);
-    })
-    .map(() => new movieActions.NoAction());
+  @Effect({ dispatch: false })
+  update: Observable<Action> = this.actions.ofType(MovieActions.UPDATE)
+    .map((action: MovieActions.Update) => action.payload)
+    .mergeMap(movie => this.moviesService.update(movie));
 
-  @Effect()
-  delete = this.actions.ofType(movieActions.DELETE)
-    .map((action: movieActions.Delete) => action.payload)
-    .mergeMap(id => {
-      return this.http.delete(`${environment.backEnd}/movies/${id}`);
-    })
-    .map(() => new movieActions.NoAction());
+  @Effect({ dispatch: false })
+  delete = this.actions.ofType(MovieActions.DELETE)
+    .map((action: MovieActions.Delete) => action.payload)
+    .mergeMap(id => this.moviesService.delete(id));
 }

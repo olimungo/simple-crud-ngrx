@@ -13,7 +13,7 @@ import { UserCardComponent } from './card/card.component';
 import { UserEditComponent } from './edit/edit.component';
 
 import { reducer } from './state/users.reducer';
-import { effects } from './state/users.effects';
+import { Effects } from './state/users.effects';
 import { UsersService } from './users.service';
 
 @NgModule({
@@ -22,7 +22,7 @@ import { UsersService } from './users.service';
     FormsModule,
     HttpModule,
     StoreModule.forFeature('users', reducer),
-    EffectsModule.forFeature([effects]),
+    EffectsModule.forFeature([Effects]),
     SharedModule,
     UsersRoutingModule
   ],

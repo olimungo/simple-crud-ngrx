@@ -13,7 +13,8 @@ import { MovieEditComponent } from './edit/edit.component';
 import { MovieCardComponent } from './card/card.component';
 
 import { reducer } from './state/movies.reducer';
-import { effects } from './state/movies.effects';
+import { Effects } from './state/movies.effects';
+import { MoviesService } from './movies.service';
 
 @NgModule({
   imports: [
@@ -21,10 +22,11 @@ import { effects } from './state/movies.effects';
     FormsModule,
     HttpModule,
     StoreModule.forFeature('movies', reducer),
-    EffectsModule.forFeature([effects]),
+    EffectsModule.forFeature([Effects]),
     SharedModule,
     MoviesRoutingModule
   ],
-  declarations: [MoviesListComponent, MovieEditComponent, MovieCardComponent]
+  declarations: [MoviesListComponent, MovieEditComponent, MovieCardComponent],
+  providers: [MoviesService]
 })
 export class MoviesModule { }

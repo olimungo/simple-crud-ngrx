@@ -2,25 +2,19 @@ import { Store, Action } from '@ngrx/store';
 
 import { Movie } from '../movie.entity';
 
-export const SET_URL = '[Movies] Set URL';
 export const GET_LIST = '[Movies] Get list';
 export const GET_LIST_FORCED = '[Movies] list forced';
 export const LIST_RETRIEVED = '[Movies] List retrieved';
 export const ADD = '[Movies] Add';
 export const EDIT = '[Movies] Edit';
 export const CREATE = '[Movies] Create';
+export const CREATE_DONE = '[Movies] Create done';
 export const UPDATE = '[Movies] Update';
 export const CANCEL = '[Movies] Cancel';
 export const DELETE = '[Movies] Delete';
 export const FILTER = '[Movies] Filter';
 export const SAVE_SCROLL_POSITION = '[Movies] Save scroll position';
 export const NO_ACTION = '[Movies] No action';
-
-export class SetUrl implements Action {
-  readonly type = SET_URL;
-
-  constructor(public payload: string) { }
-}
 
 export class GetList implements Action {
   readonly type = GET_LIST;
@@ -48,6 +42,12 @@ export class Edit implements Action {
 
 export class Create implements Action {
   readonly type = CREATE;
+
+  constructor(public payload: Movie) { }
+}
+
+export class CreateDone implements Action {
+  readonly type = CREATE_DONE;
 
   constructor(public payload: Movie) { }
 }
@@ -85,12 +85,12 @@ export class NoAction implements Action {
 }
 
 export type All
-  = SetUrl
-  | GetList
+  = GetList
   | GetListForced
   | ListRetrieved
   | Add
   | Create
+  | CreateDone
   | Update
   | Edit
   | Cancel

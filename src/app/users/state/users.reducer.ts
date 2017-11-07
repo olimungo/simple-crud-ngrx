@@ -44,8 +44,11 @@ export function reducer(state: State = defaultState, action: UsersActions.All) {
         ...state, selectedUser: getUser(state.allUsers, action.payload), selectedUserId: geSelectedUserId(state.allUsers, action.payload)
       };
     case UsersActions.CREATE:
+      // Nothing to change to the store at this point. An effect CREATE is also triggered and will subsequently fire a CREATE_DONE action.
+      return state;
+    case UsersActions.CREATE_DONE:
       return {
-        ...state, selectedUser: null, users: addUser(state.users, action.payload), allUsers: addUser(state.allUsers, action.payload)
+        ...state, users: addUser(state.users, action.payload), allUsers: addUser(state.allUsers, action.payload)
       };
     case UsersActions.UPDATE:
       return {

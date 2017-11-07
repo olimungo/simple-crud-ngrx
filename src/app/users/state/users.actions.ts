@@ -8,6 +8,7 @@ export const LIST_RETRIEVED = '[Users] List retrieved';
 export const ADD = '[Users] Add';
 export const EDIT = '[Users] Edit';
 export const CREATE = '[Users] Create';
+export const CREATE_DONE = '[Users] Create done';
 export const UPDATE = '[Users] Update';
 export const CANCEL = '[Users] Cancel';
 export const DELETE = '[Users] Delete';
@@ -41,6 +42,12 @@ export class Edit implements Action {
 
 export class Create implements Action {
   readonly type = CREATE;
+
+  constructor(public payload: User) { }
+}
+
+export class CreateDone implements Action {
+  readonly type = CREATE_DONE;
 
   constructor(public payload: User) { }
 }
@@ -83,6 +90,7 @@ export type All
   | ListRetrieved
   | Add
   | Create
+  | CreateDone
   | Update
   | Edit
   | Cancel
