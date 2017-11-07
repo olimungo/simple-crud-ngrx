@@ -32,6 +32,8 @@ export class UsersListComponent implements OnDestroy, AfterViewInit {
     this.users = this.store.select(UsersReducer.getUsers);
     this.loading = this.store.select(UsersReducer.getLoading);
 
+    // this.users.subscribe(users => console.log(users))
+
     this.store.select(UsersReducer.getFilterPattern).take(1).subscribe(pattern => {
       this.pattern = pattern;
     });

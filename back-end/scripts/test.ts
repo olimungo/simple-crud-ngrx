@@ -1,7 +1,30 @@
+import { generateUser } from './users';
+import { generateMovie } from './movies';
+
+const fs = require('fs');
 const faker = require('faker');
 
-const randomName = faker.name.findName(); // Rowan Nikolaus
-const randomEmail = faker.internet.email(); // Kassandra.Haley@erich.biz
-const randomCard = faker.helpers.createCard(); // random contact card containing many properties
+const COUNT = 15;
+let users = {};
+let movies = {};
 
-console.log(randomName, randomEmail, randomCard);
+const toto = 'toto';
+
+export const generateUuid = () => {
+  return faker.random.uuid();
+};
+
+for (let i = 0; i < COUNT; i++) {
+  movies = { ...movies, [generateUuid()]: generateMovie() };
+}
+
+for (let i = 0; i < COUNT; i++) {
+  users = { ...users, [generateUuid()]: generateUser() };
+}
+
+fs.writeFile('db.json', JSON.stringify({ users, movies }), error => {
+  if (error) {
+    return console.log(error);
+  }
+});
+
