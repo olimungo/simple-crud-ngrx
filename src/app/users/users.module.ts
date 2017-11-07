@@ -14,6 +14,7 @@ import { UserEditComponent } from './edit/edit.component';
 
 import { reducer } from './state/users.reducer';
 import { effects } from './state/users.effects';
+import { UsersService } from './users.service';
 
 @NgModule({
   imports: [
@@ -25,6 +26,7 @@ import { effects } from './state/users.effects';
     SharedModule,
     UsersRoutingModule
   ],
-  declarations: [UsersListComponent, UserCardComponent, UserEditComponent]
+  declarations: [UsersListComponent, UserCardComponent, UserEditComponent],
+  providers: [UsersService]
 })
 export class UsersModule { }
