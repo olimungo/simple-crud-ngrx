@@ -8,8 +8,8 @@ import 'rxjs/add/operator/take';
 
 import { User } from '../user.entity';
 
-import * as UsersActions from '../users.actions';
-import * as UsersReducer from '../users.reducer';
+import * as UsersActions from '../state/users.actions';
+import * as UsersReducer from '../state/users.reducer';
 
 @Component({
   selector: 'feat-user-edit',

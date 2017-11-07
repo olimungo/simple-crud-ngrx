@@ -5,10 +5,10 @@ import { Store } from '@ngrx/store';
 
 import 'rxjs/add/operator/take';
 
-import * as MoviesActions from '../../../movies/movies.actions';
-import * as MoviesReducer from '../../../movies/movies.reducer';
-import * as UsersActions from '../../../users/users.actions';
-import * as UsersReducer from '../../../users/users.reducer';
+import * as MoviesActions from '../../../movies/state/movies.actions';
+import * as MoviesReducer from '../../../movies/state/movies.reducer';
+import * as UsersActions from '../../../users/state/users.actions';
+import * as UsersReducer from '../../../users/state/users.reducer';
 
 @Component({
   selector: 'shr-shell-header',

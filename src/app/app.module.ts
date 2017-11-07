@@ -16,22 +16,10 @@ import { UsersModule } from './users/users.module';
 import { CompaniesModule } from './companies/companies.module';
 import { MoviesModule } from './movies/movies.module';
 
-import * as fromUsers from './users/users.reducer';
-import * as fromMovies from './movies/movies.reducer';
-
 import { environment } from '../environments/environment';
+import * as fromRoot from './state';
 
-export interface State {
-  users: fromUsers.State;
-  movies: fromMovies.State;
-}
-
-export const reducers: ActionReducerMap<State> = {
-  users: fromUsers.usersReducer,
-  movies: fromMovies.moviesReducer,
-};
-
-export const metaReducers: MetaReducer<State>[] = !environment.production ? [storeFreeze] : [];
+const metaReducers: MetaReducer<fromRoot.State>[] = !environment.production ? [storeFreeze] : [];
 
 @NgModule({
   declarations: [
@@ -40,7 +28,7 @@ export const metaReducers: MetaReducer<State>[] = !environment.production ? [sto
   imports: [
     BrowserModule,
     AppRoutingModule,
-    StoreModule.forRoot(reducers, { metaReducers }),
+    StoreModule.forRoot({}, { metaReducers }),
     StoreDevtoolsModule.instrument({
       maxAge: 10
     }),

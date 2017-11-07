@@ -8,8 +8,8 @@ import 'rxjs/add/operator/take';
 
 import { Movie } from '../movie.entity';
 
-import * as MoviesActions from '../movies.actions';
-import * as MoviesReducer from '../movies.reducer';
+import * as MoviesActions from '../state/movies.actions';
+import * as MoviesReducer from '../state/movies.reducer';
 
 @Component({
   selector: 'feat-movie-edit',
