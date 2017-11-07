@@ -5,8 +5,6 @@ import { RouterModule } from '@angular/router';
 
 import { SpinnerDirective } from './spinner/spinner.directive';
 import { CrudButtonsComponent } from './crud-buttons/crud-buttons.component';
-import { ShellComponent } from './shell/shell.component';
-import { ShellHeaderComponent } from './shell/header/header.component';
 import { SearchBarComponent } from './search-bar/search-bar.component';
 
 @NgModule({
@@ -15,7 +13,7 @@ import { SearchBarComponent } from './search-bar/search-bar.component';
     FormsModule,
     RouterModule
   ],
-  declarations: [SpinnerDirective, CrudButtonsComponent, ShellComponent, ShellHeaderComponent, SearchBarComponent],
-  exports: [SpinnerDirective, CrudButtonsComponent, ShellComponent, SearchBarComponent]
+  declarations: [SpinnerDirective, CrudButtonsComponent, SearchBarComponent],
+  exports: [SpinnerDirective, CrudButtonsComponent, SearchBarComponent]
 })
 export class SharedModule { }
