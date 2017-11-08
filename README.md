@@ -16,7 +16,7 @@ The following tools have to be installed:
 
 json-server is used for the back-end. It's a full REST API server based on a json file (read and write). To start it up, use the following command:
 
-`npm run backend`
+`npm run back-end`
 
 ## Front-end
 
