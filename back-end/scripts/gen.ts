@@ -7,7 +7,7 @@ const faker = require('faker');
 enum Mode { InternalKeys, ExternalKeys }
 
 const mode = Mode.ExternalKeys;
-const COUNT = 15;
+const COUNT = 50;
 let users, movies;
 
 if (mode === Mode.ExternalKeys as Mode) {
