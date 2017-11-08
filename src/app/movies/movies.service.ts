@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import * as uuid from 'uuid';
+
 import { environment } from '../../environments/environment';
 
 import { Movie } from './movie.entity';
@@ -43,8 +45,7 @@ export class MoviesService {
   }
 
   createLocal(movie: Movie) {
-    const id = new Date().getTime().toString();
-    const newMovie = { ...movie, id };
+    const newMovie = { ...movie, id: uuid() };
 
     return this.http.post(`${environment.backEnd}/movies`, newMovie).map(() => newMovie);
   }

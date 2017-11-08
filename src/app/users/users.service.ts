@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import * as uuid from 'uuid';
+
 import { environment } from '../../environments/environment';
 
 import 'rxjs/add/operator/delay';
 
 import { User } from './user.entity';
+
 
 @Injectable()
 export class UsersService {
@@ -45,8 +48,7 @@ export class UsersService {
   }
 
   createLocal(user: User) {
-    const id = new Date().getTime().toString();
-    const newUser = { ...user, id };
+    const newUser = { ...user, id: uuid() };
 
     return this.http.post(`${environment.backEnd}/users`, newUser).map(() => newUser);
   }
