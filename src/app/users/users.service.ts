@@ -56,7 +56,7 @@ export class UsersService {
   createFirebase(user: User) {
     return this.http.post(`${environment.backEnd}/users.json`,
       JSON.stringify({ firstname: user.firstname, lastname: user.lastname }))
-      .map(users => users.json())
+      .map(result => result.json())
       .map(result => ({ ...user, id: result.name }));
   }
 

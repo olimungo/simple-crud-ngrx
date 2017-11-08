@@ -53,7 +53,7 @@ export class MoviesService {
   createFirebase(movie: Movie) {
     return this.http.post(`${environment.backEnd}/movies.json`,
       JSON.stringify({ title: movie.title, genre: movie.genre, year: movie.year, director: movie.director }))
-      .map(movies => movies.json())
+      .map(result => result.json())
       .map(result => ({ ...movie, id: result.name }));
   }
 
