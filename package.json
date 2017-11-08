@@ -5,7 +5,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "backend": "cd back-end && json-server --watch db.json",
+    "back-end": "cd back-end && json-server --watch db.json",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
