@@ -12,8 +12,8 @@ import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { HomeModule } from './home/home.module';
+import { ProfileModule } from './profile/profile.module';
 import { UsersModule } from './users/users.module';
-import { CompaniesModule } from './companies/companies.module';
 import { MoviesModule } from './movies/movies.module';
 
 import { environment } from '../environments/environment';
@@ -36,8 +36,8 @@ const metaReducers: MetaReducer<fromRoot.State>[] = !environment.production ? [s
     CoreModule,
     SharedModule,
     HomeModule,
+    ProfileModule,
     UsersModule,
-    CompaniesModule,
     MoviesModule
   ],
   providers: [],

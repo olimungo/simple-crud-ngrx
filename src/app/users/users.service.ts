@@ -3,7 +3,7 @@ import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { environment } from '../../environments/environment';
 
-import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/delay';
 
 import { User } from './user.entity';
 
@@ -20,18 +20,8 @@ export class UsersService {
 
   retrieve(): Observable<any> {
     return this.http.get(`${environment.backEnd}/users`)
-      .map(users => users.json())
-      .map(users => {
-        const usersArray = [];
-
-        for (const key in users) {
-          if (users.hasOwnProperty(key)) {
-            usersArray.push(<User>{ id: key, firstname: users[key].firstname, lastname: users[key].lastname });
-          }
-        }
-
-        return usersArray;
-      });
+      .delay(1000)
+      .map(users => users.json());
   }
 
   update(user: User): Observable<any> {
@@ -42,3 +32,19 @@ export class UsersService {
     return this.http.delete(`${environment.backEnd}/users/${id}`);
   }
 }
+
+// retrieve(): Observable<any> {
+//   return this.http.get(`${environment.backEnd}/users`)
+//     .map(users => users.json())
+//     .map(users => {
+//       const usersArray = [];
+
+//       for (const key in users) {
+//         if (users.hasOwnProperty(key)) {
+//           usersArray.push(<User>{ id: key, firstname: users[key].firstname, lastname: users[key].lastname });
+//         }
+//       }
+
+//       return usersArray;
+//     });
+// }

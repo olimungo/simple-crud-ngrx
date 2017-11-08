@@ -5,7 +5,6 @@ import { Effect, Actions } from '@ngrx/effects';
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
-import 'rxjs/add/operator/delay';
 
 import { UsersService } from '../users.service';
 
@@ -37,7 +36,6 @@ export class Effects {
   @Effect()
   retrieveForced: Observable<Action> = this.actions.ofType(UserActions.GET_LIST_FORCED)
     .mergeMap(() => this.usersService.retrieve())
-    .delay(1000)
     .map(users => {
       this.usersLoaded = true;
       return new UserActions.ListRetrieved(users);
