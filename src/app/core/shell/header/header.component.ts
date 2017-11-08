@@ -11,7 +11,7 @@ import * as UsersActions from '../../../users/state/users.actions';
 import * as UsersReducer from '../../../users/state/users.reducer';
 
 @Component({
-  selector: 'shr-shell-header',
+  selector: 'core-shell-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
@@ -29,10 +29,6 @@ export class ShellHeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-  }
-
-  goHome() {
-    this.router.navigate(['/home']);
   }
 
   navigate(url: string) {

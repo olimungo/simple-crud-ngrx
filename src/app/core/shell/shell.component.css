@@ -14,3 +14,31 @@
 .shell-container {
   margin: 0 1em;
 }
+
+.shell .fa-github {
+  color: #bbb;
+  font-size: 3em;
+  position: fixed;
+  bottom: .4em;
+  left: .4em;
+}
+
+.shell-github-clickable {
+  z-index: 1000;
+  border-radius: 50%;
+  width: 1.1em;
+  height: 1.1em;
+  cursor: pointer;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.shell-github-clickable:hover {
+  background: rgba(200, 200, 200, .3);
+}
+
+.shell-github-clickable:active {
+  background: rgba(200, 200, 200, .6);
+}

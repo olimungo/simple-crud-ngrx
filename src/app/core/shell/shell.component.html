@@ -1,9 +1,11 @@
 <div class="shell">
-  <shr-shell-header></shr-shell-header>
+  <core-shell-header></core-shell-header>
 
   <div class="shell-content">
     <div class="shell-container">
       <router-outlet></router-outlet>
     </div>
   </div>
+
+  <i class="fa fa-github shell-github-clickable" (click)="goGitHub()"></i>
 </div>

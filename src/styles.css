@@ -29,7 +29,7 @@ body {
 
 .clickable {
   outline: none;
-  border-radius: .2em;
+  border-radius: .1em;
   margin: .5em 0;
   padding: .2em .4em;
   cursor: pointer;
