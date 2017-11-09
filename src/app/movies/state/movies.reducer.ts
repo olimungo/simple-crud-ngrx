@@ -31,6 +31,8 @@ export function reducer(state: State = defaultState, action: MoviesActions.All) 
     case MoviesActions.GET_LIST_FORCED:
       return { ...state, loading: true };
     case MoviesActions.LIST_RETRIEVED:
+      console.log(action.payload);
+
       const movies = sortMovies(action.payload);
 
       return {
@@ -44,7 +46,7 @@ export function reducer(state: State = defaultState, action: MoviesActions.All) 
         ...state, selectedMovie: getMovie(state.allMovies, action.payload),
         selectedMovieId: geSelectedMovieId(state.allMovies, action.payload)
       };
-      case MoviesActions.CREATE:
+    case MoviesActions.CREATE:
       // Nothing to change to the store at this point. An effect CREATE is also triggered and will subsequently fire a CREATE_DONE action.
       return state;
     case MoviesActions.CREATE_DONE:

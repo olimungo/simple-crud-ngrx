@@ -1,7 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import { switchMap, mergeMap } from 'rxjs/operators';
 import * as uuid from 'uuid';
+
+import 'rxjs/add/operator/concatAll';
+import 'rxjs/add/operator/reduce';
+import 'rxjs/add/operator/do';
 
 import { environment } from '../../environments/environment';
 
@@ -59,8 +64,17 @@ export class MoviesService {
 
   retrieveLocal(): Observable<Movie[]> {
     return this.http.get(`${environment.backEnd}/movies`)
-      .delay(1000)
-      .map(movies => movies.json());
+      // .delay(1000)
+      .map(movies => movies.json())
+      .concatAll()
+      .mergeMap(movie => this.http.get(`${environment.backEnd}/movies-actors/${movie.id}`)
+        .map(movieActors => movieActors.json().actors)
+        .concatAll()
+        .mergeMap(actorId => this.http.get(`${environment.backEnd}/actors/${actorId}`)
+          .map(actor => actor.json()))
+        .reduce((actors, actor) => ([...actors, actor]), [])
+        .map(actors => ({ ...movie, actors })))
+      .reduce((movies, movie) => ([...movies, movie]), []);
   }
 
   retrieveFirebase(): Observable<Movie[]> {
@@ -72,7 +86,9 @@ export class MoviesService {
 
         for (const key in movies) {
           if (movies.hasOwnProperty(key)) {
-            moviesArray.push(<Movie>{ id: key, title: movies[key].title, genre: movies[key].genre, year: movies[key].year, director: movies[key].director });
+            moviesArray.push(<Movie>{
+              id: key, title: movies[key].title, genre: movies[key].genre, year: movies[key].year, director: movies[key].director
+            });
           }
         }
 

@@ -49,7 +49,7 @@ if (mode === Mode.ExternalIds as Mode) {
   actorsMovies = generateMoviesActorsInternalId(actorsId, moviesId);
 }
 
-fs.writeFile('db.json', JSON.stringify({ actors, movies, 'actors-movies': actorsMovies  }), error => {
+fs.writeFile('db.json', JSON.stringify({ actors, movies, 'movies-actors': actorsMovies  }), error => {
   if (error) {
     return console.log(error);
   }
