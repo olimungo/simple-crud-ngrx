@@ -8,7 +8,7 @@ The following instructions assumes that you're using `npm` to install dependenci
 
 ## Demo
 
-Want to check what this application looks like? Try it here: <a href="https://simplecrud-b97b4.firebaseapp.com" target="_blank">https://simplecrud-b97b4.firebaseapp.com</a>
+Want to check what this application looks like? Try it here: <a href="https://simplecrud-b97b4.firebaseapp.com" target="_blank">Demo</a>
 
 ## Pre-requisites
 
