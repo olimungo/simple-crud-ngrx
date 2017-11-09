@@ -28,7 +28,6 @@ export class MoviesListComponent implements OnDestroy, AfterViewInit {
   private scrollSubscription: Subscription;
 
   constructor(private router: Router, private store: Store<MoviesReducer.State>) {
-    this.store.dispatch(new MoviesActions.GetList());
     this.movies = this.store.select(MoviesReducer.getMovies);
     this.loading = this.store.select(MoviesReducer.getLoading);
 

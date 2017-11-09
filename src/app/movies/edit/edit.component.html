@@ -4,7 +4,7 @@
   </div>
 
   <div class="movie-edit-container">
-    <form (ngSubmit)="submit()" #form="ngForm">
+    <form #form="ngForm">
       <div class="form-group">
         <label for="title">Title</label>
         <input type="text" id="title" name="title" required [(ngModel)]="title">

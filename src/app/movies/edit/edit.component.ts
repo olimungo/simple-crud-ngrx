@@ -26,8 +26,6 @@ export class MovieEditComponent implements OnInit, OnDestroy {
   private movieSubscrition: Subscription;
 
   constructor(private router: Router, private route: ActivatedRoute, private store: Store<MoviesReducer.State>) {
-    this.store.dispatch(new MoviesActions.GetList());
-
     this.movieSubscrition = this.store.select(MoviesReducer.getSelectedMovie).subscribe(movie => {
       this.id = movie ? movie.id : null;
       this.title = movie ? movie.title : null;

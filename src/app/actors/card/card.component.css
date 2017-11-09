@@ -1,0 +1,16 @@
+.actor-card {
+  padding: 1em;
+  width: 20em;
+  display: flex;
+  align-items: center;
+}
+
+.actor-card .fa-user-circle {
+  font-size: 4em;
+  color: #ddd;
+}
+
+.actor-card-lastname {
+  font-weight: bold;
+  margin: 0 .5em 0 1.5em;
+}

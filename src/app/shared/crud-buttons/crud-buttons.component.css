@@ -4,11 +4,26 @@
 }
 
 .crud-buttons button {
-  margin: 0 .3em;
+  margin: 0 .5em;
+  width: 5em;
 }
+
+.crud-buttons-save {
+  border: none;
+  color: #444;
+}
+
 .crud-button-delete {
   background: #dc3545;
   border: #dc3545;
   color: #fff;
   font-weight: normal;
+}
+
+.crud-button-delete:hover {
+  background: #bb2534;
+}
+
+.crud-button-delete:active {
+  background: #a91c2a;
 }

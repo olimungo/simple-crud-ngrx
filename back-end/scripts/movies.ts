@@ -5,11 +5,11 @@ const allGenres = [
   'Animation', 'Crime', 'Sci-Fi', 'Fantasy', 'Mystery', 'Action', 'Horror', 'Musical', 'Western'
 ];
 
-export const generateMovieExternalKey = () => {
+export const generateMovieExternalId = () => {
   return { [faker.random.uuid()]: { ...generateMovie() } };
 };
 
-export const generateMovieInternalKey = () => {
+export const generateMovieInternalId = () => {
   return { id: faker.random.uuid(), ...generateMovie() };
 };
 

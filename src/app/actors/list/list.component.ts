@@ -8,45 +8,42 @@ import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/observable/fromEvent';
 
-import { User } from '../user.entity';
+import { Actor } from '../actor.entity';
 
-import * as UsersActions from '../state/users.actions';
-import * as UsersReducer from '../state/users.reducer';
+import * as ActorsActions from '../state/actors.actions';
+import * as ActorsReducer from '../state/actors.reducer';
 
 @Component({
-  selector: 'feat-users-list',
+  selector: 'feat-actors-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.css']
 })
-export class UsersListComponent implements OnDestroy, AfterViewInit {
+export class ActorsListComponent implements OnDestroy, AfterViewInit {
   @ViewChild('scroll') scroll: ElementRef;
 
-  users: Observable<User[]>;
+  actors: Observable<Actor[]>;
   loading: Observable<boolean>;
   pattern = '';
 
   private scrollSubscription: Subscription;
 
-  constructor(private router: Router, private store: Store<UsersReducer.State>) {
-    this.store.dispatch(new UsersActions.GetList());
-    this.users = this.store.select(UsersReducer.getUsers);
-    this.loading = this.store.select(UsersReducer.getLoading);
+  constructor(private router: Router, private store: Store<ActorsReducer.State>) {
+    this.actors = this.store.select(ActorsReducer.getActors);
+    this.loading = this.store.select(ActorsReducer.getLoading);
 
-    // this.users.subscribe(users => console.log(users))
-
-    this.store.select(UsersReducer.getFilterPattern).take(1).subscribe(pattern => {
+    this.store.select(ActorsReducer.getFilterPattern).take(1).subscribe(pattern => {
       this.pattern = pattern;
     });
   }
 
   ngAfterViewInit() {
-    this.store.select(UsersReducer.getScrollPosition).take(1).subscribe(position => {
+    this.store.select(ActorsReducer.getScrollPosition).take(1).subscribe(position => {
       this.scroll.nativeElement.scrollTop = position;
     });
 
     this.scrollSubscription = Observable.fromEvent(this.scroll.nativeElement, 'scroll').debounceTime(500)
       .subscribe(event => {
-        this.store.dispatch(new UsersActions.SaveScrollPosition(this.scroll.nativeElement.scrollTop));
+        this.store.dispatch(new ActorsActions.SaveScrollPosition(this.scroll.nativeElement.scrollTop));
       });
   }
 
@@ -55,14 +52,14 @@ export class UsersListComponent implements OnDestroy, AfterViewInit {
   }
 
   edit(id: string) {
-    this.router.navigate(['users', id]);
+    this.router.navigate(['actors', id]);
   }
 
   add() {
-    this.router.navigate(['users/add']);
+    this.router.navigate(['actors/add']);
   }
 
   patternChange(pattern: string) {
-    this.store.dispatch(new UsersActions.Filter(pattern));
+    this.store.dispatch(new ActorsActions.Filter(pattern));
   }
 }
