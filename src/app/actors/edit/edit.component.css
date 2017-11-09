@@ -1,37 +1,37 @@
-.user-edit {
+.actor-edit {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.users-edit h1 {
+.actor-edit h1 {
   display: inline;
 }
 
-.users-edit-title {
+.actor-edit-title {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.user-edit-container {
+.actor-edit-container {
   padding: 1.5em 1.5em 1em 1.5em;
   background: #fff;
   border-radius: .1em;
   box-shadow: 0 -1px 0 #e0e0e0, 0 0 2px rgba(0,0,0,.12), 0 2px 4px rgba(0,0,0,.24);
 }
 
-.user-edit form {
+.actor-edit form {
   margin-bottom: 1.5em;
 }
 
-.user-edit label {
+.actor-edit label {
   font-weight: bold;
   width: 5em;
   display: inline-block;
 }
 
-.user-edit input {
+.actor-edit input {
   width: 20em;
   margin: 0 0 1em 1em;
 }

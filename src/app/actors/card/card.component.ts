@@ -1,14 +1,14 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { User } from '../user.entity';
+import { Actor } from '../actor.entity';
 
 @Component({
-  selector: 'feat-user-card',
+  selector: 'feat-actor-card',
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.css']
 })
-export class UserCardComponent implements OnInit {
-  @Input() user: User;
+export class ActorCardComponent implements OnInit {
+  @Input() actor: Actor;
 
   constructor() { }
 

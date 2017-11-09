@@ -6,10 +6,10 @@
     </div>
 
     <div class="shell-header-notifications">
-      <div [hidden]="!(usersCount | async)">
+      <div [hidden]="!(actorsCount | async)">
         <div class="group">
-          <i class="fa fa-users shell-header-clickable" (click)="navigate('users')"></i>
-          <div class="tag tag-red">{{ usersCount | async }}</div>
+          <i class="fa fa-users shell-header-clickable" (click)="navigate('actors')"></i>
+          <div class="tag tag-red">{{ actorsCount | async }}</div>
         </div>
       </div>
 

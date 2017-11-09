@@ -1,30 +1,30 @@
-.users-list {
+.actors-list {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.users-list h1 {
+.actors-list h1 {
   display: inline;
 }
 
-.users-list-title {
+.actors-list-title {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.users-list-search-bar {
+.actors-list-search-bar {
   margin-bottom: 2em;
 }
 
-.users-list-spinner {
+.actors-list-spinner {
   display: flex;
   justify-content: center;
   margin-top: 15em;
 }
 
-.users-list-cards {
+.actors-list-cards {
   position: absolute;
   top: 9em;
   bottom: 1em;

@@ -1,20 +1,20 @@
-<div class="users-list">
-  <div class="users-list-title">
-    <h1>Users</h1>
+<div class="actors-list">
+  <div class="actors-list-title">
+    <h1>Actors</h1>
   </div>
 
-  <div class="users-list-search-bar">
+  <div class="actors-list-search-bar">
     <shr-search-bar [pattern]="pattern" (patternChange)="patternChange($event)"></shr-search-bar>
   </div>
 
   <div [hidden]="!(loading | async)">
-    <div class="users-list-spinner">
+    <div class="actors-list-spinner">
       <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
     </div>
   </div>
 
-  <div #scroll class="users-list-cards">
-    <feat-user-card *ngFor="let user of users | async" [user]="user" (click)="edit(user.id)"></feat-user-card>
+  <div #scroll class="actors-list-cards">
+    <feat-actor-card *ngFor="let actor of actors | async" [actor]="actor" (click)="edit(actor.id)"></feat-actor-card>
   </div>
 
   <button class="action-button" (click)="add()">
