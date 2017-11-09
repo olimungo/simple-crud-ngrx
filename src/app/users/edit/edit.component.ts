@@ -24,8 +24,6 @@ export class UserEditComponent implements OnInit, OnDestroy {
   private userSubscrition: Subscription;
 
   constructor(private router: Router, private route: ActivatedRoute, private store: Store<UsersReducer.State>) {
-    this.store.dispatch(new UsersActions.GetList());
-
     this.userSubscrition = this.store.select(UsersReducer.getSelectedUser).subscribe(user => {
       this.id = user ? user.id : null;
       this.firstname = user ? user.firstname : null;

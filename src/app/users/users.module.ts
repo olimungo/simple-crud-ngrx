@@ -2,7 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { StoreModule } from '@ngrx/store';
+import { Router, RouteConfigLoadEnd } from '@angular/router';
+import { StoreModule, Store } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 
 import { SharedModule } from '../shared/shared.module';
@@ -15,6 +16,9 @@ import { UserEditComponent } from './edit/edit.component';
 import { reducer } from './state/users.reducer';
 import { Effects } from './state/users.effects';
 import { UsersService } from './users.service';
+
+import * as UsersActions from './state/users.actions';
+import * as UsersReducer from './state/users.reducer';
 
 @NgModule({
   imports: [
@@ -29,4 +33,14 @@ import { UsersService } from './users.service';
   declarations: [UsersListComponent, UserCardComponent, UserEditComponent],
   providers: [UsersService]
 })
-export class UsersModule { }
+export class UsersModule {
+  constructor(router: Router, store: Store<UsersReducer.State>) {
+    router.events.subscribe(event => {
+      if (event instanceof RouteConfigLoadEnd) {
+        if (event.route.path.indexOf('users') > -1) {
+          store.dispatch(new UsersActions.GetList());
+        }
+      }
+    });
+  }
+}

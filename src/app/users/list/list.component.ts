@@ -28,11 +28,8 @@ export class UsersListComponent implements OnDestroy, AfterViewInit {
   private scrollSubscription: Subscription;
 
   constructor(private router: Router, private store: Store<UsersReducer.State>) {
-    this.store.dispatch(new UsersActions.GetList());
     this.users = this.store.select(UsersReducer.getUsers);
     this.loading = this.store.select(UsersReducer.getLoading);
-
-    // this.users.subscribe(users => console.log(users))
 
     this.store.select(UsersReducer.getFilterPattern).take(1).subscribe(pattern => {
       this.pattern = pattern;
