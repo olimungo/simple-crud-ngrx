@@ -35,3 +35,9 @@
   width: 20em;
   margin: 0 0 1em 1em;
 }
+
+.movie-list-spinner {
+  display: flex;
+  justify-content: center;
+  margin-top: 5em;
+}

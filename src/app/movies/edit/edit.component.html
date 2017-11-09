@@ -3,7 +3,13 @@
     <h1>Edit movie</h1>
   </div>
 
-  <div class="movie-edit-container">
+  <div [hidden]="!(loading | async)">
+    <div class="movie-list-spinner">
+      <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
+    </div>
+  </div>
+
+  <div class="movie-edit-container" [hidden]="loading | async">
     <form #form="ngForm">
       <div class="form-group">
         <label for="title">Title</label>

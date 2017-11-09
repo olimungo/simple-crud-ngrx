@@ -21,9 +21,13 @@ export class ActorEditComponent implements OnInit, OnDestroy {
   firstname: string;
   lastname: string;
 
+  loading: Observable<boolean>;
+
   private actorSubscrition: Subscription;
 
   constructor(private router: Router, private route: ActivatedRoute, private store: Store<ActorsReducer.State>) {
+    this.loading = this.store.select(ActorsReducer.getLoading);
+
     this.actorSubscrition = this.store.select(ActorsReducer.getSelectedActor).subscribe(actor => {
       this.id = actor ? actor.id : null;
       this.firstname = actor ? actor.firstname : null;

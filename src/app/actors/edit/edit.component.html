@@ -3,7 +3,13 @@
     <h1>Edit actor</h1>
   </div>
 
-  <div class="actor-edit-container">
+  <div [hidden]="!(loading | async)">
+    <div class="actor-list-spinner">
+      <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
+    </div>
+  </div>
+
+  <div class="actor-edit-container" [hidden]="loading | async">
     <form #form="ngForm">
       <div class="form-group">
         <label for="firstname">Firstname</label>
