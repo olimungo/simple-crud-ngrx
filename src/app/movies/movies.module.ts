@@ -19,6 +19,7 @@ import { MoviesService } from './movies.service';
 
 import * as MoviesActions from './state/movies.actions';
 import * as MoviesReducer from './state/movies.reducer';
+import { MovieCardActorsBoxComponent } from './card/actors-box/actors-box.component';
 
 @NgModule({
   imports: [
@@ -30,7 +31,7 @@ import * as MoviesReducer from './state/movies.reducer';
     SharedModule,
     MoviesRoutingModule
   ],
-  declarations: [MoviesListComponent, MovieEditComponent, MovieCardComponent],
+  declarations: [MoviesListComponent, MovieEditComponent, MovieCardComponent, MovieCardActorsBoxComponent],
   providers: [MoviesService]
 })
 export class MoviesModule {

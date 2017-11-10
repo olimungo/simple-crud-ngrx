@@ -1,10 +1,18 @@
 <div class="movie-card clickable">
   <label class="movie-card-title">{{ movie?.title }}</label>
   <label class="movie-card-year">({{ movie?.year }})</label>
-  <br>
-  <label class="tag">{{ movie?.genre }}</label>
-  <br><br>
-  <label>{{ movie?.director }}</label>
+
+  <div class="movie-card-director">
+    <div>directed by <label>{{ movie?.director }}</label></div>
+  </div>
+
+  <div class="movie-card-genre">
+    <div class="tag">{{ movie?.genre }}</div>
+  </div>
+
+  <div class="movie-card-actors">
+    <div>with Alain Delon, Benicio del Toro, Daniel Craig, Roger Moore...</div>
+  </div>
 </div>
 
 

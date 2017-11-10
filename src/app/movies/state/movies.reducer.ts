@@ -31,12 +31,10 @@ export function reducer(state: State = defaultState, action: MoviesActions.All) 
     case MoviesActions.GET_LIST_FORCED:
       return { ...state, loading: true };
     case MoviesActions.LIST_RETRIEVED:
-      console.log(action.payload);
-
       const movies = sortMovies(action.payload);
 
       return {
-        ...state, movies: movies, allMovies: movies, loading: false,
+        ...state, movies, allMovies: movies, loading: false,
         selectedMovie: getMovie(movies, state.selectedMovieId), selectedMovieId: null
       };
     case MoviesActions.ADD:
@@ -44,7 +42,7 @@ export function reducer(state: State = defaultState, action: MoviesActions.All) 
     case MoviesActions.EDIT:
       return {
         ...state, selectedMovie: getMovie(state.allMovies, action.payload),
-        selectedMovieId: geSelectedMovieId(state.allMovies, action.payload)
+        selectedMovieId: state.allMovies ? null : action.payload
       };
     case MoviesActions.CREATE:
       // Nothing to change to the store at this point. An effect CREATE is also triggered and will subsequently fire a CREATE_DONE action.
@@ -73,10 +71,6 @@ export function reducer(state: State = defaultState, action: MoviesActions.All) 
       return state;
   }
 }
-
-const geSelectedMovieId = (movies: Movie[], id: string) => {
-  return movies ? null : id;
-};
 
 const getMovie = (movies: Movie[], id: string) => {
   return movies ? movies.find(movie => movie.id === id) : null;

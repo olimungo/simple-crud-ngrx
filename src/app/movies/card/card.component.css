@@ -4,7 +4,7 @@
 
 .movie-card {
   padding: 1em;
-  width: 30em;
+  width: 27em;
 }
 
 .movie-card-title {
@@ -13,4 +13,26 @@
 
 .movie-card-year {
   font-size: .8em;
+}
+
+.movie-card-director {
+  font-size: .8em;
+  margin-top: .2em;
+}
+
+.movie-card-director label {
+  font-weight: bold;
+  color: #777;
+}
+
+.movie-card-genre {
+  margin-bottom: .9em;
+}
+
+.movie-card-actors {
+  font-size: .8em;
+}
+
+.movie-card-actors label {
+  color: #777;
 }

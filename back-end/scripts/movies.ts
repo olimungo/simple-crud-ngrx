@@ -36,7 +36,7 @@ const generateGenre = () => {
   let genres = '';
 
   for (let i = 0; i < count; i++) {
-    const genreIndex = Math.round(Math.random() * allGenres.length);
+    const genreIndex = Math.floor(Math.random() * allGenres.length);
     const genre = allGenres[genreIndex];
     genres = Boolean(genres.length) ? genres += ' | ' + genre : genres += genre;
   }

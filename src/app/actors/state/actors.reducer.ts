@@ -41,7 +41,8 @@ export function reducer(state: State = defaultState, action: ActorsActions.All) 
       return { ...state, selectedActor: <Actor>{} };
     case ActorsActions.EDIT:
       return {
-        ...state, selectedActor: getActor(state.allActors, action.payload), selectedActorId: geSelectedActorId(state.allActors, action.payload)
+        ...state, selectedActor: getActor(state.allActors, action.payload),
+        selectedActorId: state.allActors ? null : action.payload
       };
     case ActorsActions.CREATE:
       // Nothing to change to the store at this point. An effect CREATE is also triggered and will subsequently fire a CREATE_DONE action.
@@ -58,7 +59,8 @@ export function reducer(state: State = defaultState, action: ActorsActions.All) 
       return { ...state, selectedActor: null };
     case ActorsActions.DELETE:
       return {
-        ...state, selectedActor: null, actors: deleteActor(state.actors, action.payload), allActors: deleteActor(state.allActors, action.payload)
+        ...state, selectedActor: null, actors: deleteActor(state.actors, action.payload),
+        allActors: deleteActor(state.allActors, action.payload)
       };
     case ActorsActions.FILTER:
       return { ...state, filterPattern: action.payload, actors: filterActors(state.allActors, action.payload) };
@@ -68,10 +70,6 @@ export function reducer(state: State = defaultState, action: ActorsActions.All) 
       return state;
   }
 }
-
-const geSelectedActorId = (actors: Actor[], id: string) => {
-  return actors ? null : id;
-};
 
 const getActor = (actors: Actor[], id: string) => {
   return actors ? actors.find(actor => actor.id === id) : null;
