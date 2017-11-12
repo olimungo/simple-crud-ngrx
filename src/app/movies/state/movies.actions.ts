@@ -1,6 +1,7 @@
 import { Store, Action } from '@ngrx/store';
 
 import { Movie } from '../movie.entity';
+import { Actor } from '../../actors/actor.entity';
 
 export const GET_LIST = '[Movies] Get list';
 export const GET_LIST_FORCED = '[Movies] list forced';
@@ -16,6 +17,11 @@ export const FILTER = '[Movies] Filter';
 export const SAVE_SCROLL_POSITION = '[Movies] Save scroll position';
 export const NO_ACTION = '[Movies] No action';
 
+export interface RetrieveResult {
+  movies: Movie[];
+  actors: Actor[];
+}
+
 export class GetList implements Action {
   readonly type = GET_LIST;
 }
@@ -27,7 +33,7 @@ export class GetListForced implements Action {
 export class ListRetrieved implements Action {
   readonly type = LIST_RETRIEVED;
 
-  constructor(public payload: Movie[]) { }
+  constructor(public payload: RetrieveResult) { }
 }
 
 export class Add implements Action {

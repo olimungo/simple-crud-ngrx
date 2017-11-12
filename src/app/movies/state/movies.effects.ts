@@ -5,7 +5,6 @@ import { Effect, Actions } from '@ngrx/effects';
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
-import 'rxjs/add/operator/delay';
 
 import { MoviesService } from '../movies.service';
 
@@ -37,10 +36,9 @@ export class Effects {
   @Effect()
   retrieveForced: Observable<Action> = this.actions.ofType(MovieActions.GET_LIST_FORCED)
     .mergeMap(() => this.moviesService.retrieve())
-    .delay(1000)
-    .map(movies => {
+    .map(retrieveResult => {
       this.moviesLoaded = true;
-      return new MovieActions.ListRetrieved(movies);
+      return new MovieActions.ListRetrieved(retrieveResult);
     });
 
   @Effect({ dispatch: false })

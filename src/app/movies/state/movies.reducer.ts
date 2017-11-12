@@ -3,6 +3,7 @@ import { createSelector, createFeatureSelector } from '@ngrx/store';
 import * as fromRoot from '../../state';
 import * as MoviesActions from './movies.actions';
 import { Movie } from '../movie.entity';
+import { Actor } from '../../actors/actor.entity';
 
 export type Action = MoviesActions.All;
 
@@ -11,6 +12,7 @@ export interface State extends fromRoot.State {
   allMovies: Movie[];
   selectedMovieId: string;
   selectedMovie: Movie;
+  allActors: Actor[];
   loading: boolean;
   filterPattern: string;
   scrollPosition: number;
@@ -21,6 +23,7 @@ const defaultState: State = {
   allMovies: null,
   selectedMovieId: null,
   selectedMovie: null,
+  allActors: null,
   loading: false,
   filterPattern: '',
   scrollPosition: 0
@@ -31,10 +34,10 @@ export function reducer(state: State = defaultState, action: MoviesActions.All) 
     case MoviesActions.GET_LIST_FORCED:
       return { ...state, loading: true };
     case MoviesActions.LIST_RETRIEVED:
-      const movies = sortMovies(action.payload);
+      const movies = sortMovies(action.payload.movies);
 
       return {
-        ...state, movies, allMovies: movies, loading: false,
+        ...state, movies, allMovies: movies, loading: false, allActors: action.payload.actors,
         selectedMovie: getMovie(movies, state.selectedMovieId), selectedMovieId: null
       };
     case MoviesActions.ADD:
@@ -112,4 +115,5 @@ export const getSelectedMovie = createSelector(selectMovies, (state: State) => s
 export const getLoading = createSelector(selectMovies, (state: State) => state.loading);
 export const getFilterPattern = createSelector(selectMovies, (state: State) => state.filterPattern);
 export const getScrollPosition = createSelector(selectMovies, (state: State) => state.scrollPosition);
+export const getAllActors = createSelector(selectMovies, (state: State) => state.allActors);
 

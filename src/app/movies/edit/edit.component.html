@@ -37,6 +37,19 @@
         <label for="director">Director</label>
         <input type="text" id="director" name="director" required [(ngModel)]="director">
       </div>
+
+      <div class="form-group">
+        <label>Actors</label>
+        <shr-autocomplete [items]="actorsForAutocomplete" [pattern]="''" (itemSelect)="addActor($event)"></shr-autocomplete>
+      </div>
+
+      <div class="form-group">
+        <label></label>
+        <div class="movie-edit-tag">
+          <shr-tag *ngFor="let actor of actors" [label]="actor.firstname + ' ' + actor.lastname" [color]="'#ffb74d'"
+          (closeClick)="removeActor(actor)"></shr-tag>
+        </div>
+      </div>
     </form>
 
     <shr-crud-buttons (save)="save()" (cancel)="cancel()" (delete)="delete()"></shr-crud-buttons>

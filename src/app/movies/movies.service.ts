@@ -11,6 +11,7 @@ import 'rxjs/add/operator/do';
 import { environment } from '../../environments/environment';
 
 import { Movie } from './movie.entity';
+import { RetrieveResult } from './state/movies.actions';
 
 @Injectable()
 export class MoviesService {
@@ -37,7 +38,7 @@ export class MoviesService {
     return this.targetCreate(movie);
   }
 
-  retrieve(): Observable<Movie[]> {
+  retrieve(): Observable<RetrieveResult> {
     return this.targetRetrieve();
   }
 
@@ -62,7 +63,7 @@ export class MoviesService {
       .map(result => ({ ...movie, id: result.name }));
   }
 
-  retrieveLocal(): Observable<Movie[]> {
+  retrieveLocal(): Observable<RetrieveResult> {
     return this.http.get(`${environment.backEnd}/movies`)
       // .delay(1000)
       .map(movies => movies.json())
@@ -74,7 +75,10 @@ export class MoviesService {
           .map(actor => actor.json()))
         .reduce((actors, actor) => ([...actors, actor]), [])
         .map(actors => ({ ...movie, actors })))
-      .reduce((movies, movie) => ([...movies, movie]), []);
+      .reduce((movies, movie) => ([...movies, movie]), [])
+      .mergeMap(movies => this.http.get(`${environment.backEnd}/actors`)
+        .map(actors => actors.json())
+        .map(actors => ({ movies, actors })));
   }
 
   retrieveFirebase(): Observable<Movie[]> {
@@ -97,8 +101,11 @@ export class MoviesService {
   }
 
   updateLocal(movie: Movie) {
+    const actors = movie.actors.map(actor => actor.id);
+
     return this.http.put(`${environment.backEnd}/movies/${movie.id}`,
-      { title: movie.title, genres: movie.genres, year: movie.year, director: movie.director });
+      { title: movie.title, genres: movie.genres, year: movie.year, director: movie.director })
+      .mergeMap(() => this.http.put(`${environment.backEnd}/movies-actors/${movie.id}`, { actors }));
   }
 
   updateFirebase(movie: Movie) {
