@@ -6,6 +6,11 @@ import { RouterModule } from '@angular/router';
 import { SpinnerDirective } from './spinner/spinner.directive';
 import { CrudButtonsComponent } from './crud-buttons/crud-buttons.component';
 import { SearchBarComponent } from './search-bar/search-bar.component';
+import { AutocompleteComponent } from './autocomplete/autocomplete.component';
+import { AutocompleteInputComponent } from './autocomplete/input/input.component';
+import { AutocompletePopupComponent } from './autocomplete/popup/popup.component';
+import { AutocompletePopUpItemComponent } from './autocomplete/popup/item/item.component';
+import { TagComponent } from './tag/tag.component';
 
 @NgModule({
   imports: [
@@ -13,7 +18,10 @@ import { SearchBarComponent } from './search-bar/search-bar.component';
     FormsModule,
     RouterModule
   ],
-  declarations: [SpinnerDirective, CrudButtonsComponent, SearchBarComponent],
-  exports: [SpinnerDirective, CrudButtonsComponent, SearchBarComponent]
+  declarations: [
+    SpinnerDirective, CrudButtonsComponent, SearchBarComponent, TagComponent,
+    AutocompleteComponent, AutocompleteInputComponent, AutocompletePopupComponent, AutocompletePopUpItemComponent
+  ],
+  exports: [SpinnerDirective, CrudButtonsComponent, SearchBarComponent, AutocompleteComponent, TagComponent]
 })
 export class SharedModule { }

@@ -15,10 +15,18 @@
 }
 
 .movie-edit-container {
-  padding: 1.5em 1.5em 1em 1.5em;
+  padding: 1.5em .5em 1em .5em;
   background: #fff;
   border-radius: .1em;
   box-shadow: 0 -1px 0 #e0e0e0, 0 0 2px rgba(0,0,0,.12), 0 2px 4px rgba(0,0,0,.24);
+}
+
+.movie-edit-container .form-group {
+  margin: 0 0 1em 1em;
+}
+
+.movie-edit-container shr-tag {
+  margin-right: .5em;
 }
 
 .movie-edit form {
@@ -32,12 +40,16 @@
 }
 
 .movie-edit input {
-  width: 20em;
-  margin: 0 0 1em 1em;
+  width: 17em;
 }
 
 .movie-list-spinner {
   display: flex;
   justify-content: center;
   margin-top: 5em;
+}
+
+.movie-edit-tag {
+  display: inline-block;
+  width: 20em;
 }

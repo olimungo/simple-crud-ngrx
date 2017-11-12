@@ -8,6 +8,7 @@ import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/observable/fromEvent';
 
+import { AutocompleteItem } from '../../shared/autocomplete/autocomplete-item.entity';
 import { Movie } from '../movie.entity';
 
 import * as MoviesActions from '../state/movies.actions';

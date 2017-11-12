@@ -2,7 +2,7 @@ const faker = require('faker');
 
 const allGenres = [
   'Drama', 'Comedy', 'Thriller', 'Action', 'Adventure', 'Documentary', 'Romance', 'War',
-  'Animation', 'Crime', 'Sci-Fi', 'Fantasy', 'Mystery', 'Action', 'Horror', 'Musical', 'Western'
+  'Animation', 'Crime', 'Sci-Fi', 'Fantasy', 'Mystery', 'Horror', 'Musical', 'Western'
 ];
 
 export const generateMovieExternalId = () => {
@@ -16,7 +16,7 @@ export const generateMovieInternalId = () => {
 const generateMovie = () => {
   return {
     title: generateTitle(),
-    genre: generateGenre(),
+    genres: generateGenre(),
     year: generateYear(),
     director: `${faker.name.firstName()} ${faker.name.lastName()}`
   };
@@ -33,12 +33,14 @@ const generateYear = () => {
 
 const generateGenre = () => {
   const count = Math.round(Math.random() * 4) + 1;
-  let genres = '';
+  const copyGenre = [ ...allGenres ];
+  let genres = [];
 
   for (let i = 0; i < count; i++) {
-    const genreIndex = Math.floor(Math.random() * allGenres.length);
-    const genre = allGenres[genreIndex];
-    genres = Boolean(genres.length) ? genres += ' | ' + genre : genres += genre;
+    const genreIndex = Math.floor(Math.random() * copyGenre.length);
+    const genre = copyGenre[genreIndex];
+    copyGenre.splice(genreIndex, 1);
+    genres = [...genres, genre];
   }
 
   return genres;

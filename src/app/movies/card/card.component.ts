@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 
+import { Actor } from '../../actors/actor.entity';
 import { Movie } from '../movie.entity';
 
 @Component({
@@ -10,10 +11,15 @@ import { Movie } from '../movie.entity';
 export class MovieCardComponent implements OnInit {
   @Input() movie: Movie;
 
+  actors = '';
+
   constructor() { }
 
   ngOnInit() {
-    console.log(this.movie);
+    if (this.movie && this.movie.actors) {
+      this.actors = this.movie.actors
+        .map((actor: Actor) => actor.firstname + ' ' + actor.lastname).join(', ');
+    }
   }
 
 }
