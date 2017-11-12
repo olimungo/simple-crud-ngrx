@@ -179,13 +179,13 @@
       "director": "Cornelius Stark"
     },
     {
-      "id": "f88c9814-3d68-4965-ac76-e30d2ce8d110",
       "title": "Accounts",
       "genres": [
         "Romance"
       ],
       "year": 2012,
-      "director": "Maggie Zieme"
+      "director": "Maggie Zieme",
+      "id": "f88c9814-3d68-4965-ac76-e30d2ce8d110"
     },
     {
       "id": "4b67d14d-3f95-4697-a9be-6ba9d8581e50",
@@ -221,15 +221,14 @@
       "director": "Seth Kub"
     },
     {
-      "id": "5fbb5021-7e09-4673-975c-742e4905411c",
       "title": "Architect Strategist bluetooth",
       "genres": [
         "Thriller",
-        "Action",
-        "Romance"
+        "Action"
       ],
       "year": 1974,
-      "director": "Olga Hintz"
+      "director": "Olga Hintz",
+      "id": "5fbb5021-7e09-4673-975c-742e4905411c"
     },
     {
       "id": "bdf409cd-7aff-4c3b-8865-7f1c932d9168",

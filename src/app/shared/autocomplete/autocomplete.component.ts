@@ -81,6 +81,8 @@ export class AutocompleteComponent implements OnInit, OnDestroy {
 
     if (!this.keepValueAfterSelect) {
       this.pattern = '';
+    } else {
+      this.pattern = item.value;
     }
   }
 

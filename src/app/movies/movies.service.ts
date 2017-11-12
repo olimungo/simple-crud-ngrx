@@ -57,7 +57,7 @@ export class MoviesService {
 
   createFirebase(movie: Movie) {
     return this.http.post(`${environment.backEnd}/movies.json`,
-      JSON.stringify({ title: movie.title, genre: movie.genres, year: movie.year, director: movie.director }))
+      JSON.stringify({ title: movie.title, genres: movie.genres, year: movie.year, director: movie.director }))
       .map(result => result.json())
       .map(result => ({ ...movie, id: result.name }));
   }
@@ -87,7 +87,7 @@ export class MoviesService {
         for (const key in movies) {
           if (movies.hasOwnProperty(key)) {
             moviesArray.push(<Movie>{
-              id: key, title: movies[key].title, genres: movies[key].genre, year: movies[key].year, director: movies[key].director
+              id: key, title: movies[key].title, genres: movies[key].genres, year: movies[key].year, director: movies[key].director
             });
           }
         }
@@ -98,12 +98,12 @@ export class MoviesService {
 
   updateLocal(movie: Movie) {
     return this.http.put(`${environment.backEnd}/movies/${movie.id}`,
-      { title: movie.title, genre: movie.genres, year: movie.year, director: movie.director });
+      { title: movie.title, genres: movie.genres, year: movie.year, director: movie.director });
   }
 
   updateFirebase(movie: Movie) {
     return this.http.patch(`${environment.backEnd}/movies/${movie.id}.json`,
-      JSON.stringify({ title: movie.title, genre: movie.genres, year: movie.year, director: movie.director }));
+      JSON.stringify({ title: movie.title, genres: movie.genres, year: movie.year, director: movie.director }));
   }
 
   deleteLocal(id: string) {
