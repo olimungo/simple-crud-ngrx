@@ -1,0 +1,15 @@
+.autocomplete-item {
+  display: flex;
+  color: #333;
+  padding: 0.3em;
+  cursor: pointer;
+  width: 14em;
+}
+
+.autocomplete-item .higlighted {
+  background: #eee;
+}
+
+.autocomplete-item:hover {
+  background: #f7f7f7;
+}

@@ -1,0 +1,9 @@
+<div class="autocomplete">
+  <shr-autocomplete-input [(pattern)]="pattern" (keydown)="keyDown($event)" (patternChange)="patternChange($event)" (inputClick)="switchPopupVisible()"
+    (clearClick)="clearClicked()" [placeholder]="placeholder">
+  </shr-autocomplete-input>
+
+  <div class="popup" [class.visible]="isPopUpVisible">
+    <shr-autocomplete-popup [items]="itemsFiltered" (itemSelect)="itemSelected($event)"></shr-autocomplete-popup>
+  </div>
+</div>
