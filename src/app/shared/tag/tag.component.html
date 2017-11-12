@@ -1,4 +1,6 @@
 <span class="tag" [style.background]="color">
   <span>{{ label }}</span>
-  <i class="fa fa-times" (click)="click()"></i>
+  <span [hidden]="!isClosable">
+    <i class="fa fa-times" (click)="click()"></i>
+  </span>
 </span>

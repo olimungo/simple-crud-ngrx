@@ -5,16 +5,16 @@
   </div>
 
   <div class="movie-card-director">
-    <div>directed by <label>{{ movie?.director }}</label></div>
+    <div>directed by
+      <label>{{ movie?.director }}</label>
+    </div>
   </div>
 
   <div class="movie-card-genre">
-    <div class="tag">{{ movie?.genres }}</div>
+    <shr-tag *ngFor="let genre of movie.genres" [label]="genre" [isClosable]="false"></shr-tag>
   </div>
 
   <div class="movie-card-actors" [hidden]="!actors.length">
     <div>with {{ actors }}</div>
   </div>
 </div>
-
-

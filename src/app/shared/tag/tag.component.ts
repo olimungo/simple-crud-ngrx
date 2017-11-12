@@ -7,7 +7,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class TagComponent implements OnInit {
   @Input() label: string;
-  @Input() isClosable = false;
+  @Input() isClosable = true;
   @Input() color = '#aaa';
 
   @Output() closeClick = new EventEmitter<any>();

@@ -94,7 +94,10 @@ const deleteMovie = (movies: Movie[], id: string) => {
 
 const filterMovies = (movies: Movie[], pattern: string) => {
   return movies.filter(movie => {
-    const fullString = (movie.title + ' ' + movie.genres + ' ' + movie.year + ' ' + movie.director).toUpperCase();
+    const fullString = (movie.title + ' ' + ' ' + movie.year + ' ' + movie.director + ' ' + movie.genres.join(' ') +
+      movie.actors.map(actor => actor.firstname + ' ' + actor.lastname).join(' '))
+      .toUpperCase();
+
     return fullString.indexOf(pattern.toUpperCase()) > -1;
   });
 };
