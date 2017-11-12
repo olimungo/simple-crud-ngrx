@@ -1,5 +1,5 @@
 <div class="autocomplete-input">
-  <input name="pattern" #input [(ngModel)]="pattern" (ngModelChange)="patternChanged()" (click)="inputClicked()" [placeholder]="placeholder"
+  <input name="pattern" #input [(ngModel)]="pattern" (ngModelChange)="patternChanged()" [placeholder]="placeholder"
   />
 
   <div class="autocomplete-input-button" [hidden]="!pattern" (click)="clear()">

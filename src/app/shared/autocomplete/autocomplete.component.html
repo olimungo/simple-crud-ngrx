@@ -1,5 +1,5 @@
 <div class="autocomplete">
-  <shr-autocomplete-input [(pattern)]="pattern" (keydown)="keyDown($event)" (patternChange)="patternChange($event)" (inputClick)="switchPopupVisible()"
+  <shr-autocomplete-input [(pattern)]="pattern" (keydown)="keyDown($event)" (patternChange)="patternChanged($event)" (click)="switchPopupVisible()"
     (clearClick)="clearClicked()" [placeholder]="placeholder">
   </shr-autocomplete-input>
 

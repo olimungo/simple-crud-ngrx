@@ -12,9 +12,6 @@ export class AutocompleteInputComponent implements OnInit {
   // Property used to define the placeholder of the input field.
   @Input() placeholder = '';
 
-  // Emit an event to notify that the input field was clicked
-  @Output() inputClick: EventEmitter<any> = new EventEmitter<any>();
-
   // Emit an event to notify that the clear button was clicked
   @Output() clearClick: EventEmitter<any> = new EventEmitter<any>();
 
@@ -33,10 +30,6 @@ export class AutocompleteInputComponent implements OnInit {
     if (!this.placeholder) {
       this.placeholder = '';
     }
-  }
-
-  inputClicked() {
-    this.inputClick.emit(null);
   }
 
   patternChanged() {

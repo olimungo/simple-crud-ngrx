@@ -6,10 +6,10 @@
   width: 14em;
 }
 
-.autocomplete-item .higlighted {
+.autocomplete-item.highlighted {
   background: #eee;
 }
 
 .autocomplete-item:hover {
-  background: #f7f7f7;
+  background: #eee;
 }

@@ -1,3 +1,3 @@
-<div class="autocomplete-item" (click)="selectItem()">
-  <div [class.highlighted]="item.selected">{{ item.value }}</div>
+<div class="autocomplete-item" [class.highlighted]="item.selected | async" (click)="selectItem()">
+  <div>{{ item.value }}</div>
 </div>

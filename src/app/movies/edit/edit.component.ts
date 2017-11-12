@@ -22,12 +22,12 @@ export class MovieEditComponent implements OnInit, OnDestroy {
   id: string;
   title: string;
   genres: string[];
+  genresForAutocomplete: AutocompleteItem[];
   year: number;
   director: string;
 
   loading: Observable<boolean>;
-  genresForAutocomplete: AutocompleteItem[];
-  pattern = 'xxx';
+  pattern = '';
 
   private movieSubscrition: Subscription;
 
@@ -92,7 +92,6 @@ export class MovieEditComponent implements OnInit, OnDestroy {
     const index = this.genresForAutocomplete.findIndex(g => g.value === genre);
     this.genresForAutocomplete = this.genresForAutocomplete.slice(0, index).concat(this.genresForAutocomplete.slice(index + 1));
     this.genres = [...this.genres, genre].sort((a, b) => a > b ? 1 : -1);
-    this.pattern = '';
   }
 
   removeGenre(id: string) {
