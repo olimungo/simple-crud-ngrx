@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { switchMap, mergeMap } from 'rxjs/operators';
+import { switchMap, mergeMap, flatMap } from 'rxjs/operators';
 import * as uuid from 'uuid';
 
 import 'rxjs/add/operator/concatAll';
@@ -12,6 +12,7 @@ import { environment } from '../../environments/environment';
 
 import { Movie } from './movie.entity';
 import { RetrieveResult } from './state/movies.actions';
+import { Actor } from '../actors/actor.entity';
 
 @Injectable()
 export class MoviesService {
@@ -51,16 +52,23 @@ export class MoviesService {
   }
 
   createLocal(movie: Movie) {
-    const newMovie = { ...movie, id: uuid() };
+    const newMovie = { id: uuid(), title: movie.title, genres: movie.genres, year: movie.year, director: movie.director };
+    const actors = movie.actors.map(actor => actor.id);
 
-    return this.http.post(`${environment.backEnd}/movies`, newMovie).map(() => newMovie);
+    return this.http.post(`${environment.backEnd}/movies`, newMovie)
+      .mergeMap(() => this.http.post(`${environment.backEnd}/movies-actors`, { id: newMovie.id, actors })
+        .map(() => ({ ...newMovie, actors: movie.actors })));
   }
 
   createFirebase(movie: Movie) {
-    return this.http.post(`${environment.backEnd}/movies.json`,
-      JSON.stringify({ title: movie.title, genres: movie.genres, year: movie.year, director: movie.director }))
+    const newMovie = { title: movie.title, genres: movie.genres, year: movie.year, director: movie.director };
+    const actors = movie.actors.map(actor => ({ [actor.id]: true }));
+
+    return this.http.post(`${environment.backEnd}/movies.json`, JSON.stringify(newMovie))
       .map(result => result.json())
-      .map(result => ({ ...movie, id: result.name }));
+      .map(result => ({ ...movie, id: result.name, actors: movie.actors }))
+      .mergeMap(result => this.http.post(`${environment.backEnd}/movies-actors.json`, { [result.id]: actors })
+        .map(() => result));
   }
 
   retrieveLocal(): Observable<RetrieveResult> {
@@ -81,11 +89,11 @@ export class MoviesService {
         .map(actors => ({ movies, actors })));
   }
 
-  retrieveFirebase(): Observable<Movie[]> {
+  retrieveFirebase(): Observable<RetrieveResult> {
     return this.http.get(`${environment.backEnd}/movies.json`)
-      .delay(1000)
+      // .delay(1000)
       .map(movies => movies.json())
-      .map(movies => {
+      .flatMap(movies => {
         const moviesArray = [];
 
         for (const key in movies) {
@@ -97,7 +105,40 @@ export class MoviesService {
         }
 
         return moviesArray;
-      });
+      })
+      .mergeMap(movie => this.http.get(`${environment.backEnd}/movies-actors/${movie.id}.json`)
+        .map(movieActors => movieActors.json())
+        .flatMap(movieActors => {
+          const movieActorsArray = [];
+
+          for (const key in movieActors) {
+            if (movieActors.hasOwnProperty(key)) {
+              movieActorsArray.push(key);
+            }
+          }
+
+          return movieActorsArray;
+        })
+        .mergeMap(actorId => this.http.get(`${environment.backEnd}/actors/${actorId}.json`)
+          .map(actor => actor.json())
+          .map(actor => (<Actor>{ id: actorId, firstname: actor.firstname, lastname: actor.lastname })))
+        .reduce((actors, actor) => ([...actors, actor]), [])
+        .map(actors => ({ ...movie, actors })))
+      .reduce((movies, movie) => ([...movies, movie]), [])
+      .mergeMap(movies => this.http.get(`${environment.backEnd}/actors.json`)
+        .map(actors => actors.json())
+        .map(actors => {
+          const actorsArray = [];
+
+          for (const key in actors) {
+            if (actors.hasOwnProperty(key)) {
+              actorsArray.push(<Actor>{ id: key, firstname: actors[key].firstname, lastname: actors[key].lastname });
+            }
+          }
+
+          return actorsArray;
+        })
+        .map(actors => ({ movies, actors })));
   }
 
   updateLocal(movie: Movie) {
@@ -114,7 +155,8 @@ export class MoviesService {
   }
 
   deleteLocal(id: string) {
-    return this.http.delete(`${environment.backEnd}/movies/${id}`);
+    return this.http.delete(`${environment.backEnd}/movies/${id}`)
+      .mergeMap(() => this.http.delete(`${environment.backEnd}/movies-actors/${id}`));
   }
 
   deleteFirebase(id: string) {

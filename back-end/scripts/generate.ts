@@ -7,8 +7,8 @@ const faker = require('faker');
 
 enum Mode { InternalIds, ExternalIds }
 
-const mode = Mode.InternalIds;
-const COUNT = 100;
+const mode = Mode.ExternalIds;
+const COUNT = 10;
 let actors, movies, actorsId, moviesId, actorsMovies;
 
 if (mode === Mode.ExternalIds as Mode) {

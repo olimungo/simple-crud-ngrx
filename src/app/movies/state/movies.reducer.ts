@@ -20,10 +20,10 @@ export interface State extends fromRoot.State {
 
 const defaultState: State = {
   movies: null,
-  allMovies: null,
+  allMovies: [],
   selectedMovieId: null,
   selectedMovie: null,
-  allActors: null,
+  allActors: [],
   loading: false,
   filterPattern: '',
   scrollPosition: 0
@@ -41,11 +41,11 @@ export function reducer(state: State = defaultState, action: MoviesActions.All) 
         selectedMovie: getMovie(movies, state.selectedMovieId), selectedMovieId: null
       };
     case MoviesActions.ADD:
-      return { ...state, selectedMovie: <Movie>{} };
+      return { ...state, selectedMovie: <Movie>{ genres: [], actors: [] } };
     case MoviesActions.EDIT:
       return {
         ...state, selectedMovie: getMovie(state.allMovies, action.payload),
-        selectedMovieId: state.allMovies ? null : action.payload
+        selectedMovieId: state.allMovies.length > 0 ? null : action.payload
       };
     case MoviesActions.CREATE:
       // Nothing to change to the store at this point. An effect CREATE is also triggered and will subsequently fire a CREATE_DONE action.

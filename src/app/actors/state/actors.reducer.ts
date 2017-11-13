@@ -18,7 +18,7 @@ export interface State extends fromRoot.State {
 
 const defaultState: State = {
   actors: null,
-  allActors: null,
+  allActors: [],
   selectedActorId: null,
   selectedActor: null,
   loading: false,

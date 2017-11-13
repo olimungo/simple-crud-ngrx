@@ -48,6 +48,8 @@ export class MovieEditComponent implements OnInit, OnDestroy {
       this.actorsForAutocomplete = [];
       this.genresForAutocomplete = [];
 
+      // console.log(movie)
+
       if (movie) {
         this.id = movie.id;
         this.title = movie.title;
