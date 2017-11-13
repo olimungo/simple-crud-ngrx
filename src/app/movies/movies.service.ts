@@ -62,12 +62,12 @@ export class MoviesService {
 
   createFirebase(movie: Movie) {
     const newMovie = { title: movie.title, genres: movie.genres, year: movie.year, director: movie.director };
-    const actors = movie.actors.map(actor => ({ [actor.id]: true }));
+    const newActors = movie.actors.reduce((actors, actor) => ({ ...actors, [actor.id]: true }), {});
 
     return this.http.post(`${environment.backEnd}/movies.json`, JSON.stringify(newMovie))
       .map(result => result.json())
       .map(result => ({ ...movie, id: result.name, actors: movie.actors }))
-      .mergeMap(result => this.http.post(`${environment.backEnd}/movies-actors.json`, { [result.id]: actors })
+      .mergeMap(result => this.http.patch(`${environment.backEnd}/movies-actors/${result.id}.json`, JSON.stringify(newActors))
         .map(() => result));
   }
 
@@ -142,16 +142,19 @@ export class MoviesService {
   }
 
   updateLocal(movie: Movie) {
-    const actors = movie.actors.map(actor => actor.id);
+    const newActors = movie.actors.map(actor => actor.id);
 
     return this.http.put(`${environment.backEnd}/movies/${movie.id}`,
       { title: movie.title, genres: movie.genres, year: movie.year, director: movie.director })
-      .mergeMap(() => this.http.put(`${environment.backEnd}/movies-actors/${movie.id}`, { actors }));
+      .mergeMap(() => this.http.put(`${environment.backEnd}/movies-actors/${movie.id}`, { newActors }));
   }
 
   updateFirebase(movie: Movie) {
+    const newActors = movie.actors.reduce((actors, actor) => ({ ...actors, [actor.id]: true }), {});
+
     return this.http.patch(`${environment.backEnd}/movies/${movie.id}.json`,
-      JSON.stringify({ title: movie.title, genres: movie.genres, year: movie.year, director: movie.director }));
+      JSON.stringify({ title: movie.title, genres: movie.genres, year: movie.year, director: movie.director }))
+      .mergeMap(() => this.http.put(`${environment.backEnd}/movies-actors/${movie.id}.json`, JSON.stringify(newActors)));
   }
 
   deleteLocal(id: string) {
@@ -160,6 +163,7 @@ export class MoviesService {
   }
 
   deleteFirebase(id: string) {
-    return this.http.delete(`${environment.backEnd}/movies/${id}.json`);
+    return this.http.delete(`${environment.backEnd}/movies/${id}.json`)
+      .mergeMap(() => this.http.delete(`${environment.backEnd}/movies-actors/${id}.json`));
   }
 }

@@ -4,7 +4,7 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  production: true,
-  // backEnd: 'http://localhost:3000'
-  backEnd: 'https://simplecrud-b97b4.firebaseio.com'
+  production: false,
+  backEnd: 'http://localhost:3000'
+  // backEnd: 'https://simplecrud-b97b4.firebaseio.com'
 };
