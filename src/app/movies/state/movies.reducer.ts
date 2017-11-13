@@ -1,13 +1,12 @@
 import { createSelector, createFeatureSelector } from '@ngrx/store';
 
-import * as fromRoot from '../../state';
+import { State as RootState } from '../../state';
 import * as MoviesActions from './movies.actions';
+
 import { Movie } from '../movie.entity';
 import { Actor } from '../../actors/actor.entity';
 
-export type Action = MoviesActions.All;
-
-export interface State extends fromRoot.State {
+export interface State extends RootState {
   movies: Movie[];
   allMovies: Movie[];
   selectedMovieId: string;

@@ -13,20 +13,17 @@ import { MoviesListComponent } from './list/list.component';
 import { MovieEditComponent } from './edit/edit.component';
 import { MovieCardComponent } from './card/card.component';
 
-import { reducer } from './state/movies.reducer';
-import { Effects } from './state/movies.effects';
 import { MoviesService } from './movies.service';
 
-import * as MoviesActions from './state/movies.actions';
-import * as MoviesReducer from './state/movies.reducer';
+import * as MoviesState from './state';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     HttpModule,
-    StoreModule.forFeature('movies', reducer),
-    EffectsModule.forFeature([Effects]),
+    StoreModule.forFeature('movies', MoviesState.reducer),
+    EffectsModule.forFeature([MoviesState.Effects]),
     SharedModule,
     MoviesRoutingModule
   ],
@@ -34,11 +31,11 @@ import * as MoviesReducer from './state/movies.reducer';
   providers: [MoviesService]
 })
 export class MoviesModule {
-  constructor(router: Router, store: Store<MoviesReducer.State>) {
+  constructor(router: Router, store: Store<MoviesState.State>) {
     router.events.subscribe(event => {
       if (event instanceof RouteConfigLoadEnd) {
         if (event.route.path.indexOf('movies') > -1) {
-          store.dispatch(new MoviesActions.GetList());
+          store.dispatch(new MoviesState.GetList());
         }
       }
     });
