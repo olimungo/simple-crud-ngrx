@@ -1,4 +1,4 @@
-import { Actor } from '../actors/actor.entity';
+import { Actor } from './actor.entity';
 
 export interface Movie {
   id: string;
