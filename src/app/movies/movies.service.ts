@@ -10,9 +10,8 @@ import 'rxjs/add/operator/do';
 
 import { environment } from '../../environments/environment';
 
-import { Movie } from './movie.entity';
 import { RetrieveResult } from './state/movies.actions';
-import { Actor } from '../actors/actor.entity';
+import { Movie, Actor } from '../core/models';
 
 @Injectable()
 export class MoviesService {

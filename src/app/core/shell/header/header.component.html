@@ -6,14 +6,14 @@
     </div>
 
     <div class="shell-header-notifications">
-      <div [hidden]="(actorsCount | async) === '0'">
+      <div [hidden]="(actorsCount | async) === 0">
         <div class="group">
           <i class="fa fa-users shell-header-clickable" (click)="navigate('actors')"></i>
           <div class="tag tag-red">{{ actorsCount | async }}</div>
         </div>
       </div>
 
-      <div [hidden]="(moviesCount | async) === '0'">
+      <div [hidden]="(moviesCount | async) === 0">
         <div class="group gap-left">
           <i class="fa fa-film shell-header-clickable" (click)="navigate('movies')"></i>
           <div class="tag tag-red">{{ moviesCount | async }}</div>

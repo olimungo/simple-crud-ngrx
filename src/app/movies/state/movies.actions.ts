@@ -1,7 +1,5 @@
 import { Store, Action } from '@ngrx/store';
-
-import { Movie } from '../movie.entity';
-import { Actor } from '../../actors/actor.entity';
+import { Movie, Actor } from '../../core/models';
 
 export const GET_LIST = '[Movies] Get list';
 export const GET_LIST_FORCED = '[Movies] list forced';

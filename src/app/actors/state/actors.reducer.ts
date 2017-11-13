@@ -1,14 +1,13 @@
 import { createSelector, createFeatureSelector } from '@ngrx/store';
 
-import * as fromRoot from '../../state';
 import * as ActorsActions from './actors.actions';
-import { Actor } from '../actor.entity';
+import { Actor } from '../../core/models';
 
 export type Action = ActorsActions.All;
 
-export interface State extends fromRoot.State {
-  actors: Actor[];
+export interface State {
   allActors: Actor[];
+  actors: Actor[];
   selectedActorId: string;
   selectedActor: Actor;
   loading: boolean;
@@ -17,8 +16,8 @@ export interface State extends fromRoot.State {
 }
 
 const defaultState: State = {
-  actors: null,
   allActors: [],
+  actors: [],
   selectedActorId: null,
   selectedActor: null,
   loading: false,
@@ -106,7 +105,7 @@ const compareActors = (a: Actor, b: Actor) => {
 export const selectActors = createFeatureSelector<State>('actors');
 
 export const getActors = createSelector(selectActors, (state: State) => state.actors);
-export const getActorsCount = createSelector(selectActors, (state: State) => state.allActors ? state.allActors.length.toString() : null);
+export const getActorsCount = createSelector(selectActors, (state: State) => state.allActors ? state.allActors.length : 0);
 export const getSelectedActor = createSelector(selectActors, (state: State) => state.selectedActor);
 export const getLoading = createSelector(selectActors, (state: State) => state.loading);
 export const getFilterPattern = createSelector(selectActors, (state: State) => state.filterPattern);

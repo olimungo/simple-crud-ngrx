@@ -9,10 +9,10 @@ import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/observable/fromEvent';
 
 import { AutocompleteItem } from '../../shared/autocomplete/autocomplete-item.entity';
-import { Movie } from '../movie.entity';
 
 import * as MoviesActions from '../state/movies.actions';
 import * as MoviesReducer from '../state/movies.reducer';
+import { Movie } from '../../core/models';
 
 @Component({
   selector: 'feat-movies-list',

@@ -1,28 +1,25 @@
 import { createSelector, createFeatureSelector } from '@ngrx/store';
 
-import { State as RootState } from '../../state';
 import * as MoviesActions from './movies.actions';
+import { Movie, Actor } from '../../core/models';
 
-import { Movie } from '../movie.entity';
-import { Actor } from '../../actors/actor.entity';
-
-export interface State extends RootState {
-  movies: Movie[];
+export interface State {
+  allActors: Actor[];
   allMovies: Movie[];
+  movies: Movie[];
   selectedMovieId: string;
   selectedMovie: Movie;
-  allActors: Actor[];
   loading: boolean;
   filterPattern: string;
   scrollPosition: number;
 }
 
 const defaultState: State = {
-  movies: null,
+  allActors: [],
   allMovies: [],
+  movies: [],
   selectedMovieId: null,
   selectedMovie: null,
-  allActors: [],
   loading: false,
   filterPattern: '',
   scrollPosition: 0
@@ -112,7 +109,7 @@ const compareMovies = (a: Movie, b: Movie) => {
 export const selectMovies = createFeatureSelector<State>('movies');
 
 export const getMovies = createSelector(selectMovies, (state: State) => state.movies);
-export const getMoviesCount = createSelector(selectMovies, (state: State) => state.allMovies ? state.allMovies.length.toString() : '');
+export const getMoviesCount = createSelector(selectMovies, (state: State) => state.allMovies ? state.allMovies.length : 0);
 export const getSelectedMovie = createSelector(selectMovies, (state: State) => state.selectedMovie);
 export const getLoading = createSelector(selectMovies, (state: State) => state.loading);
 export const getFilterPattern = createSelector(selectMovies, (state: State) => state.filterPattern);

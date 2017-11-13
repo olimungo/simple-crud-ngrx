@@ -8,10 +8,9 @@ import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/observable/fromEvent';
 
-import { Actor } from '../actor.entity';
-
 import * as ActorsActions from '../state/actors.actions';
 import * as ActorsReducer from '../state/actors.reducer';
+import { Actor } from '../../core/models';
 
 @Component({
   selector: 'feat-actors-list',

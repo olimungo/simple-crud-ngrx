@@ -1,6 +1,5 @@
 import { Store, Action } from '@ngrx/store';
-
-import { Actor } from '../actor.entity';
+import { Actor } from '../../core/models';
 
 export const GET_LIST = '[Actors] Get list';
 export const GET_LIST_FORCED = '[Actors] Get list forced';

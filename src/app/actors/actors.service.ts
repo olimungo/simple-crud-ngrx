@@ -6,9 +6,7 @@ import * as uuid from 'uuid';
 import { environment } from '../../environments/environment';
 
 import 'rxjs/add/operator/delay';
-
-import { Actor } from './actor.entity';
-
+import { Actor } from '../core/models';
 
 @Injectable()
 export class ActorsService {

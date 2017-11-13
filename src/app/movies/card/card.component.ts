@@ -1,7 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-
-import { Actor } from '../../actors/actor.entity';
-import { Movie } from '../movie.entity';
+import { Movie, Actor } from '../../core/models';
 
 @Component({
   selector: 'feat-movie-card',

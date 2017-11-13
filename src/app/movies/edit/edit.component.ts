@@ -6,13 +6,10 @@ import { Store } from '@ngrx/store';
 
 import 'rxjs/add/operator/take';
 
-import { Movie } from '../movie.entity';
-
 import * as MoviesActions from '../state/movies.actions';
 import * as MoviesReducer from '../state/movies.reducer';
 import { AutocompleteItem } from '../../shared/autocomplete/autocomplete-item.entity';
-import { allGenres } from '../all-genres.values';
-import { Actor } from '../../actors/actor.entity';
+import { Actor, allGenres, Movie } from '../../core/models';
 
 @Component({
   selector: 'feat-movie-edit',

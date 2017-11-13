@@ -3,12 +3,10 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 
-import 'rxjs/add/operator/take';
-
-import * as MoviesActions from '../../../movies/state/movies.actions';
-import * as MoviesReducer from '../../../movies/state/movies.reducer';
-import * as ActorsActions from '../../../actors/state/actors.actions';
-import * as ActorsReducer from '../../../actors/state/actors.reducer';
+import * as fromActors from '../../../actors/state';
+import * as fromMovies from '../../../movies/state';
+import * as fromActorsReducer from '../../../actors/state/actors.reducer';
+import * as fromMoviesReducer from '../../../movies/state/movies.reducer';
 
 @Component({
   selector: 'core-shell-header',
@@ -16,16 +14,12 @@ import * as ActorsReducer from '../../../actors/state/actors.reducer';
   styleUrls: ['./header.component.css']
 })
 export class ShellHeaderComponent implements OnInit {
-  moviesCount: Observable<string>;
-  actorsCount: Observable<string>;
+  moviesCount: Observable<number>;
+  actorsCount: Observable<number>;
 
-  constructor(private router: Router,
-    private storeActors: Store<ActorsReducer.State>,
-    private storeMovies: Store<MoviesReducer.State>) {
-    this.actorsCount = this.storeActors.select(ActorsReducer.getActorsCount);
-    this.moviesCount = this.storeMovies.select(MoviesReducer.getMoviesCount);
-    // this.storeActors.dispatch(new ActorsActions.GetList());
-    // this.storeMovies.dispatch(new MoviesActions.GetList());
+  constructor(private router: Router, private actorsStore: Store<fromActors.State>, private moviesStore: Store<fromMovies.State>) {
+    this.actorsCount = this.actorsStore.select(fromActorsReducer.getActorsCount);
+    this.moviesCount = this.moviesStore.select(fromMoviesReducer.getMoviesCount);
   }
 
   ngOnInit() {

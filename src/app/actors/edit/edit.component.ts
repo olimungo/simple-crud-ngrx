@@ -6,10 +6,9 @@ import { Store } from '@ngrx/store';
 
 import 'rxjs/add/operator/take';
 
-import { Actor } from '../actor.entity';
-
 import * as ActorsActions from '../state/actors.actions';
 import * as ActorsReducer from '../state/actors.reducer';
+import { Actor } from '../../core/models';
 
 @Component({
   selector: 'feat-actor-edit',
