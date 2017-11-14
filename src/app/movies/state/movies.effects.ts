@@ -5,6 +5,7 @@ import { Effect, Actions } from '@ngrx/effects';
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
+import 'rxjs/add/operator/do';
 
 import { MoviesService } from '../movies.service';
 
@@ -14,6 +15,7 @@ export type Action = MovieActions.All;
 @Injectable()
 export class Effects {
   private moviesLoaded = false;
+  private actorsLoaded = false;
 
   constructor(private actions: Actions, private http: Http, private moviesService: MoviesService) { }
 
@@ -26,10 +28,16 @@ export class Effects {
   @Effect()
   retrieve: Observable<Action> = this.actions.ofType(MovieActions.GET_LIST)
     .map(() => {
+      if (this.moviesLoaded && this.actorsLoaded) {
+        return new MovieActions.NoAction();
+      }
+
       if (!this.moviesLoaded) {
         return new MovieActions.GetListForced();
-      } else {
-        return new MovieActions.NoAction();
+      }
+
+      if (!this.actorsLoaded) {
+        return new MovieActions.GetListActorsForced();
       }
     });
 
@@ -39,6 +47,14 @@ export class Effects {
     .map(retrieveResult => {
       this.moviesLoaded = true;
       return new MovieActions.ListRetrieved(retrieveResult);
+    });
+
+  @Effect()
+  retrieveActorsForced: Observable<Action> = this.actions.ofType(MovieActions.GET_LIST_FORCED)
+    .mergeMap(() => this.moviesService.retrieveActors())
+    .map(actors => {
+      this.moviesLoaded = true;
+      return new MovieActions.ListActorsRetrieved(actors);
     });
 
   @Effect({ dispatch: false })

@@ -1,9 +1,11 @@
-import { Store, Action } from '@ngrx/store';
+import { Action } from '@ngrx/store';
 import { Movie, Actor } from '../../core/models';
 
 export const GET_LIST = '[Movies] Get list';
 export const GET_LIST_FORCED = '[Movies] list forced';
+export const GET_LIST_ACTORS_FORCED = '[Movies] list actors forced';
 export const LIST_RETRIEVED = '[Movies] List retrieved';
+export const LIST_ACTORS_RETRIEVED = '[Movies] List actors retrieved';
 export const ADD = '[Movies] Add';
 export const EDIT = '[Movies] Edit';
 export const CREATE = '[Movies] Create';
@@ -15,11 +17,6 @@ export const FILTER = '[Movies] Filter';
 export const SAVE_SCROLL_POSITION = '[Movies] Save scroll position';
 export const NO_ACTION = '[Movies] No action';
 
-export interface RetrieveResult {
-  movies: Movie[];
-  actors: Actor[];
-}
-
 export class GetList implements Action {
   readonly type = GET_LIST;
 }
@@ -28,10 +25,20 @@ export class GetListForced implements Action {
   readonly type = GET_LIST_FORCED;
 }
 
+export class GetListActorsForced implements Action {
+  readonly type = GET_LIST_ACTORS_FORCED;
+}
+
 export class ListRetrieved implements Action {
   readonly type = LIST_RETRIEVED;
 
-  constructor(public payload: RetrieveResult) { }
+  constructor(public payload: Movie[]) { }
+}
+
+export class ListActorsRetrieved implements Action {
+  readonly type = LIST_ACTORS_RETRIEVED;
+
+  constructor(public payload: Actor[]) { }
 }
 
 export class Add implements Action {
@@ -91,7 +98,9 @@ export class NoAction implements Action {
 export type All
   = GetList
   | GetListForced
+  | GetListActorsForced
   | ListRetrieved
+  | ListActorsRetrieved
   | Add
   | Create
   | CreateDone

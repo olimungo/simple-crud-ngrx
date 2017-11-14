@@ -63,8 +63,8 @@ export class MovieEditComponent implements OnInit, OnDestroy {
         this.actorsSubscrition = this.store.select(MoviesReducer.getAllActors)
           .subscribe(actors => this.actorsForAutocomplete = actors
             .filter(actor => !this.actors.some(a => a.id === actor.id))
-            .sort((a, b) => a.firstname + ' ' + a.lastname > b.firstname + ' ' + b.lastname ? 1 : -1)
-            .map(actor => ({ value: actor.firstname + ' ' + actor.lastname, data: actor }))
+            .sort((a, b) => a.fullname > b.fullname ? 1 : -1)
+            .map(actor => ({ value: actor.fullname, data: actor }))
           );
       }
     });
@@ -128,13 +128,13 @@ export class MovieEditComponent implements OnInit, OnDestroy {
   addActor(actor: Actor) {
     const index = this.actorsForAutocomplete.findIndex(g => g.data.id === actor.id);
     this.actorsForAutocomplete = this.actorsForAutocomplete.slice(0, index).concat(this.actorsForAutocomplete.slice(index + 1));
-    this.actors = [...this.actors, actor].sort((a, b) => a.firstname + ' ' + a.lastname > b.firstname + ' ' + b.lastname ? 1 : -1);
+    this.actors = [...this.actors, actor].sort((a, b) => a.fullname > b.fullname ? 1 : -1);
   }
 
   removeActor(actor: Actor) {
     const index = this.actors.findIndex(a => a.id === actor.id);
     this.actors = this.actors.slice(0, index).concat(this.actors.slice(index + 1));
-    this.actorsForAutocomplete = [...this.actorsForAutocomplete, { value: actor.firstname + ' ' + actor.lastname, data: actor }]
+    this.actorsForAutocomplete = [...this.actorsForAutocomplete, { value: actor.fullname, data: actor }]
       .sort((a, b) => a.value > b.value ? 1 : -1);
   }
 }

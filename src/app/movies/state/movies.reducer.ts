@@ -9,7 +9,8 @@ export interface State {
   movies: Movie[];
   selectedMovieId: string;
   selectedMovie: Movie;
-  loading: boolean;
+  loadingMovies: boolean;
+  loadingActors: boolean;
   filterPattern: string;
   scrollPosition: number;
 }
@@ -20,7 +21,8 @@ const defaultState: State = {
   movies: [],
   selectedMovieId: null,
   selectedMovie: null,
-  loading: false,
+  loadingMovies: false,
+  loadingActors: false,
   filterPattern: '',
   scrollPosition: 0
 };
@@ -28,14 +30,18 @@ const defaultState: State = {
 export function reducer(state: State = defaultState, action: MoviesActions.All) {
   switch (action.type) {
     case MoviesActions.GET_LIST_FORCED:
-      return { ...state, loading: true };
+      return { ...state, loadingMovies: true, loadingActors: true };
     case MoviesActions.LIST_RETRIEVED:
-      const movies = sortMovies(action.payload.movies);
+      const movies = sortMovies(action.payload);
 
       return {
-        ...state, movies, allMovies: movies, loading: false, allActors: action.payload.actors,
+        ...state, movies, allMovies: movies, loadingMovies: false,
         selectedMovie: getMovie(movies, state.selectedMovieId), selectedMovieId: null
       };
+    case MoviesActions.LIST_ACTORS_RETRIEVED:
+      const actors = sortActors(action.payload);
+
+      return { ...state, actors, allActors: actors, loadingActors: false };
     case MoviesActions.ADD:
       return { ...state, selectedMovie: <Movie>{ genres: [], actors: [] } };
     case MoviesActions.EDIT:
@@ -91,7 +97,7 @@ const deleteMovie = (movies: Movie[], id: string) => {
 const filterMovies = (movies: Movie[], pattern: string) => {
   return movies.filter(movie => {
     const fullString = (movie.title + ' ' + ' ' + movie.year + ' ' + movie.director + ' ' + movie.genres.join(' ') +
-      movie.actors.map(actor => actor.firstname + ' ' + actor.lastname).join(' '))
+      movie.actors.map(actor => actor.fullname).join(' '))
       .toUpperCase();
 
     return fullString.indexOf(pattern.toUpperCase()) > -1;
@@ -102,8 +108,16 @@ const sortMovies = (movies: Movie[]) => {
   return [...movies].sort(compareMovies);
 };
 
+const sortActors = (actors: Actor[]) => {
+  return [...actors].sort(compareActors);
+};
+
 const compareMovies = (a: Movie, b: Movie) => {
   return a.title > b.title ? 1 : -1;
+};
+
+const compareActors = (a: Actor, b: Actor) => {
+  return a.fullname > b.fullname ? 1 : -1;
 };
 
 export const selectMovies = createFeatureSelector<State>('movies');
@@ -111,7 +125,7 @@ export const selectMovies = createFeatureSelector<State>('movies');
 export const getMovies = createSelector(selectMovies, (state: State) => state.movies);
 export const getMoviesCount = createSelector(selectMovies, (state: State) => state.allMovies ? state.allMovies.length : 0);
 export const getSelectedMovie = createSelector(selectMovies, (state: State) => state.selectedMovie);
-export const getLoading = createSelector(selectMovies, (state: State) => state.loading);
+export const getLoading = createSelector(selectMovies, (state: State) => state.loadingMovies || state.loadingActors);
 export const getFilterPattern = createSelector(selectMovies, (state: State) => state.filterPattern);
 export const getScrollPosition = createSelector(selectMovies, (state: State) => state.scrollPosition);
 export const getAllActors = createSelector(selectMovies, (state: State) => state.allActors);

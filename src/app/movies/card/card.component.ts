@@ -16,7 +16,7 @@ export class MovieCardComponent implements OnInit {
   ngOnInit() {
     if (this.movie && this.movie.actors) {
       this.actors = this.movie.actors
-        .map((actor: Actor) => actor.firstname + ' ' + actor.lastname).join(', ');
+        .map((actor: Actor) => actor.fullname).join(', ');
     }
   }
 

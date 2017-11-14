@@ -9,14 +9,13 @@ import 'rxjs/add/operator/reduce';
 import 'rxjs/add/operator/do';
 
 import { environment } from '../../environments/environment';
-
-import { RetrieveResult } from './state/movies.actions';
 import { Movie, Actor } from '../core/models';
 
 @Injectable()
 export class MoviesService {
   private targetCreate: any;
   private targetRetrieve: any;
+  private targetRetrieveActors: any;
   private targetUpdate: any;
   private targetDelete: any;
 
@@ -24,11 +23,13 @@ export class MoviesService {
     if (environment.production) {
       this.targetCreate = this.createFirebase;
       this.targetRetrieve = this.retrieveFirebase;
+      this.targetRetrieveActors = this.retrieveActorsFirebase;
       this.targetUpdate = this.updateFirebase;
       this.targetDelete = this.deleteFirebase;
     } else {
       this.targetCreate = this.createLocal;
       this.targetRetrieve = this.retrieveLocal;
+      this.targetRetrieveActors = this.retrieveActorsLocal;
       this.targetUpdate = this.updateLocal;
       this.targetDelete = this.deleteLocal;
     }
@@ -38,8 +39,12 @@ export class MoviesService {
     return this.targetCreate(movie);
   }
 
-  retrieve(): Observable<RetrieveResult> {
+  retrieve(): Observable<Movie[]> {
     return this.targetRetrieve();
+  }
+
+  retrieveActors(): Observable<Actor[]> {
+    return this.targetRetrieveActors();
   }
 
   update(movie: Movie): Observable<any> {
@@ -70,7 +75,7 @@ export class MoviesService {
         .map(() => result));
   }
 
-  retrieveLocal(): Observable<RetrieveResult> {
+  retrieveLocal(): Observable<Movie[]> {
     return this.http.get(`${environment.backEnd}/movies`)
       // .delay(1000)
       .map(movies => movies.json())
@@ -79,16 +84,14 @@ export class MoviesService {
         .map(movieActors => movieActors.json().actors)
         .concatAll()
         .mergeMap(actorId => this.http.get(`${environment.backEnd}/actors/${actorId}`)
-          .map(actor => actor.json()))
+          .map(actor => actor.json())
+          .map(actor => ({ ...actor, fullname: this.getFullname(actor) })))
         .reduce((actors, actor) => ([...actors, actor]), [])
         .map(actors => ({ ...movie, actors })))
-      .reduce((movies, movie) => ([...movies, movie]), [])
-      .mergeMap(movies => this.http.get(`${environment.backEnd}/actors`)
-        .map(actors => actors.json())
-        .map(actors => ({ movies, actors })));
+      .reduce((movies, movie) => ([...movies, movie]), []);
   }
 
-  retrieveFirebase(): Observable<RetrieveResult> {
+  retrieveFirebase(): Observable<Movie[]> {
     return this.http.get(`${environment.backEnd}/movies.json`)
       // .delay(1000)
       .map(movies => movies.json())
@@ -120,24 +123,33 @@ export class MoviesService {
         })
         .mergeMap(actorId => this.http.get(`${environment.backEnd}/actors/${actorId}.json`)
           .map(actor => actor.json())
-          .map(actor => (<Actor>{ id: actorId, firstname: actor.firstname, lastname: actor.lastname })))
+          .map(actor => (<Actor>{ id: actorId, firstname: actor.firstname, lastname: actor.lastname, fullname: this.getFullname(actor) })))
         .reduce((actors, actor) => ([...actors, actor]), [])
         .map(actors => ({ ...movie, actors })))
-      .reduce((movies, movie) => ([...movies, movie]), [])
-      .mergeMap(movies => this.http.get(`${environment.backEnd}/actors.json`)
-        .map(actors => actors.json())
-        .map(actors => {
-          const actorsArray = [];
+      .reduce((movies, movie) => ([...movies, movie]), []);
+  }
 
-          for (const key in actors) {
-            if (actors.hasOwnProperty(key)) {
-              actorsArray.push(<Actor>{ id: key, firstname: actors[key].firstname, lastname: actors[key].lastname });
-            }
+  retrieveActorsLocal(): Observable<Actor[]> {
+    return this.http.get(`${environment.backEnd}/actors`)
+      .map(actors => actors.json())
+      .map(actors => actors.map(actor => ({ ...actor, fullname: this.getFullname(actor) })));
+  }
+
+  retrieveActorsFirebase(): Observable<Actor[]> {
+    return this.http.get(`${environment.backEnd}/actors.json`)
+      .map(actors => actors.json())
+      .map(actors => {
+        const actorsArray = [];
+
+        for (const key in actors) {
+          if (actors.hasOwnProperty(key)) {
+            actorsArray.push(<Actor>{ id: key, firstname: actors[key].firstname, lastname: actors[key].lastname });
           }
+        }
 
-          return actorsArray;
-        })
-        .map(actors => ({ movies, actors })));
+        return actorsArray;
+      })
+      .map(actors => actors.map(actor => ({ ...actor, fullname: this.getFullname(actor) })));
   }
 
   updateLocal(movie: Movie) {
@@ -164,5 +176,9 @@ export class MoviesService {
   deleteFirebase(id: string) {
     return this.http.delete(`${environment.backEnd}/movies/${id}.json`)
       .mergeMap(() => this.http.delete(`${environment.backEnd}/movies-actors/${id}.json`));
+  }
+
+  private getFullname(actor: Actor) {
+    return actor.firstname + ' ' + actor.lastname;
   }
 }

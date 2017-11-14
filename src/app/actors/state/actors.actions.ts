@@ -1,4 +1,4 @@
-import { Store, Action } from '@ngrx/store';
+import { Action } from '@ngrx/store';
 import { Actor } from '../../core/models';
 
 export const GET_LIST = '[Actors] Get list';
