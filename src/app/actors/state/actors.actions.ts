@@ -4,7 +4,6 @@ import { Actor } from '../../core/models';
 export const GET_LIST = '[Actors] Get list';
 export const GET_LIST_FORCED = '[Actors] Get list forced';
 export const LIST_RETRIEVED = '[Actors] List retrieved';
-export const ADD = '[Actors] Add';
 export const EDIT = '[Actors] Edit';
 export const CREATE = '[Actors] Create';
 export const CREATE_DONE = '[Actors] Create done';
@@ -27,10 +26,6 @@ export class ListRetrieved implements Action {
   readonly type = LIST_RETRIEVED;
 
   constructor(public payload: Actor[]) { }
-}
-
-export class Add implements Action {
-  readonly type = ADD;
 }
 
 export class Edit implements Action {
@@ -87,7 +82,6 @@ export type All
   = GetList
   | GetListForced
   | ListRetrieved
-  | Add
   | Create
   | CreateDone
   | Update

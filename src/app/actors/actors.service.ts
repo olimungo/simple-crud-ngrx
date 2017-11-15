@@ -3,9 +3,9 @@ import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import * as uuid from 'uuid';
 
-import { environment } from '../../environments/environment';
-
 import 'rxjs/add/operator/delay';
+
+import { environment } from '../../environments/environment';
 import { Actor } from '../core/models';
 
 @Injectable()
@@ -61,12 +61,13 @@ export class ActorsService {
   retrieveLocal(): Observable<Actor[]> {
     return this.http.get(`${environment.backEnd}/actors`)
       .delay(1000)
-      .map(actors => actors.json());
+      .map(actors => actors.json())
+      .map(actors => actors.map(actor => ({ ...actor, fullname: this.getFullname(actor) })));
   }
 
   retrieveFirebase(): Observable<Actor[]> {
     return this.http.get(`${environment.backEnd}/actors.json`)
-      .delay(1000)
+      // .delay(1000)
       .map(actors => actors.json())
       .map(actors => {
         const actorsArray = [];
@@ -78,7 +79,8 @@ export class ActorsService {
         }
 
         return actorsArray;
-      });
+      })
+      .map(actors => actors.map(actor => ({ ...actor, fullname: this.getFullname(actor) })));
   }
 
   updateLocal(actor: Actor) {
@@ -96,5 +98,9 @@ export class ActorsService {
 
   deleteFirebase(id: string) {
     return this.http.delete(`${environment.backEnd}/actors/${id}.json`);
+  }
+
+  private getFullname(actor: Actor) {
+    return actor.lastname + ' ' + actor.firstname;
   }
 }

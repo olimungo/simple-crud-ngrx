@@ -38,8 +38,6 @@ export class ActorEditComponent implements OnInit, OnDestroy {
     this.route.params.subscribe(params => {
       if (params['id']) {
         this.store.dispatch(new ActorsActions.Edit(params['id']));
-      } else {
-        this.store.dispatch(new ActorsActions.Add());
       }
     });
   }

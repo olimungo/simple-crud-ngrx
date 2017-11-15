@@ -28,22 +28,24 @@ const defaultState: State = {
 };
 
 export function reducer(state: State = defaultState, action: MoviesActions.All) {
+  let actors: Actor[];
+
   switch (action.type) {
     case MoviesActions.GET_LIST_FORCED:
       return { ...state, loadingMovies: true, loadingActors: true };
     case MoviesActions.LIST_RETRIEVED:
-      const movies = sortMovies(action.payload);
+      let movies = sortMovies(action.payload);
+
+      movies = movies.map(movie => ({ ...movie, actors: sortActors(movie.actors) }));
 
       return {
         ...state, movies, allMovies: movies, loadingMovies: false,
         selectedMovie: getMovie(movies, state.selectedMovieId), selectedMovieId: null
       };
     case MoviesActions.LIST_ACTORS_RETRIEVED:
-      const actors = sortActors(action.payload);
+      actors = sortActors(action.payload);
 
       return { ...state, actors, allActors: actors, loadingActors: false };
-    case MoviesActions.ADD:
-      return { ...state, selectedMovie: <Movie>{ genres: [], actors: [] } };
     case MoviesActions.EDIT:
       return {
         ...state, selectedMovie: getMovie(state.allMovies, action.payload),

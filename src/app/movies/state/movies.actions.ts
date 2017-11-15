@@ -6,7 +6,6 @@ export const GET_LIST_FORCED = '[Movies] list forced';
 export const GET_LIST_ACTORS_FORCED = '[Movies] list actors forced';
 export const LIST_RETRIEVED = '[Movies] List retrieved';
 export const LIST_ACTORS_RETRIEVED = '[Movies] List actors retrieved';
-export const ADD = '[Movies] Add';
 export const EDIT = '[Movies] Edit';
 export const CREATE = '[Movies] Create';
 export const CREATE_DONE = '[Movies] Create done';
@@ -39,10 +38,6 @@ export class ListActorsRetrieved implements Action {
   readonly type = LIST_ACTORS_RETRIEVED;
 
   constructor(public payload: Actor[]) { }
-}
-
-export class Add implements Action {
-  readonly type = ADD;
 }
 
 export class Edit implements Action {
@@ -101,7 +96,6 @@ export type All
   | GetListActorsForced
   | ListRetrieved
   | ListActorsRetrieved
-  | Add
   | Create
   | CreateDone
   | Update

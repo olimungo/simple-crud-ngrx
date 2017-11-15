@@ -171,16 +171,15 @@
       "director": "Caleb Glover"
     },
     {
-      "id": "e9528e48-e1c8-4684-a01d-5c9ed107ad84",
       "title": "Architect Music Forward",
       "genres": [
         "Documentary",
         "Mystery",
-        "Horror",
-        "Animation"
+        "Horror"
       ],
       "year": 1997,
-      "director": "Ida Tremblay"
+      "director": "Ida Tremblay",
+      "id": "e9528e48-e1c8-4684-a01d-5c9ed107ad84"
     },
     {
       "id": "1bd4a3d8-5fa0-4ba2-8678-82a931411173",
@@ -391,14 +390,14 @@
       "director": "Kody Corwin"
     },
     {
-      "id": "def15b5b-b69b-4471-a8fb-91259f402d4d",
       "title": "Bedfordshire back-end Berkshire",
       "genres": [
         "Animation",
         "Comedy"
       ],
       "year": 1989,
-      "director": "Fritz Christiansen"
+      "director": "Fritz Christiansen",
+      "id": "def15b5b-b69b-4471-a8fb-91259f402d4d"
     }
   ],
   "movies-actors": [
@@ -432,13 +431,13 @@
       ]
     },
     {
-      "id": "e9528e48-e1c8-4684-a01d-5c9ed107ad84",
       "actors": [
-        "aec4c022-1fe3-4cfa-9ec7-51e01dad2f18",
         "9ca51c47-3c24-4335-9f26-039ffa0766ba",
+        "46e623c2-5a1f-418e-bd08-a3fe0530dcb7",
         "ffb47f56-7972-4f9b-a3c7-be580ec820de",
-        "46e623c2-5a1f-418e-bd08-a3fe0530dcb7"
-      ]
+        "aec4c022-1fe3-4cfa-9ec7-51e01dad2f18"
+      ],
+      "id": "e9528e48-e1c8-4684-a01d-5c9ed107ad84"
     },
     {
       "id": "1bd4a3d8-5fa0-4ba2-8678-82a931411173",
@@ -598,11 +597,11 @@
       ]
     },
     {
-      "id": "def15b5b-b69b-4471-a8fb-91259f402d4d",
       "actors": [
-        "881ba790-816d-41d9-91f8-f023f7658f0e",
+        "154724a4-1386-4e2e-b5ef-87b1276523c6",
         "aec4c022-1fe3-4cfa-9ec7-51e01dad2f18"
-      ]
+      ],
+      "id": "def15b5b-b69b-4471-a8fb-91259f402d4d"
     }
   ]
 }

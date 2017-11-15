@@ -36,8 +36,6 @@ export function reducer(state: State = defaultState, action: ActorsActions.All) 
         ...state, actors: actors, allActors: actors, loading: false,
         selectedActor: getActor(actors, state.selectedActorId), selectedActorId: null
       };
-    case ActorsActions.ADD:
-      return { ...state, selectedActor: <Actor>{} };
     case ActorsActions.EDIT:
       return {
         ...state, selectedActor: getActor(state.allActors, action.payload),
@@ -89,7 +87,7 @@ const deleteActor = (actors: Actor[], id: string) => {
 
 const filterActors = (actors: Actor[], pattern: string) => {
   return actors.filter(actor => {
-    const fullString = (actor.firstname + ' ' + actor.lastname).toUpperCase();
+    const fullString = actor.fullname.toUpperCase();
     return fullString.indexOf(pattern.toUpperCase()) > -1;
   });
 };
@@ -99,7 +97,7 @@ const sortActors = (actors: Actor[]) => {
 };
 
 const compareActors = (a: Actor, b: Actor) => {
-  return a.lastname + a.firstname > b.lastname + b.firstname ? 1 : -1;
+  return a.fullname > b.fullname ? 1 : -1;
 };
 
 export const selectActors = createFeatureSelector<State>('actors');

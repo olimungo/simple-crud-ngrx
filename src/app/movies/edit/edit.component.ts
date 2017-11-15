@@ -37,10 +37,10 @@ export class MovieEditComponent implements OnInit, OnDestroy {
 
     this.movieSubscrition = this.store.select(MoviesReducer.getSelectedMovie).subscribe(movie => {
       this.id = null;
-      this.title = null;
+      this.title = '';
       this.genres = [];
       this.year = null;
-      this.director = null;
+      this.director = '';
       this.actors = [];
       this.actorsForAutocomplete = [];
       this.genresForAutocomplete = [];
@@ -74,8 +74,6 @@ export class MovieEditComponent implements OnInit, OnDestroy {
     this.route.params.subscribe(params => {
       if (params['id']) {
         this.store.dispatch(new MoviesActions.Edit(params['id']));
-      } else {
-        this.store.dispatch(new MoviesActions.Add());
       }
     });
   }

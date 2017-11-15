@@ -6,7 +6,6 @@ import * as uuid from 'uuid';
 
 import 'rxjs/add/operator/concatAll';
 import 'rxjs/add/operator/reduce';
-import 'rxjs/add/operator/do';
 
 import { environment } from '../../environments/environment';
 import { Movie, Actor } from '../core/models';
@@ -157,7 +156,7 @@ export class MoviesService {
 
     return this.http.put(`${environment.backEnd}/movies/${movie.id}`,
       { title: movie.title, genres: movie.genres, year: movie.year, director: movie.director })
-      .mergeMap(() => this.http.put(`${environment.backEnd}/movies-actors/${movie.id}`, { newActors }));
+      .mergeMap(() => this.http.put(`${environment.backEnd}/movies-actors/${movie.id}`, { actors: newActors }));
   }
 
   updateFirebase(movie: Movie) {
@@ -179,6 +178,6 @@ export class MoviesService {
   }
 
   private getFullname(actor: Actor) {
-    return actor.firstname + ' ' + actor.lastname;
+    return actor.lastname + ' ' + actor.firstname;
   }
 }
