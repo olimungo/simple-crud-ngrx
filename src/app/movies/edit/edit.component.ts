@@ -17,17 +17,14 @@ import { Actor, allGenres, Movie } from '../../core/models';
   styleUrls: ['./edit.component.css']
 })
 export class MovieEditComponent implements OnInit, OnDestroy {
-  id: string;
-  title: string;
+  movie: Movie;
+
   genres: string[];
   genresForAutocomplete: AutocompleteItem[];
-  year: number;
-  director: string;
   actors: Actor[];
   actorsForAutocomplete: AutocompleteItem[];
 
   loading: Observable<boolean>;
-  pattern = '';
 
   private movieSubscrition: Subscription;
   private actorsSubscrition: Subscription;
@@ -35,12 +32,10 @@ export class MovieEditComponent implements OnInit, OnDestroy {
   constructor(private router: Router, private route: ActivatedRoute, private store: Store<MoviesReducer.State>) {
     this.loading = this.store.select(MoviesReducer.getLoading);
 
+    this.store.select(MoviesReducer.getSelectedMovie).subscribe(movie => this.movie = { ...movie });
+
     this.movieSubscrition = this.store.select(MoviesReducer.getSelectedMovie).subscribe(movie => {
-      this.id = null;
-      this.title = '';
       this.genres = [];
-      this.year = null;
-      this.director = '';
       this.actors = [];
       this.actorsForAutocomplete = [];
       this.genresForAutocomplete = [];
@@ -48,11 +43,7 @@ export class MovieEditComponent implements OnInit, OnDestroy {
       // console.log(movie)
 
       if (movie) {
-        this.id = movie.id;
-        this.title = movie.title;
         this.genres = movie.genres;
-        this.year = movie.year;
-        this.director = movie.director;
         this.actors = movie.actors;
 
         this.genresForAutocomplete = allGenres
@@ -84,17 +75,14 @@ export class MovieEditComponent implements OnInit, OnDestroy {
   }
 
   save() {
-    const movie: Movie = {
-      id: this.id, title: this.title, genres: this.genres, year: this.year,
-      director: this.director, actors: this.actors };
+    console.log(this.movie.id);
+    // if (this.movie.id) {
+    //   this.store.dispatch(new MoviesActions.Update(this.movie));
+    // } else {
+    //   this.store.dispatch(new MoviesActions.Create(this.movie));
+    // }
 
-    if (this.id) {
-      this.store.dispatch(new MoviesActions.Update(movie));
-    } else {
-      this.store.dispatch(new MoviesActions.Create(movie));
-    }
-
-    this.backToList();
+    // this.backToList();
   }
 
   cancel() {
@@ -103,7 +91,7 @@ export class MovieEditComponent implements OnInit, OnDestroy {
   }
 
   delete() {
-    this.store.dispatch(new MoviesActions.Delete(this.id));
+    this.store.dispatch(new MoviesActions.Delete(this.movie.id));
     this.backToList();
   }
 
