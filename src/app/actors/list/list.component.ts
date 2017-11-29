@@ -8,8 +8,7 @@ import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/observable/fromEvent';
 
-import * as ActorsActions from '../state/actors.actions';
-import * as ActorsReducer from '../state/actors.reducer';
+import { State, Reducer, Actions } from '../state';
 import { Actor } from '../../core/models';
 
 @Component({
@@ -26,23 +25,23 @@ export class ActorsListComponent implements OnDestroy, AfterViewInit {
 
   private scrollSubscription: Subscription;
 
-  constructor(private router: Router, private store: Store<ActorsReducer.State>) {
-    this.actors = this.store.select(ActorsReducer.getActors);
-    this.loading = this.store.select(ActorsReducer.getLoading);
+  constructor(private router: Router, private store: Store<State>) {
+    this.actors = this.store.select(Reducer.getActors);
+    this.loading = this.store.select(Reducer.getLoading);
 
-    this.store.select(ActorsReducer.getFilterPattern).take(1).subscribe(pattern => {
+    this.store.select(Reducer.getFilterPattern).take(1).subscribe(pattern => {
       this.pattern = pattern;
     });
   }
 
   ngAfterViewInit() {
-    this.store.select(ActorsReducer.getScrollPosition).take(1).subscribe(position => {
+    this.store.select(Reducer.getScrollPosition).take(1).subscribe(position => {
       this.scroll.nativeElement.scrollTop = position;
     });
 
     this.scrollSubscription = Observable.fromEvent(this.scroll.nativeElement, 'scroll').debounceTime(500)
       .subscribe(event => {
-        this.store.dispatch(new ActorsActions.SaveScrollPosition(this.scroll.nativeElement.scrollTop));
+        this.store.dispatch(new Actions.SaveScrollPosition(this.scroll.nativeElement.scrollTop));
       });
   }
 
@@ -59,6 +58,6 @@ export class ActorsListComponent implements OnDestroy, AfterViewInit {
   }
 
   patternChange(pattern: string) {
-    this.store.dispatch(new ActorsActions.Filter(pattern));
+    this.store.dispatch(new Actions.Filter(pattern));
   }
 }

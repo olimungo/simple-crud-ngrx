@@ -15,15 +15,15 @@ import { ActorEditComponent } from './edit/edit.component';
 
 import { ActorsService } from './actors.service';
 
-import * as ActorsState from './state';
+import { Actions, reducer, effects, State } from './state';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     HttpModule,
-    StoreModule.forFeature('actors', ActorsState.reducer),
-    EffectsModule.forFeature([ActorsState.Effects]),
+    StoreModule.forFeature('actors', reducer),
+    EffectsModule.forFeature(effects),
     SharedModule,
     ActorsRoutingModule
   ],
@@ -31,11 +31,11 @@ import * as ActorsState from './state';
   providers: [ActorsService]
 })
 export class ActorsModule {
-  constructor(router: Router, store: Store<ActorsState.State>) {
+  constructor(router: Router, store: Store<State>) {
     router.events.subscribe(event => {
       if (event instanceof RouteConfigLoadEnd) {
         if (event.route.path.indexOf('actors') > -1) {
-          store.dispatch(new ActorsState.GetList());
+          store.dispatch(new Actions.GetList());
         }
       }
     });

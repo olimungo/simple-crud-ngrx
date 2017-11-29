@@ -1,3 +1,9 @@
-export * from './actors.actions';
-export { reducer, State } from './actors.reducer';
-export { Effects } from './actors.effects';
+import * as Actions from './actions';
+import * as Reducer from './reducer';
+import { Effects } from './effects';
+
+export { Actions, Reducer };
+export { State, reducer } from './reducer';
+
+export const effects = [Effects];
+

@@ -1,18 +1,18 @@
 import { Action } from '@ngrx/store';
 import { Actor } from '../../core/models';
 
-export const GET_LIST = '[Actors] Get list';
-export const GET_LIST_FORCED = '[Actors] Get list forced';
-export const LIST_RETRIEVED = '[Actors] List retrieved';
-export const EDIT = '[Actors] Edit';
-export const CREATE = '[Actors] Create';
-export const CREATE_DONE = '[Actors] Create done';
-export const UPDATE = '[Actors] Update';
-export const CANCEL = '[Actors] Cancel';
-export const DELETE = '[Actors] Delete';
-export const FILTER = '[Actors] Filter';
-export const SAVE_SCROLL_POSITION = '[Actors] Save scroll position';
-export const NO_ACTION = '[Actors] No action';
+export const GET_LIST = '[Actors-list] Get list';
+export const GET_LIST_FORCED = '[Actors-list] Get list forced';
+export const LIST_RETRIEVED = '[Actors-list] List retrieved';
+export const FILTER = '[Actors-list] Filter';
+export const SAVE_SCROLL_POSITION = '[Actors-list] Save scroll position';
+export const EDIT = '[Actors-list] Edit';
+export const CREATE = '[Actors-list] Create';
+export const CREATE_DONE = '[Actors-list] Create done';
+export const UPDATE = '[Actors-list] Update';
+export const CANCEL = '[Actors-list] Cancel';
+export const DELETE = '[Actors-list] Delete';
+export const NO_ACTION = '[Actors-list] No action';
 
 export class GetList implements Action {
   readonly type = GET_LIST;
@@ -26,6 +26,18 @@ export class ListRetrieved implements Action {
   readonly type = LIST_RETRIEVED;
 
   constructor(public payload: Actor[]) { }
+}
+
+export class Filter implements Action {
+  readonly type = FILTER;
+
+  constructor(public payload: string) { }
+}
+
+export class SaveScrollPosition implements Action {
+  readonly type = SAVE_SCROLL_POSITION;
+
+  constructor(public payload: number) { }
 }
 
 export class Edit implements Action {
@@ -62,18 +74,6 @@ export class Delete implements Action {
   constructor(public payload: string) { }
 }
 
-export class Filter implements Action {
-  readonly type = FILTER;
-
-  constructor(public payload: string) { }
-}
-
-export class SaveScrollPosition implements Action {
-  readonly type = SAVE_SCROLL_POSITION;
-
-  constructor(public payload: number) { }
-}
-
 export class NoAction implements Action {
   readonly type = NO_ACTION;
 }
@@ -82,13 +82,13 @@ export type All
   = GetList
   | GetListForced
   | ListRetrieved
+  | Filter
+  | SaveScrollPosition
   | Create
   | CreateDone
   | Update
   | Edit
   | Cancel
   | Delete
-  | Filter
-  | SaveScrollPosition
   | NoAction;
 
