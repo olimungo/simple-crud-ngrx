@@ -4,12 +4,9 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { Store } from '@ngrx/store';
 
-import 'rxjs/add/operator/take';
-
-import { Movie } from '../movie.entity';
-
-import * as MoviesActions from '../state/movies.actions';
-import * as MoviesReducer from '../state/movies.reducer';
+import { Actions, Reducer, State } from '../state';
+import { AutocompleteItem } from '../../shared/autocomplete/autocomplete-item.entity';
+import { Actor, Movie } from '../../core/models';
 
 @Component({
   selector: 'feat-movie-edit',
@@ -17,35 +14,47 @@ import * as MoviesReducer from '../state/movies.reducer';
   styleUrls: ['./edit.component.css']
 })
 export class MovieEditComponent implements OnInit, OnDestroy {
-  id: string;
-  title: string;
-  genre: string;
-  year: number;
-  director: string;
+  // movie: Movie;
+
+  movie: Movie = {
+    id: null,
+    title: null,
+    genres: [],
+    year: null,
+    director: null,
+    actors: []
+  };
+
+  genresForAutocomplete: Observable<AutocompleteItem[]>;
+  actorsForAutocomplete: Observable<AutocompleteItem[]>;
 
   loading: Observable<boolean>;
 
   private movieSubscrition: Subscription;
 
-  constructor(private router: Router, private route: ActivatedRoute, private store: Store<MoviesReducer.State>) {
-    this.loading = this.store.select(MoviesReducer.getLoading);
+  constructor(private router: Router, private route: ActivatedRoute, private store: Store<Reducer.State>) {
+    this.loading = this.store.select(Reducer.getLoading);
 
-    this.movieSubscrition = this.store.select(MoviesReducer.getSelectedMovie).subscribe(movie => {
-      this.id = movie ? movie.id : null;
-      this.title = movie ? movie.title : null;
-      this.genre = movie ? movie.genre : null;
-      this.year = movie ? movie.year : null;
-      this.director = movie ? movie.director : null;
-    });
+    // Cannot handle an HTML input field with an Observable. So, we need to subscribe to the element in the store...
+    // ...and unsubscribe when component is destroyed (see ngOnDestroy)
+    this.movieSubscrition = this.store.select(Reducer.getSelectedMovie)
+      .subscribe(movie => {
+        this.movie = { ...movie };
+      });
+
+    this.genresForAutocomplete = this.store.select(Reducer.getFilteredGenres);
+    this.actorsForAutocomplete = this.store.select(Reducer.getFilteredActors);
   }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
+      let id = '';
+
       if (params['id']) {
-        this.store.dispatch(new MoviesActions.Edit(params['id']));
-      } else {
-        this.store.dispatch(new MoviesActions.Add());
+        id = params['id'];
       }
+
+      this.store.dispatch(new Actions.Edit(id));
     });
   }
 
@@ -54,28 +63,42 @@ export class MovieEditComponent implements OnInit, OnDestroy {
   }
 
   save() {
-    const movie: Movie = { id: this.id, title: this.title, genre: this.genre, year: this.year, director: this.director };
-
-    if (this.id) {
-      this.store.dispatch(new MoviesActions.Update(movie));
+    if (this.movie.id) {
+      this.store.dispatch(new Actions.Update(this.movie));
     } else {
-      this.store.dispatch(new MoviesActions.Create(movie));
+      this.store.dispatch(new Actions.Create(this.movie));
     }
 
     this.backToList();
   }
 
   cancel() {
-    this.store.dispatch(new MoviesActions.Cancel());
+    this.store.dispatch(new Actions.Cancel());
     this.backToList();
   }
 
   delete() {
-    this.store.dispatch(new MoviesActions.Delete(this.id));
+    this.store.dispatch(new Actions.Delete(this.movie.id));
     this.backToList();
   }
 
   backToList() {
     this.router.navigate(['movies']);
+  }
+
+  addGenre(genre: string) {
+    this.store.dispatch(new Actions.AddGenre(genre));
+  }
+
+  removeGenre(genre: string) {
+    this.store.dispatch(new Actions.RemoveGenre(genre));
+  }
+
+  addActor(actor: Actor) {
+    this.store.dispatch(new Actions.AddActor(actor));
+  }
+
+  removeActor(actor: Actor) {
+    this.store.dispatch(new Actions.RemoveActor(actor));
   }
 }

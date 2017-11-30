@@ -1,0 +1,37 @@
+.autocomplete-input {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.autocomplete-input input {
+  padding-right: 2em;
+  width: 14em;
+}
+
+.autocomplete-input-button {
+  position: relative;
+  right: 1.8em;
+}
+
+.autocomplete-input-close {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  width: 1.5em;
+  height: 1.5em;
+}
+
+.autocomplete-input-close .fa {
+  color: #777;
+}
+
+.autocomplete-input-close:hover {
+  background: #eee;
+}
+
+.autocomplete-input-close:active {
+  background: #ddd;
+}
+

@@ -13,12 +13,9 @@ import { ActorsListComponent } from './list/list.component';
 import { ActorCardComponent } from './card/card.component';
 import { ActorEditComponent } from './edit/edit.component';
 
-import { reducer } from './state/actors.reducer';
-import { Effects } from './state/actors.effects';
 import { ActorsService } from './actors.service';
 
-import * as ActorsActions from './state/actors.actions';
-import * as ActorsReducer from './state/actors.reducer';
+import { Actions, reducer, effects, State } from './state';
 
 @NgModule({
   imports: [
@@ -26,7 +23,7 @@ import * as ActorsReducer from './state/actors.reducer';
     FormsModule,
     HttpModule,
     StoreModule.forFeature('actors', reducer),
-    EffectsModule.forFeature([Effects]),
+    EffectsModule.forFeature(effects),
     SharedModule,
     ActorsRoutingModule
   ],
@@ -34,11 +31,11 @@ import * as ActorsReducer from './state/actors.reducer';
   providers: [ActorsService]
 })
 export class ActorsModule {
-  constructor(router: Router, store: Store<ActorsReducer.State>) {
+  constructor(router: Router, store: Store<State>) {
     router.events.subscribe(event => {
       if (event instanceof RouteConfigLoadEnd) {
         if (event.route.path.indexOf('actors') > -1) {
-          store.dispatch(new ActorsActions.GetList());
+          store.dispatch(new Actions.GetList());
         }
       }
     });

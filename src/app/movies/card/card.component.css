@@ -4,15 +4,25 @@
 
 .movie-card {
   padding: 1em;
-  width: 27em;
+  width: 23em;
+}
+
+.movie-card-header {
+  display: flex;
+  align-items: center;
 }
 
 .movie-card-title {
   font-weight: bold;
+  max-width: 20em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .movie-card-year {
   font-size: .8em;
+  margin-left: .4em;
 }
 
 .movie-card-director {
@@ -25,14 +35,23 @@
   color: #777;
 }
 
-.movie-card-genre {
-  margin-bottom: .9em;
+.movie-card-genre  {
+  margin-bottom: .7em;
 }
+
+.movie-card-genre shr-tag {
+  margin-right: .5em;
+}
+
 
 .movie-card-actors {
   font-size: .8em;
 }
 
-.movie-card-actors label {
-  color: #777;
+.movie-card-actors div {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 26em;
 }

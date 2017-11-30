@@ -1,18 +1,20 @@
 <div class="movie-card clickable">
-  <label class="movie-card-title">{{ movie?.title }}</label>
-  <label class="movie-card-year">({{ movie?.year }})</label>
+  <div class="movie-card-header">
+    <div class="movie-card-title">{{ movie?.title }}</div>
+    <div class="movie-card-year">({{ movie?.year }})</div>
+  </div>
 
   <div class="movie-card-director">
-    <div>directed by <label>{{ movie?.director }}</label></div>
+    <div>directed by
+      <label>{{ movie?.director }}</label>
+    </div>
   </div>
 
   <div class="movie-card-genre">
-    <div class="tag">{{ movie?.genre }}</div>
+    <shr-tag *ngFor="let genre of movie.genres" [label]="genre" [isClosable]="false"></shr-tag>
   </div>
 
-  <div class="movie-card-actors">
-    <div>with Alain Delon, Benicio del Toro, Daniel Craig, Roger Moore...</div>
+  <div class="movie-card-actors" [hidden]="!actors.length">
+    <div>with {{ actors }}</div>
   </div>
 </div>
-
-

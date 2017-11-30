@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-
-import { Movie } from '../movie.entity';
+import { Movie, Actor } from '../../core/models';
 
 @Component({
   selector: 'feat-movie-card',
@@ -10,10 +9,15 @@ import { Movie } from '../movie.entity';
 export class MovieCardComponent implements OnInit {
   @Input() movie: Movie;
 
+  actors = '';
+
   constructor() { }
 
   ngOnInit() {
-    console.log(this.movie);
+    if (this.movie && this.movie.actors) {
+      this.actors = this.movie.actors
+        .map((actor: Actor) => actor.fullname).join(', ');
+    }
   }
 
 }

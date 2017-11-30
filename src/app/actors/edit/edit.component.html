@@ -13,12 +13,12 @@
     <form #form="ngForm">
       <div class="form-group">
         <label for="firstname">Firstname</label>
-        <input type="text" id="firstname" name="firstname" required [(ngModel)]="firstname">
+        <input type="text" id="firstname" name="firstname" required [ngModel]="actor?.firstname" (ngModelChange)="actor.firstname=$event">
       </div>
 
       <div class="form-group">
         <label for="lastname">Lastname</label>
-        <input type="text" id="lastname" name="lastname" required [(ngModel)]="lastname">
+        <input type="text" id="lastname" name="lastname" required [ngModel]="actor?.lastname" (ngModelChange)="actor.lastname=$event">
       </div>
     </form>
 

@@ -1,0 +1,5 @@
+<div class="autocomplete-popup">
+  <div *ngFor="let item of items">
+    <shr-autocomplete-item [item]="item" (itemSelected)="selectItem($event)"></shr-autocomplete-item>
+  </div>
+</div>

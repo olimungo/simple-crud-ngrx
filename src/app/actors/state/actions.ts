@@ -1,19 +1,17 @@
-import { Store, Action } from '@ngrx/store';
-
-import { Actor } from '../actor.entity';
+import { Action } from '@ngrx/store';
+import { Actor } from '../../core/models';
 
 export const GET_LIST = '[Actors] Get list';
 export const GET_LIST_FORCED = '[Actors] Get list forced';
 export const LIST_RETRIEVED = '[Actors] List retrieved';
-export const ADD = '[Actors] Add';
+export const FILTER = '[Actors] Filter';
+export const SAVE_SCROLL_POSITION = '[Actors] Save scroll position';
 export const EDIT = '[Actors] Edit';
 export const CREATE = '[Actors] Create';
 export const CREATE_DONE = '[Actors] Create done';
 export const UPDATE = '[Actors] Update';
 export const CANCEL = '[Actors] Cancel';
 export const DELETE = '[Actors] Delete';
-export const FILTER = '[Actors] Filter';
-export const SAVE_SCROLL_POSITION = '[Actors] Save scroll position';
 export const NO_ACTION = '[Actors] No action';
 
 export class GetList implements Action {
@@ -30,8 +28,16 @@ export class ListRetrieved implements Action {
   constructor(public payload: Actor[]) { }
 }
 
-export class Add implements Action {
-  readonly type = ADD;
+export class Filter implements Action {
+  readonly type = FILTER;
+
+  constructor(public payload: string) { }
+}
+
+export class SaveScrollPosition implements Action {
+  readonly type = SAVE_SCROLL_POSITION;
+
+  constructor(public payload: number) { }
 }
 
 export class Edit implements Action {
@@ -68,18 +74,6 @@ export class Delete implements Action {
   constructor(public payload: string) { }
 }
 
-export class Filter implements Action {
-  readonly type = FILTER;
-
-  constructor(public payload: string) { }
-}
-
-export class SaveScrollPosition implements Action {
-  readonly type = SAVE_SCROLL_POSITION;
-
-  constructor(public payload: number) { }
-}
-
 export class NoAction implements Action {
   readonly type = NO_ACTION;
 }
@@ -88,14 +82,13 @@ export type All
   = GetList
   | GetListForced
   | ListRetrieved
-  | Add
+  | Filter
+  | SaveScrollPosition
   | Create
   | CreateDone
   | Update
   | Edit
   | Cancel
   | Delete
-  | Filter
-  | SaveScrollPosition
   | NoAction;
 

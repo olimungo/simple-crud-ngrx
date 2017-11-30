@@ -1,0 +1,14 @@
+.autocomplete {
+  display: inline-block;
+}
+
+.autocomplete .popup {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .2s ease-in;
+}
+
+.autocomplete .popup.visible {
+  visibility: visible;
+  opacity: 1;
+}

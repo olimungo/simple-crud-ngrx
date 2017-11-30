@@ -1,0 +1,15 @@
+.tag {
+  padding: .4em .7em;
+}
+
+.tag .fa {
+  margin-left: .4em ;
+}
+
+.tag .fa:hover {
+  color: #888;
+}
+
+.tag .fa:active {
+  color: #777;
+}

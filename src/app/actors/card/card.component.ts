@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-
-import { Actor } from '../actor.entity';
+import { Actor } from '../../core/models';
 
 @Component({
   selector: 'feat-actor-card',
