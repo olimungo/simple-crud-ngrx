@@ -45,7 +45,9 @@ export function reducer(state: State = defaultState, action: Actions.All) {
 
       movies = movies.map(movie => ({ ...movie, actors: sortActors(movie.actors), genres: sortGenres(movie.genres) }));
 
-      selectedMovie = getMovie(movies, state.selectedMovieId);
+      // If there's already a selectedMovie (for example, when an EDIT was triggered), don't look for the movie
+      // in the retrieved array.
+      selectedMovie = !state.selectedMovieId ? state.selectedMovie : getMovie(movies, state.selectedMovieId);
 
       return {
         ...state, filteredMovies: movies, movies: movies, loadingMovies: false,
@@ -62,7 +64,7 @@ export function reducer(state: State = defaultState, action: Actions.All) {
         filteredActors: filterActors(actors, state.selectedMovie),
       };
     case Actions.EDIT:
-      if (action.payload) {
+    if (action.payload) {
         selectedMovie = getMovie(state.movies, action.payload);
       } else {
         selectedMovie = { id: '', title: '', genres: [], year: null, director: '', actors: [] };
@@ -105,10 +107,11 @@ export function reducer(state: State = defaultState, action: Actions.All) {
 
       return { ...state, filteredGenres: removeGenreFilteredGenres, selectedMovie: removeGenreMovie };
     case Actions.ADD_ACTOR: {
+      console.log(state.selectedMovie)
       const { addActorFilteredActors, addActorMovie } =
         addActor(state.selectedMovie, state.actors, state.filteredActors, action.payload);
 
-      return { ...state, filteredGenres: addActorFilteredActors, selectedMovie: addActorMovie };
+      return { ...state, filteredActors: addActorFilteredActors, selectedMovie: addActorMovie };
     }
     case Actions.REMOVE_ACTOR:
       const { removeActorFilteredActors, removeActorMovie } =
@@ -185,7 +188,7 @@ const removeActor = (movie: Movie, actors: Actor[], filteredActors: Autocomplete
 
 const filterMovies = (movies: Movie[], pattern: string) => {
   return movies.filter(movie => {
-    const fullString = (movie.title + ' ' + ' ' + movie.year + ' ' + movie.director + ' ' + movie.genres.join(' ') +
+    const fullString = (movie.title + ' ' + movie.year + ' ' + movie.director + ' ' + movie.genres.join(' ') + ' ' +
       movie.actors.map(actor => actor.fullname).join(' '))
       .toUpperCase();
 

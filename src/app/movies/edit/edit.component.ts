@@ -4,8 +4,6 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { Store } from '@ngrx/store';
 
-import 'rxjs/add/operator/take';
-
 import { Actions, Reducer, State } from '../state';
 import { AutocompleteItem } from '../../shared/autocomplete/autocomplete-item.entity';
 import { Actor, Movie } from '../../core/models';

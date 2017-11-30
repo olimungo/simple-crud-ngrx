@@ -4,8 +4,6 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { Store } from '@ngrx/store';
 
-import 'rxjs/add/operator/take';
-
 import { State, Reducer, Actions } from '../state';
 import { Actor } from '../../core/models';
 

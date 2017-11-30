@@ -378,17 +378,17 @@
       "director": "Afton Blick"
     },
     {
-      "id": "fc403bbe-2da9-421c-8098-ebfcaf9ae882",
       "title": "Auto Loan Account",
       "genres": [
-        "Western",
+        "Comedy",
         "Musical",
-        "Thriller",
         "Romance",
-        "Comedy"
+        "Thriller",
+        "Western"
       ],
       "year": 1978,
-      "director": "Kody Corwin"
+      "director": "Kody Corwin",
+      "id": "fc403bbe-2da9-421c-8098-ebfcaf9ae882"
     },
     {
       "title": "Bedfordshire back-end Berkshire",
@@ -399,16 +399,6 @@
       "year": 1989,
       "director": "Fritz Christiansen",
       "id": "def15b5b-b69b-4471-a8fb-91259f402d4d"
-    },
-    {
-      "id": "4e2ad3be-0418-4679-bee9-1bb4ecb8272e",
-      "title": "Aaaa",
-      "genres": [
-        "Action",
-        "Comedy"
-      ],
-      "year": "2000",
-      "director": "yyy"
     }
   ],
   "movies-actors": [
@@ -597,14 +587,13 @@
       ]
     },
     {
-      "id": "fc403bbe-2da9-421c-8098-ebfcaf9ae882",
       "actors": [
-        "4505e21b-4c13-43a4-9d24-b7b51d2c2e71",
         "9bff78f1-8e58-458d-8ece-45e643f29631",
-        "ffb47f56-7972-4f9b-a3c7-be580ec820de",
+        "9bff78f1-8e58-458d-8ece-45e643f29631",
         "78bb1835-b4a9-4ff6-8f4a-f371cf252359",
-        "9bff78f1-8e58-458d-8ece-45e643f29631"
-      ]
+        "4505e21b-4c13-43a4-9d24-b7b51d2c2e71"
+      ],
+      "id": "fc403bbe-2da9-421c-8098-ebfcaf9ae882"
     },
     {
       "actors": [
@@ -612,12 +601,6 @@
         "aec4c022-1fe3-4cfa-9ec7-51e01dad2f18"
       ],
       "id": "def15b5b-b69b-4471-a8fb-91259f402d4d"
-    },
-    {
-      "id": "4e2ad3be-0418-4679-bee9-1bb4ecb8272e",
-      "actors": [
-        "154724a4-1386-4e2e-b5ef-87b1276523c6"
-      ]
     }
   ]
 }
