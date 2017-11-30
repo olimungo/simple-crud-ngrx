@@ -50,7 +50,7 @@ export class MovieEditComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      let id = 'add';
+      let id = '';
 
       if (params['id']) {
         id = params['id'];
@@ -89,18 +89,18 @@ export class MovieEditComponent implements OnInit, OnDestroy {
   }
 
   addGenre(genre: string) {
-    this.store.dispatch(new Actions.AddGenre({ id: this.movie.id, genre }));
+    this.store.dispatch(new Actions.AddGenre(genre));
   }
 
   removeGenre(genre: string) {
-    this.store.dispatch(new Actions.RemoveGenre({ id: this.movie.id, genre }));
+    this.store.dispatch(new Actions.RemoveGenre(genre));
   }
 
   addActor(actor: Actor) {
-    this.store.dispatch(new Actions.AddActor({ id: this.movie.id, actor }));
+    this.store.dispatch(new Actions.AddActor(actor));
   }
 
   removeActor(actor: Actor) {
-    this.store.dispatch(new Actions.RemoveActor({ id: this.movie.id, actor }));
+    this.store.dispatch(new Actions.RemoveActor(actor));
   }
 }

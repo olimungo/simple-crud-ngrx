@@ -1,16 +1,6 @@
 import { Action } from '@ngrx/store';
 import { Movie, Actor } from '../../core/models';
 
-export interface GenrePayload {
-  id: string;
-  genre: string;
-}
-
-export interface ActorPayload {
-  id: string;
-  actor: Actor;
-}
-
 export const GET_LIST = '[Movies] Get list';
 export const GET_LIST_FORCED = '[Movies] list forced';
 export const GET_LIST_ACTORS_FORCED = '[Movies] list actors forced';
@@ -97,25 +87,25 @@ export class Filter implements Action {
 export class AddGenre implements Action {
   readonly type = ADD_GENRE;
 
-  constructor(public payload: GenrePayload) { }
+  constructor(public payload: string) { }
 }
 
 export class RemoveGenre implements Action {
   readonly type = REMOVE_GENRE;
 
-  constructor(public payload: GenrePayload) { }
+  constructor(public payload: string) { }
 }
 
 export class AddActor implements Action {
   readonly type = ADD_ACTOR;
 
-  constructor(public payload: ActorPayload) { }
+  constructor(public payload: Actor) { }
 }
 
 export class RemoveActor implements Action {
   readonly type = REMOVE_ACTOR;
 
-  constructor(public payload: ActorPayload) { }
+  constructor(public payload: Actor) { }
 }
 
 export class SaveScrollPosition implements Action {
