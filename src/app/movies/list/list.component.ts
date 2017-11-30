@@ -10,8 +10,7 @@ import 'rxjs/add/observable/fromEvent';
 
 import { AutocompleteItem } from '../../shared/autocomplete/autocomplete-item.entity';
 
-import * as MoviesActions from '../state/movies.actions';
-import * as MoviesReducer from '../state/movies.reducer';
+import { Actions, Reducer, State } from '../state';
 import { Movie } from '../../core/models';
 
 @Component({
@@ -28,23 +27,23 @@ export class MoviesListComponent implements OnDestroy, AfterViewInit {
 
   private scrollSubscription: Subscription;
 
-  constructor(private router: Router, private store: Store<MoviesReducer.State>) {
-    this.movies = this.store.select(MoviesReducer.getMovies);
-    this.loading = this.store.select(MoviesReducer.getLoading);
+  constructor(private router: Router, private store: Store<State>) {
+    this.movies = this.store.select(Reducer.getMovies);
+    this.loading = this.store.select(Reducer.getLoading);
 
-    this.store.select(MoviesReducer.getFilterPattern).take(1).subscribe(pattern => {
+    this.store.select(Reducer.getFilterPattern).take(1).subscribe(pattern => {
       this.pattern = pattern;
     });
   }
 
   ngAfterViewInit() {
-    this.store.select(MoviesReducer.getScrollPosition).take(1).subscribe(position => {
+    this.store.select(Reducer.getScrollPosition).take(1).subscribe(position => {
       this.scroll.nativeElement.scrollTop = position;
     });
 
     this.scrollSubscription = Observable.fromEvent(this.scroll.nativeElement, 'scroll').debounceTime(500)
       .subscribe(event => {
-        this.store.dispatch(new MoviesActions.SaveScrollPosition(this.scroll.nativeElement.scrollTop));
+        this.store.dispatch(new Actions.SaveScrollPosition(this.scroll.nativeElement.scrollTop));
       });
   }
 
@@ -61,6 +60,6 @@ export class MoviesListComponent implements OnDestroy, AfterViewInit {
   }
 
   patternChange(pattern: string) {
-    this.store.dispatch(new MoviesActions.Filter(pattern));
+    this.store.dispatch(new Actions.Filter(pattern));
   }
 }

@@ -43,7 +43,7 @@ export function reducer(state: State = defaultState, action: Actions.All): State
     case Actions.EDIT:
       return {
         ...state, selectedActor: getActor(state.actors, action.payload),
-        selectedActorId: state.actors.length !== 0 ? null : action.payload
+        selectedActorId: state.actors.length > 0 ? null : action.payload
       };
     case Actions.CREATE:
       // Nothing to change to the store at this point. An effect CREATE is also triggered and will subsequently fire a CREATE_DONE action.
@@ -104,7 +104,7 @@ const compareActors = (a: Actor, b: Actor) => {
 export const getState = createFeatureSelector<State>('actors');
 
 export const getActors = createSelector(getState, (state: State) => state.filteredActors);
-export const getActorsCount = createSelector(getState, (state: State) => state.actors ? state.actors.length : 0);
+export const getActorsCount = createSelector(getState, (state: State) => state.actors.length);
 export const getLoading = createSelector(getState, (state: State) => state.loading);
 export const getFilterPattern = createSelector(getState, (state: State) => state.filterPattern);
 export const getScrollPosition = createSelector(getState, (state: State) => state.scrollPosition);

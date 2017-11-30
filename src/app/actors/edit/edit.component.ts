@@ -15,9 +15,7 @@ import { Actor } from '../../core/models';
   styleUrls: ['./edit.component.css']
 })
 export class ActorEditComponent implements OnInit, OnDestroy {
-  id: string;
-  firstname: string;
-  lastname: string;
+  actor: Actor;
 
   loading: Observable<boolean>;
 
@@ -26,10 +24,10 @@ export class ActorEditComponent implements OnInit, OnDestroy {
   constructor(private router: Router, private route: ActivatedRoute, private store: Store<State>) {
     this.loading = this.store.select(Reducer.getLoading);
 
+    // Cannot handle an HTML input field with an Observable. So, we need to subscribe to the element in the store...
+    // ...and unsubscribe when component is destroyed (see ngOnDestroy)
     this.actorSubscrition = this.store.select(Reducer.getSelectedActor).subscribe(actor => {
-      this.id = actor ? actor.id : null;
-      this.firstname = actor ? actor.firstname : null;
-      this.lastname = actor ? actor.lastname : null;
+      this.actor = { ...actor };
     });
   }
 
@@ -46,12 +44,10 @@ export class ActorEditComponent implements OnInit, OnDestroy {
   }
 
   save() {
-    const actor: Actor = { id: this.id, firstname: this.firstname, lastname: this.lastname };
-
-    if (this.id) {
-      this.store.dispatch(new Actions.Update(actor));
+    if (this.actor.id) {
+      this.store.dispatch(new Actions.Update(this.actor));
     } else {
-      this.store.dispatch(new Actions.Create(actor));
+      this.store.dispatch(new Actions.Create(this.actor));
     }
 
     this.backToList();
@@ -63,7 +59,7 @@ export class ActorEditComponent implements OnInit, OnDestroy {
   }
 
   delete() {
-    this.store.dispatch(new Actions.Delete(this.id));
+    this.store.dispatch(new Actions.Delete(this.actor.id));
     this.backToList();
   }
 

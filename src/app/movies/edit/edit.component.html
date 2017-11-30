@@ -18,13 +18,13 @@
 
       <div class="form-group">
         <label>Genre</label>
-        <shr-autocomplete [items]="genresForAutocomplete" (itemSelect)="addGenre($event)"></shr-autocomplete>
+        <shr-autocomplete [items]="genresForAutocomplete | async" (itemSelect)="addGenre($event)"></shr-autocomplete>
       </div>
 
       <div class="form-group">
         <label></label>
         <div class="movie-edit-tag">
-          <shr-tag *ngFor="let genre of genres" [label]="genre" (closeClick)="removeGenre(genre)"></shr-tag>
+          <shr-tag *ngFor="let genre of movie?.genres" [label]="genre" (closeClick)="removeGenre(genre)"></shr-tag>
         </div>
       </div>
 
@@ -40,13 +40,13 @@
 
       <div class="form-group">
         <label>Actors</label>
-        <shr-autocomplete [items]="actorsForAutocomplete" (itemSelect)="addActor($event)"></shr-autocomplete>
+        <shr-autocomplete [items]="actorsForAutocomplete | async" (itemSelect)="addActor($event)"></shr-autocomplete>
       </div>
 
       <div class="form-group">
         <label></label>
         <div class="movie-edit-tag">
-          <shr-tag *ngFor="let actor of actors" [label]="actor.fullname" [color]="'#ffb74d'"
+          <shr-tag *ngFor="let actor of movie?.actors" [label]="actor.fullname" [color]="'#ffb74d'"
           (closeClick)="removeActor(actor)"></shr-tag>
         </div>
       </div>

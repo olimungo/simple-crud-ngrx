@@ -9,7 +9,7 @@ import 'rxjs/add/operator/do';
 
 import { MoviesService } from '../movies.service';
 
-import * as MovieActions from './movies.actions';
+import * as MovieActions from './actions';
 export type Action = MovieActions.All;
 
 @Injectable()

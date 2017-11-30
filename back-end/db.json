@@ -36,9 +36,9 @@
       "lastname": "Wiza"
     },
     {
-      "id": "cdaed082-b0de-43fc-a336-86ded5d6087b",
       "firstname": "Ronaldo",
-      "lastname": "Cole"
+      "lastname": "Cole",
+      "id": "cdaed082-b0de-43fc-a336-86ded5d6087b"
     },
     {
       "firstname": "Orpha",
@@ -174,7 +174,6 @@
       "title": "Architect Music Forward",
       "genres": [
         "Documentary",
-        "Mystery",
         "Horror"
       ],
       "year": 1997,
@@ -235,14 +234,15 @@
       "director": "Krystina Kiehn"
     },
     {
-      "id": "b41acadd-019f-424f-9b33-45405243f25e",
       "title": "Designer",
       "genres": [
+        "Documentary",
         "War",
-        "Documentary"
+        "Western"
       ],
       "year": 1986,
-      "director": "Claudie Cronin"
+      "director": "Claudie Cronin",
+      "id": "b41acadd-019f-424f-9b33-45405243f25e"
     },
     {
       "id": "7e452094-717f-4b09-9882-f9a015881e21",
@@ -291,13 +291,14 @@
       "director": "Alberto Sanford"
     },
     {
-      "id": "b2bbdab5-c2b6-499d-b17e-026e023d5a5d",
       "title": "Generating",
       "genres": [
-        "Adventure"
+        "Adventure",
+        "Animation"
       ],
       "year": 1997,
-      "director": "Gregory Beatty"
+      "director": "Gregory Beatty",
+      "id": "b2bbdab5-c2b6-499d-b17e-026e023d5a5d"
     },
     {
       "id": "56a368dc-5310-41f8-9868-e49e1f7bc4fb",
@@ -432,9 +433,7 @@
     },
     {
       "actors": [
-        "9ca51c47-3c24-4335-9f26-039ffa0766ba",
-        "46e623c2-5a1f-418e-bd08-a3fe0530dcb7",
-        "ffb47f56-7972-4f9b-a3c7-be580ec820de",
+        "eb8045f8-b752-40db-ab9b-56cbd9055673",
         "aec4c022-1fe3-4cfa-9ec7-51e01dad2f18"
       ],
       "id": "e9528e48-e1c8-4684-a01d-5c9ed107ad84"
@@ -478,10 +477,10 @@
       ]
     },
     {
-      "id": "b41acadd-019f-424f-9b33-45405243f25e",
       "actors": [
         "f0a29ee2-5e8e-45a9-a30a-7f288a81f4b2"
-      ]
+      ],
+      "id": "b41acadd-019f-424f-9b33-45405243f25e"
     },
     {
       "id": "7e452094-717f-4b09-9882-f9a015881e21",
@@ -514,14 +513,14 @@
       ]
     },
     {
-      "id": "b2bbdab5-c2b6-499d-b17e-026e023d5a5d",
       "actors": [
         "881ba790-816d-41d9-91f8-f023f7658f0e",
         "4d590427-7b7b-484e-89e2-0c0d386ef0ea",
-        "6ec35ae3-24b6-448e-9751-117510ae3633",
         "4d590427-7b7b-484e-89e2-0c0d386ef0ea",
-        "4d590427-7b7b-484e-89e2-0c0d386ef0ea"
-      ]
+        "4d590427-7b7b-484e-89e2-0c0d386ef0ea",
+        "6ec35ae3-24b6-448e-9751-117510ae3633"
+      ],
+      "id": "b2bbdab5-c2b6-499d-b17e-026e023d5a5d"
     },
     {
       "id": "56a368dc-5310-41f8-9868-e49e1f7bc4fb",

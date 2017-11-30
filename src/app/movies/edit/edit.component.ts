@@ -6,10 +6,9 @@ import { Store } from '@ngrx/store';
 
 import 'rxjs/add/operator/take';
 
-import * as MoviesActions from '../state/movies.actions';
-import * as MoviesReducer from '../state/movies.reducer';
+import { Actions, Reducer, State } from '../state';
 import { AutocompleteItem } from '../../shared/autocomplete/autocomplete-item.entity';
-import { Actor, allGenres, Movie } from '../../core/models';
+import { Actor, Movie } from '../../core/models';
 
 @Component({
   selector: 'feat-movie-edit',
@@ -17,81 +16,71 @@ import { Actor, allGenres, Movie } from '../../core/models';
   styleUrls: ['./edit.component.css']
 })
 export class MovieEditComponent implements OnInit, OnDestroy {
-  movie: Movie;
+  // movie: Movie;
 
-  genres: string[];
-  genresForAutocomplete: AutocompleteItem[];
-  actors: Actor[];
-  actorsForAutocomplete: AutocompleteItem[];
+  movie: Movie = {
+    id: null,
+    title: null,
+    genres: [],
+    year: null,
+    director: null,
+    actors: []
+  };
+
+  genresForAutocomplete: Observable<AutocompleteItem[]>;
+  actorsForAutocomplete: Observable<AutocompleteItem[]>;
 
   loading: Observable<boolean>;
 
   private movieSubscrition: Subscription;
-  private actorsSubscrition: Subscription;
 
-  constructor(private router: Router, private route: ActivatedRoute, private store: Store<MoviesReducer.State>) {
-    this.loading = this.store.select(MoviesReducer.getLoading);
+  constructor(private router: Router, private route: ActivatedRoute, private store: Store<Reducer.State>) {
+    this.loading = this.store.select(Reducer.getLoading);
 
-    this.store.select(MoviesReducer.getSelectedMovie).subscribe(movie => this.movie = { ...movie });
+    // Cannot handle an HTML input field with an Observable. So, we need to subscribe to the element in the store...
+    // ...and unsubscribe when component is destroyed (see ngOnDestroy)
+    this.movieSubscrition = this.store.select(Reducer.getSelectedMovie)
+      .subscribe(movie => {
+        this.movie = { ...movie };
+      });
 
-    this.movieSubscrition = this.store.select(MoviesReducer.getSelectedMovie).subscribe(movie => {
-      this.genres = [];
-      this.actors = [];
-      this.actorsForAutocomplete = [];
-      this.genresForAutocomplete = [];
-
-      // console.log(movie)
-
-      if (movie) {
-        this.genres = movie.genres;
-        this.actors = movie.actors;
-
-        this.genresForAutocomplete = allGenres
-          .filter(allGenre => !movie.genres.some(genre => genre === allGenre))
-          .sort((a, b) => a > b ? 1 : -1)
-          .map(genre => ({ value: genre, data: genre }));
-
-        this.actorsSubscrition = this.store.select(MoviesReducer.getAllActors)
-          .subscribe(actors => this.actorsForAutocomplete = actors
-            .filter(actor => !this.actors.some(a => a.id === actor.id))
-            .sort((a, b) => a.fullname > b.fullname ? 1 : -1)
-            .map(actor => ({ value: actor.fullname, data: actor }))
-          );
-      }
-    });
+    this.genresForAutocomplete = this.store.select(Reducer.getFilteredGenres);
+    this.actorsForAutocomplete = this.store.select(Reducer.getFilteredActors);
   }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
+      let id = 'add';
+
       if (params['id']) {
-        this.store.dispatch(new MoviesActions.Edit(params['id']));
+        id = params['id'];
       }
+
+      this.store.dispatch(new Actions.Edit(id));
     });
   }
 
   ngOnDestroy() {
     this.movieSubscrition.unsubscribe();
-    this.actorsSubscrition.unsubscribe();
   }
 
   save() {
-    console.log(this.movie.id);
-    // if (this.movie.id) {
-    //   this.store.dispatch(new MoviesActions.Update(this.movie));
-    // } else {
-    //   this.store.dispatch(new MoviesActions.Create(this.movie));
-    // }
+    if (this.movie.id) {
+      this.store.dispatch(new Actions.Update(this.movie));
+    } else {
+      this.store.dispatch(new Actions.Create(this.movie));
+    }
 
-    // this.backToList();
+    this.backToList();
   }
 
   cancel() {
-    this.store.dispatch(new MoviesActions.Cancel());
+    this.store.dispatch(new Actions.Cancel());
     this.backToList();
   }
 
   delete() {
-    this.store.dispatch(new MoviesActions.Delete(this.movie.id));
+    this.store.dispatch(new Actions.Delete(this.movie.id));
     this.backToList();
   }
 
@@ -100,27 +89,18 @@ export class MovieEditComponent implements OnInit, OnDestroy {
   }
 
   addGenre(genre: string) {
-    const index = this.genresForAutocomplete.findIndex(g => g.value === genre);
-    this.genresForAutocomplete = this.genresForAutocomplete.slice(0, index).concat(this.genresForAutocomplete.slice(index + 1));
-    this.genres = [...this.genres, genre].sort((a, b) => a > b ? 1 : -1);
+    this.store.dispatch(new Actions.AddGenre({ id: this.movie.id, genre }));
   }
 
-  removeGenre(id: string) {
-    const index = this.genres.findIndex(genre => genre === id);
-    this.genres = this.genres.slice(0, index).concat(this.genres.slice(index + 1));
-    this.genresForAutocomplete = [...this.genresForAutocomplete, { value: id, data: id }].sort((a, b) => a.value > b.value ? 1 : -1);
+  removeGenre(genre: string) {
+    this.store.dispatch(new Actions.RemoveGenre({ id: this.movie.id, genre }));
   }
 
   addActor(actor: Actor) {
-    const index = this.actorsForAutocomplete.findIndex(g => g.data.id === actor.id);
-    this.actorsForAutocomplete = this.actorsForAutocomplete.slice(0, index).concat(this.actorsForAutocomplete.slice(index + 1));
-    this.actors = [...this.actors, actor].sort((a, b) => a.fullname > b.fullname ? 1 : -1);
+    this.store.dispatch(new Actions.AddActor({ id: this.movie.id, actor }));
   }
 
   removeActor(actor: Actor) {
-    const index = this.actors.findIndex(a => a.id === actor.id);
-    this.actors = this.actors.slice(0, index).concat(this.actors.slice(index + 1));
-    this.actorsForAutocomplete = [...this.actorsForAutocomplete, { value: actor.fullname, data: actor }]
-      .sort((a, b) => a.value > b.value ? 1 : -1);
+    this.store.dispatch(new Actions.RemoveActor({ id: this.movie.id, actor }));
   }
 }
