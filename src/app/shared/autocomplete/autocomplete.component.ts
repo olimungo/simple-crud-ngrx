@@ -17,12 +17,12 @@ export class AutocompleteComponent implements OnInit, OnDestroy {
   @Input() pattern = '';
 
   // Property used to define the initial values of the autocomplete.
-  @Input('items') set _items(value: AutocompleteItem[]) {
+  @Input('items') set _items(values: AutocompleteItem[]) {
     this.items = [];
     this.pattern = this.pattern ? this.pattern : '';
 
-    if (value) {
-      this.items = value;
+    if (values) {
+      this.items = values.map(value => ({ ...value }));
       this.itemsFiltered = this.items.filter(item => item.value.toUpperCase().indexOf(this.pattern.toUpperCase()) > -1);
     }
   }

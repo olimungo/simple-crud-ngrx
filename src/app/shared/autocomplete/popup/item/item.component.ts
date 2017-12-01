@@ -9,13 +9,9 @@ import { Subscription } from 'rxjs/Subscription';
   styleUrls: ['./item.component.css']
 })
 export class AutocompletePopUpItemComponent implements OnInit, OnDestroy {
-  @Input('item') set _item(value: AutocompleteItem) {
-    this.item = { ...value };
-  }
+  @Input() item: AutocompleteItem;
 
   @Output() itemSelected: EventEmitter<AutocompleteItem> = new EventEmitter<AutocompleteItem>();
-
-  item: AutocompleteItem;
 
   // This element in the DOM
   private element: any;
