@@ -13,15 +13,23 @@ import { AutocompletePopUpItemComponent } from './autocomplete/popup/item/item.c
 import { TagComponent } from './tag/tag.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    RouterModule
-  ],
+  imports: [CommonModule, FormsModule, RouterModule],
   declarations: [
-    SpinnerDirective, CrudButtonsComponent, SearchBarComponent, TagComponent,
-    AutocompleteComponent, AutocompleteInputComponent, AutocompletePopupComponent, AutocompletePopUpItemComponent
+    SpinnerDirective,
+    CrudButtonsComponent,
+    SearchBarComponent,
+    TagComponent,
+    AutocompleteComponent,
+    AutocompleteInputComponent,
+    AutocompletePopupComponent,
+    AutocompletePopUpItemComponent
   ],
-  exports: [SpinnerDirective, CrudButtonsComponent, SearchBarComponent, AutocompleteComponent, TagComponent]
+  exports: [
+    SpinnerDirective,
+    CrudButtonsComponent,
+    SearchBarComponent,
+    AutocompleteComponent,
+    TagComponent
+  ]
 })
-export class SharedModule { }
+export class SharedModule {}

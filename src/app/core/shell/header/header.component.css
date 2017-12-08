@@ -4,7 +4,7 @@
 
 .shell-header:before {
   background: #4285f4;
-  box-shadow: 0 0 4px rgba(0,0,0,.14), 0 4px 8px rgba(0,0,0,.28);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.14), 0 4px 8px rgba(0, 0, 0, 0.28);
   content: "";
   height: 4em;
   left: -2%;
@@ -34,7 +34,9 @@
   font-size: 2em;
 }
 
-.shell-header .fa-ellipsis-v, .shell-header .fa-users, .shell-header .fa-film {
+.shell-header .fa-ellipsis-v,
+.shell-header .fa-users,
+.shell-header .fa-film {
   font-size: 1.4em;
 }
 
@@ -55,11 +57,11 @@
 }
 
 .shell-header-clickable:hover {
-  background: rgba(255, 255, 255, .1);
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .shell-header-clickable:active {
-  background: rgba(255, 255, 255, .2);
+  background: rgba(255, 255, 255, 0.2);
 }
 
 .shell-header-notifications {

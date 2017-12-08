@@ -6,12 +6,13 @@ describe('EditComponent', () => {
   let component: MovieEditComponent;
   let fixture: ComponentFixture<MovieEditComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ MovieEditComponent ]
+  beforeEach(
+    async(() => {
+      TestBed.configureTestingModule({
+        declarations: [MovieEditComponent]
+      }).compileComponents();
     })
-    .compileComponents();
-  }));
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(MovieEditComponent);

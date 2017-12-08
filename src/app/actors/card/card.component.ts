@@ -9,9 +9,7 @@ import { Actor } from '../../core/models';
 export class ActorCardComponent implements OnInit {
   @Input() actor: Actor;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

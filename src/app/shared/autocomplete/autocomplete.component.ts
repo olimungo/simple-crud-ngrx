@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewContainerRef } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewContainerRef
+} from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { Subject } from 'rxjs/Subject';
@@ -11,19 +19,22 @@ import { AutocompleteItem } from './autocomplete-item.entity';
   templateUrl: 'autocomplete.component.html',
   styleUrls: ['autocomplete.component.css']
 })
-
 export class AutocompleteComponent implements OnInit, OnDestroy {
   // Property used to define the initial pattern of the autocomplete.
   @Input() pattern = '';
 
   // Property used to define the initial values of the autocomplete.
-  @Input('items') set _items(values: AutocompleteItem[]) {
+  @Input('items')
+  set _items(values: AutocompleteItem[]) {
     this.items = [];
     this.pattern = this.pattern ? this.pattern : '';
 
     if (values) {
       this.items = values.map(value => ({ ...value }));
-      this.itemsFiltered = this.items.filter(item => item.value.toUpperCase().indexOf(this.pattern.toUpperCase()) > -1);
+      this.itemsFiltered = this.items.filter(
+        item =>
+          item.value.toUpperCase().indexOf(this.pattern.toUpperCase()) > -1
+      );
     }
   }
 
@@ -61,10 +72,12 @@ export class AutocompleteComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.htmlDom = Observable.fromEvent(document, 'click')
-      .subscribe((event: MouseEvent) => this.handleClick(event));
+    this.htmlDom = Observable.fromEvent(document, 'click').subscribe(
+      (event: MouseEvent) => this.handleClick(event)
+    );
 
-    this.popup = Observable.fromEvent(document, 'mouseover').debounceTime(200)
+    this.popup = Observable.fromEvent(document, 'mouseover')
+      .debounceTime(200)
       .subscribe((event: MouseEvent) => this.handleMouseOver(event));
   }
 
@@ -115,7 +128,10 @@ export class AutocompleteComponent implements OnInit, OnDestroy {
       this.itemHighlighted = -1;
     }
 
-    if ((key === 'ArrowUp' || key === 'ArrowDown') && this.itemsFiltered.length > 0) {
+    if (
+      (key === 'ArrowUp' || key === 'ArrowDown') &&
+      this.itemsFiltered.length > 0
+    ) {
       event.preventDefault();
 
       this.isPopUpVisible = true;
@@ -124,7 +140,10 @@ export class AutocompleteComponent implements OnInit, OnDestroy {
         this.itemsFiltered[this.itemHighlighted].selected.next(false);
       }
 
-      if (key === 'ArrowDown' && this.itemHighlighted < this.itemsFiltered.length - 1) {
+      if (
+        key === 'ArrowDown' &&
+        this.itemHighlighted < this.itemsFiltered.length - 1
+      ) {
         this.itemHighlighted++;
       }
 
@@ -147,7 +166,10 @@ export class AutocompleteComponent implements OnInit, OnDestroy {
         this.itemHighlighted = -1;
       }
 
-      this.itemsFiltered = this.items.filter(item => item.value.toUpperCase().indexOf(this.pattern.toUpperCase()) > -1);
+      this.itemsFiltered = this.items.filter(
+        item =>
+          item.value.toUpperCase().indexOf(this.pattern.toUpperCase()) > -1
+      );
       this.isPopUpVisible = this.itemsFiltered.length ? true : false;
     }
   }
@@ -166,7 +188,12 @@ export class AutocompleteComponent implements OnInit, OnDestroy {
   // Remove highlighting on the item which was hightlighted after a key DOWN or UP,
   // if the user moved mouse.
   private handleMouseOver(event: MouseEvent): void {
-    if (!this.isPopUpVisible || !event.target || this.itemHighlighted < 0 || (event.movementX === 0 && event.movementY === 0)) {
+    if (
+      !this.isPopUpVisible ||
+      !event.target ||
+      this.itemHighlighted < 0 ||
+      (event.movementX === 0 && event.movementY === 0)
+    ) {
       return;
     }
 

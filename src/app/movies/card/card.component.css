@@ -21,13 +21,13 @@
 }
 
 .movie-card-year {
-  font-size: .8em;
-  margin-left: .4em;
+  font-size: 0.8em;
+  margin-left: 0.4em;
 }
 
 .movie-card-director {
-  font-size: .8em;
-  margin-top: .2em;
+  font-size: 0.8em;
+  margin-top: 0.2em;
 }
 
 .movie-card-director label {
@@ -35,17 +35,16 @@
   color: #777;
 }
 
-.movie-card-genre  {
-  margin-bottom: .7em;
+.movie-card-genre {
+  margin-bottom: 0.7em;
 }
 
 .movie-card-genre shr-tag {
-  margin-right: .5em;
+  margin-right: 0.5em;
 }
 
-
 .movie-card-actors {
-  font-size: .8em;
+  font-size: 0.8em;
 }
 
 .movie-card-actors div {

@@ -15,10 +15,15 @@ export type Action = ActorsActions.All;
 export class Effects {
   private actorsLoaded = false;
 
-  constructor(private actions: Actions, private http: Http, private actorsService: ActorsService) { }
+  constructor(
+    private actions: Actions,
+    private http: Http,
+    private actorsService: ActorsService
+  ) {}
 
   @Effect()
-  retrieve: Observable<Action> = this.actions.ofType(ActorsActions.GET_LIST)
+  retrieve: Observable<Action> = this.actions
+    .ofType(ActorsActions.GET_LIST)
     .map(() => {
       if (!this.actorsLoaded) {
         return new ActorsActions.GetListForced();
@@ -28,7 +33,8 @@ export class Effects {
     });
 
   @Effect()
-  retrieveForced: Observable<Action> = this.actions.ofType(ActorsActions.GET_LIST_FORCED)
+  retrieveForced: Observable<Action> = this.actions
+    .ofType(ActorsActions.GET_LIST_FORCED)
     .mergeMap(() => this.actorsService.retrieve())
     .map(actors => {
       this.actorsLoaded = true;
@@ -36,18 +42,21 @@ export class Effects {
     });
 
   @Effect()
-  create: Observable<Action> = this.actions.ofType(ActorsActions.CREATE)
+  create: Observable<Action> = this.actions
+    .ofType(ActorsActions.CREATE)
     .map((action: ActorsActions.Create) => action.payload)
     .mergeMap(actor => this.actorsService.create(actor))
     .map(actor => new ActorsActions.CreateDone(actor));
 
   @Effect({ dispatch: false })
-  update: Observable<Action> = this.actions.ofType(ActorsActions.UPDATE)
+  update: Observable<Action> = this.actions
+    .ofType(ActorsActions.UPDATE)
     .map((action: ActorsActions.Update) => action.payload)
     .mergeMap(actor => this.actorsService.update(actor));
 
   @Effect({ dispatch: false })
-  delete = this.actions.ofType(ActorsActions.DELETE)
+  delete = this.actions
+    .ofType(ActorsActions.DELETE)
     .map((action: ActorsActions.Delete) => action.payload)
     .mergeMap(id => this.actorsService.delete(id));
 }

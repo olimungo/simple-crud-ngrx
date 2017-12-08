@@ -6,12 +6,13 @@ describe('CrudButtonsComponent', () => {
   let component: CrudButtonsComponent;
   let fixture: ComponentFixture<CrudButtonsComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ CrudButtonsComponent ]
+  beforeEach(
+    async(() => {
+      TestBed.configureTestingModule({
+        declarations: [CrudButtonsComponent]
+      }).compileComponents();
     })
-    .compileComponents();
-  }));
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CrudButtonsComponent);

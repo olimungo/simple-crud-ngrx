@@ -7,12 +7,8 @@ import { ShellComponent } from './shell/shell.component';
 import { ShellHeaderComponent } from './shell/header/header.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    RouterModule
-  ],
+  imports: [CommonModule, FormsModule, RouterModule],
   declarations: [ShellComponent, ShellHeaderComponent],
   exports: [ShellComponent]
 })
-export class CoreModule { }
+export class CoreModule {}

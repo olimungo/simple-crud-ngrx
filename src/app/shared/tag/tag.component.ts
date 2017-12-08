@@ -12,10 +12,9 @@ export class TagComponent implements OnInit {
 
   @Output() closeClick = new EventEmitter<any>();
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   click() {
     this.closeClick.emit(null);

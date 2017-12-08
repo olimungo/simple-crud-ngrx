@@ -19,14 +19,20 @@ export class ActorEditComponent implements OnInit, OnDestroy {
 
   private actorSubscrition: Subscription;
 
-  constructor(private router: Router, private route: ActivatedRoute, private store: Store<State>) {
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private store: Store<State>
+  ) {
     this.loading = this.store.select(Reducer.getLoading);
 
     // Cannot handle an HTML input field with an Observable. So, we need to subscribe to the element in the store...
     // ...and unsubscribe when component is destroyed (see ngOnDestroy)
-    this.actorSubscrition = this.store.select(Reducer.getSelectedActor).subscribe(actor => {
-      this.actor = { ...actor };
-    });
+    this.actorSubscrition = this.store
+      .select(Reducer.getSelectedActor)
+      .subscribe(actor => {
+        this.actor = { ...actor };
+      });
   }
 
   ngOnInit() {

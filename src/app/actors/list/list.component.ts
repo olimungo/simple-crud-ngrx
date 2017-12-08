@@ -1,4 +1,10 @@
-import { Component, OnDestroy, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import {
+  Component,
+  OnDestroy,
+  AfterViewInit,
+  ViewChild,
+  ElementRef
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
@@ -29,19 +35,31 @@ export class ActorsListComponent implements OnDestroy, AfterViewInit {
     this.actors = this.store.select(Reducer.getActors);
     this.loading = this.store.select(Reducer.getLoading);
 
-    this.store.select(Reducer.getFilterPattern).take(1).subscribe(pattern => {
-      this.pattern = pattern;
-    });
+    this.store
+      .select(Reducer.getFilterPattern)
+      .take(1)
+      .subscribe(pattern => {
+        this.pattern = pattern;
+      });
   }
 
   ngAfterViewInit() {
-    this.store.select(Reducer.getScrollPosition).take(1).subscribe(position => {
-      this.scroll.nativeElement.scrollTop = position;
-    });
+    this.store
+      .select(Reducer.getScrollPosition)
+      .take(1)
+      .subscribe(position => {
+        this.scroll.nativeElement.scrollTop = position;
+      });
 
-    this.scrollSubscription = Observable.fromEvent(this.scroll.nativeElement, 'scroll').debounceTime(500)
+    this.scrollSubscription = Observable.fromEvent(
+      this.scroll.nativeElement,
+      'scroll'
+    )
+      .debounceTime(500)
       .subscribe(event => {
-        this.store.dispatch(new Actions.SaveScrollPosition(this.scroll.nativeElement.scrollTop));
+        this.store.dispatch(
+          new Actions.SaveScrollPosition(this.scroll.nativeElement.scrollTop)
+        );
       });
   }
 

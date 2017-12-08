@@ -48,48 +48,70 @@ export class ActorsService {
   createLocal(actor: Actor) {
     const newActor = { ...actor, id: uuid() };
 
-    return this.http.post(`${environment.backEnd}/actors`, newActor).map(() => newActor);
+    return this.http
+      .post(`${environment.backEnd}/actors`, newActor)
+      .map(() => newActor);
   }
 
   createFirebase(actor: Actor) {
-    return this.http.post(`${environment.backEnd}/actors.json`,
-      JSON.stringify({ firstname: actor.firstname, lastname: actor.lastname }))
+    return this.http
+      .post(
+        `${environment.backEnd}/actors.json`,
+        JSON.stringify({ firstname: actor.firstname, lastname: actor.lastname })
+      )
       .map(result => result.json())
       .map(result => ({ ...actor, id: result.name }));
   }
 
   retrieveLocal(): Observable<Actor[]> {
-    return this.http.get(`${environment.backEnd}/actors`)
+    return this.http
+      .get(`${environment.backEnd}/actors`)
       .delay(1000)
       .map(actors => actors.json())
-      .map(actors => actors.map(actor => ({ ...actor, fullname: this.getFullname(actor) })));
+      .map(actors =>
+        actors.map(actor => ({ ...actor, fullname: this.getFullname(actor) }))
+      );
   }
 
   retrieveFirebase(): Observable<Actor[]> {
-    return this.http.get(`${environment.backEnd}/actors.json`)
-      // .delay(1000)
-      .map(actors => actors.json())
-      .map(actors => {
-        const actorsArray = [];
+    return (
+      this.http
+        .get(`${environment.backEnd}/actors.json`)
+        // .delay(1000)
+        .map(actors => actors.json())
+        .map(actors => {
+          const actorsArray = [];
 
-        for (const key in actors) {
-          if (actors.hasOwnProperty(key)) {
-            actorsArray.push(<Actor>{ id: key, firstname: actors[key].firstname, lastname: actors[key].lastname });
+          for (const key in actors) {
+            if (actors.hasOwnProperty(key)) {
+              actorsArray.push(<Actor>{
+                id: key,
+                firstname: actors[key].firstname,
+                lastname: actors[key].lastname
+              });
+            }
           }
-        }
 
-        return actorsArray;
-      })
-      .map(actors => actors.map(actor => ({ ...actor, fullname: this.getFullname(actor) })));
+          return actorsArray;
+        })
+        .map(actors =>
+          actors.map(actor => ({ ...actor, fullname: this.getFullname(actor) }))
+        )
+    );
   }
 
   updateLocal(actor: Actor) {
-    return this.http.put(`${environment.backEnd}/actors/${actor.id}`, { firstname: actor.firstname, lastname: actor.lastname });
+    return this.http.put(`${environment.backEnd}/actors/${actor.id}`, {
+      firstname: actor.firstname,
+      lastname: actor.lastname
+    });
   }
 
   updateFirebase(actor: Actor) {
-    return this.http.patch(`${environment.backEnd}/actors/${actor.id}.json`,
-      JSON.stringify({ firstname: actor.firstname, lastname: actor.lastname }));
+    return this.http.patch(
+      `${environment.backEnd}/actors/${actor.id}.json`,
+      JSON.stringify({ firstname: actor.firstname, lastname: actor.lastname })
+    );
   }
 
   deleteLocal(id: string) {

@@ -11,13 +11,13 @@ export class MovieCardComponent implements OnInit {
 
   actors = '';
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
     if (this.movie && this.movie.actors) {
       this.actors = this.movie.actors
-        .map((actor: Actor) => actor.fullname).join(', ');
+        .map((actor: Actor) => actor.fullname)
+        .join(', ');
     }
   }
-
 }

@@ -5,7 +5,10 @@ const routes: Routes = [
   { path: 'home', loadChildren: './home/home.module#HomeModule' },
   { path: 'actors', loadChildren: './actors/actors.module#ActorsModule' },
   { path: 'movies', loadChildren: './movies/movies.module#MoviesModule' },
-  { path: 'settings', loadChildren: './settings/settings.module#SettingsModule' },
+  {
+    path: 'settings',
+    loadChildren: './settings/settings.module#SettingsModule'
+  },
   { path: '**', redirectTo: '/home', pathMatch: 'full' }
 ];
 
@@ -13,4 +16,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

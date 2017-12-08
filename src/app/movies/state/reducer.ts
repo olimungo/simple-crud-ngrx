@@ -43,15 +43,25 @@ export function reducer(state: State = defaultState, action: Actions.All) {
     case Actions.LIST_RETRIEVED:
       movies = sortMovies(action.payload);
 
-      movies = movies.map(movie => ({ ...movie, actors: sortActors(movie.actors), genres: sortGenres(movie.genres) }));
+      movies = movies.map(movie => ({
+        ...movie,
+        actors: sortActors(movie.actors),
+        genres: sortGenres(movie.genres)
+      }));
 
       // If there's already a selectedMovie (for example, when an EDIT was triggered), don't look for the movie
       // in the retrieved array.
-      selectedMovie = !state.selectedMovieId ? state.selectedMovie : getMovie(movies, state.selectedMovieId);
+      selectedMovie = !state.selectedMovieId
+        ? state.selectedMovie
+        : getMovie(movies, state.selectedMovieId);
 
       return {
-        ...state, filteredMovies: movies, movies: movies, loadingMovies: false,
-        selectedMovie, selectedMovieId: null,
+        ...state,
+        filteredMovies: movies,
+        movies: movies,
+        loadingMovies: false,
+        selectedMovie,
+        selectedMovieId: null,
         filteredGenres: filterGenres(allGenres, selectedMovie),
         filteredActors: filterActors(state.actors, selectedMovie)
       };
@@ -59,67 +69,119 @@ export function reducer(state: State = defaultState, action: Actions.All) {
       actors = sortActors(action.payload);
 
       return {
-        ...state, actors, loadingActors: false,
+        ...state,
+        actors,
+        loadingActors: false,
         filteredGenres: filterGenres(allGenres, state.selectedMovie),
-        filteredActors: filterActors(actors, state.selectedMovie),
+        filteredActors: filterActors(actors, state.selectedMovie)
       };
     case Actions.EDIT:
-    if (action.payload) {
+      if (action.payload) {
         selectedMovie = getMovie(state.movies, action.payload);
       } else {
-        selectedMovie = { id: '', title: '', genres: [], year: null, director: '', actors: [] };
+        selectedMovie = {
+          id: '',
+          title: '',
+          genres: [],
+          year: null,
+          director: '',
+          actors: []
+        };
       }
 
       return {
-        ...state, selectedMovie,
+        ...state,
+        selectedMovie,
         selectedMovieId: state.movies.length > 0 ? null : action.payload,
         filteredGenres: filterGenres(allGenres, selectedMovie),
-        filteredActors: filterActors(state.actors, selectedMovie),
+        filteredActors: filterActors(state.actors, selectedMovie)
       };
     case Actions.CREATE:
       // Nothing to change to the store at this point. An effect CREATE is also triggered and will subsequently fire a CREATE_DONE action.
       return state;
     case Actions.CREATE_DONE:
       return {
-        ...state, filteredMovies: addMovie(state.filteredMovies, action.payload), movies: addMovie(state.movies, action.payload)
+        ...state,
+        filteredMovies: addMovie(state.filteredMovies, action.payload),
+        movies: addMovie(state.movies, action.payload)
       };
     case Actions.UPDATE:
       return {
-        ...state, filteredMovies: updateMovie(state.filteredMovies, action.payload),
-        movies: updateMovie(state.movies, action.payload), selectedMovie: null
+        ...state,
+        filteredMovies: updateMovie(state.filteredMovies, action.payload),
+        movies: updateMovie(state.movies, action.payload),
+        selectedMovie: null
       };
     case Actions.CANCEL:
       return { ...state, selectedMovie: null };
     case Actions.DELETE:
       return {
-        ...state, selectedMovie: null, filteredMovies: deleteMovie(state.filteredMovies, action.payload),
+        ...state,
+        selectedMovie: null,
+        filteredMovies: deleteMovie(state.filteredMovies, action.payload),
         movies: deleteMovie(state.movies, action.payload)
       };
     case Actions.ADD_GENRE: {
-      const { addGenreFilteredGenres, addGenreMovie } =
-        addGenre(state.selectedMovie, allGenres, state.filteredGenres, action.payload);
+      const { addGenreFilteredGenres, addGenreMovie } = addGenre(
+        state.selectedMovie,
+        allGenres,
+        state.filteredGenres,
+        action.payload
+      );
 
-      return { ...state, filteredGenres: addGenreFilteredGenres, selectedMovie: addGenreMovie };
+      return {
+        ...state,
+        filteredGenres: addGenreFilteredGenres,
+        selectedMovie: addGenreMovie
+      };
     }
     case Actions.REMOVE_GENRE:
-      const { removeGenreFilteredGenres, removeGenreMovie } =
-        removeGenre(state.selectedMovie, allGenres, state.filteredGenres, action.payload);
+      const { removeGenreFilteredGenres, removeGenreMovie } = removeGenre(
+        state.selectedMovie,
+        allGenres,
+        state.filteredGenres,
+        action.payload
+      );
 
-      return { ...state, filteredGenres: removeGenreFilteredGenres, selectedMovie: removeGenreMovie };
+      return {
+        ...state,
+        filteredGenres: removeGenreFilteredGenres,
+        selectedMovie: removeGenreMovie
+      };
     case Actions.ADD_ACTOR: {
-      console.log(state.selectedMovie)
-      const { addActorFilteredActors, addActorMovie } =
-        addActor(state.selectedMovie, state.actors, state.filteredActors, action.payload);
+      console.log(state.selectedMovie);
+      const { addActorFilteredActors, addActorMovie } = addActor(
+        state.selectedMovie,
+        state.actors,
+        state.filteredActors,
+        action.payload
+      );
 
-      return { ...state, filteredActors: addActorFilteredActors, selectedMovie: addActorMovie };
+      return {
+        ...state,
+        filteredActors: addActorFilteredActors,
+        selectedMovie: addActorMovie
+      };
     }
     case Actions.REMOVE_ACTOR:
-      const { removeActorFilteredActors, removeActorMovie } =
-        removeActor(state.selectedMovie, state.actors, state.filteredActors, action.payload);
+      const { removeActorFilteredActors, removeActorMovie } = removeActor(
+        state.selectedMovie,
+        state.actors,
+        state.filteredActors,
+        action.payload
+      );
 
-      return { ...state, filteredActors: removeActorFilteredActors, selectedMovie: removeActorMovie };
+      return {
+        ...state,
+        filteredActors: removeActorFilteredActors,
+        selectedMovie: removeActorMovie
+      };
     case Actions.FILTER:
-      return { ...state, filterPattern: action.payload, filteredMovies: filterMovies(state.movies, action.payload) };
+      return {
+        ...state,
+        filterPattern: action.payload,
+        filteredMovies: filterMovies(state.movies, action.payload)
+      };
     case Actions.SAVE_SCROLL_POSITION:
       return { ...state, scrollPosition: action.payload };
     default:
@@ -132,7 +194,7 @@ const getMovie = (movies: Movie[], id: string) => {
 };
 
 const addMovie = (movies: Movie[], movie: Movie) => {
-  return ([...movies, movie]).sort(compareMovies);
+  return [...movies, movie].sort(compareMovies);
 };
 
 const updateMovie = (movies: Movie[], movie: Movie) => {
@@ -144,7 +206,12 @@ const deleteMovie = (movies: Movie[], id: string) => {
   return movies.slice(0, index).concat(movies.slice(index + 1));
 };
 
-const addGenre = (movie: Movie, genres: string[], filteredGenres: AutocompleteItem[], genre: string) => {
+const addGenre = (
+  movie: Movie,
+  genres: string[],
+  filteredGenres: AutocompleteItem[],
+  genre: string
+) => {
   const addGenreMovie = { ...movie };
   let addGenreFilteredGenres = filteredGenres;
 
@@ -154,18 +221,30 @@ const addGenre = (movie: Movie, genres: string[], filteredGenres: AutocompleteIt
   return { addGenreFilteredGenres, addGenreMovie };
 };
 
-const removeGenre = (movie: Movie, genres: string[], filteredGenres: AutocompleteItem[], genre: string) => {
+const removeGenre = (
+  movie: Movie,
+  genres: string[],
+  filteredGenres: AutocompleteItem[],
+  genre: string
+) => {
   const removeGenreMovie = { ...movie };
   let removeGenreFilteredGenres = filteredGenres;
   const index = removeGenreMovie.genres.findIndex(g => g === genre);
 
-  removeGenreMovie.genres = removeGenreMovie.genres.slice(0, index).concat(removeGenreMovie.genres.slice(index + 1));
+  removeGenreMovie.genres = removeGenreMovie.genres
+    .slice(0, index)
+    .concat(removeGenreMovie.genres.slice(index + 1));
   removeGenreFilteredGenres = filterGenres(genres, removeGenreMovie);
 
   return { removeGenreFilteredGenres, removeGenreMovie };
 };
 
-const addActor = (movie: Movie, actors: Actor[], filteredActors: AutocompleteItem[], actor: Actor) => {
+const addActor = (
+  movie: Movie,
+  actors: Actor[],
+  filteredActors: AutocompleteItem[],
+  actor: Actor
+) => {
   const addActorMovie = { ...movie };
   let addActorFilteredActors = filteredActors;
 
@@ -175,12 +254,21 @@ const addActor = (movie: Movie, actors: Actor[], filteredActors: AutocompleteIte
   return { addActorFilteredActors, addActorMovie };
 };
 
-const removeActor = (movie: Movie, actors: Actor[], filteredActors: AutocompleteItem[], actor: Actor) => {
+const removeActor = (
+  movie: Movie,
+  actors: Actor[],
+  filteredActors: AutocompleteItem[],
+  actor: Actor
+) => {
   const removeActorMovie = { ...movie };
   let removeActorFilteredActors = filteredActors;
-  const index = removeActorMovie.actors.findIndex(p => p.fullname === actor.fullname);
+  const index = removeActorMovie.actors.findIndex(
+    p => p.fullname === actor.fullname
+  );
 
-  removeActorMovie.actors = removeActorMovie.actors.slice(0, index).concat(removeActorMovie.actors.slice(index + 1));
+  removeActorMovie.actors = removeActorMovie.actors
+    .slice(0, index)
+    .concat(removeActorMovie.actors.slice(index + 1));
   removeActorFilteredActors = filterActors(actors, removeActorMovie);
 
   return { removeActorFilteredActors, removeActorMovie };
@@ -188,15 +276,26 @@ const removeActor = (movie: Movie, actors: Actor[], filteredActors: Autocomplete
 
 const filterMovies = (movies: Movie[], pattern: string) => {
   return movies.filter(movie => {
-    const fullString = (movie.title + ' ' + movie.year + ' ' + movie.director + ' ' + movie.genres.join(' ') + ' ' +
-      movie.actors.map(actor => actor.fullname).join(' '))
-      .toUpperCase();
+    const fullString = (
+      movie.title +
+      ' ' +
+      movie.year +
+      ' ' +
+      movie.director +
+      ' ' +
+      movie.genres.join(' ') +
+      ' ' +
+      movie.actors.map(actor => actor.fullname).join(' ')
+    ).toUpperCase();
 
     return fullString.indexOf(pattern.toUpperCase()) > -1;
   });
 };
 
-const filterGenres = (genres: string[], selectedMovie: Movie): AutocompleteItem[] => {
+const filterGenres = (
+  genres: string[],
+  selectedMovie: Movie
+): AutocompleteItem[] => {
   const filteredGenres = [...genres]
     .sort(compareGenres)
     .map(genre => ({ value: genre, data: genre }));
@@ -205,11 +304,16 @@ const filterGenres = (genres: string[], selectedMovie: Movie): AutocompleteItem[
     return filteredGenres;
   }
 
-  return filteredGenres
-    .filter(genre => !selectedMovie.genres.some(movieGenre => movieGenre === genre.value));
+  return filteredGenres.filter(
+    genre =>
+      !selectedMovie.genres.some(movieGenre => movieGenre === genre.value)
+  );
 };
 
-const filterActors = (actors: Actor[], selectedMovie: Movie): AutocompleteItem[] => {
+const filterActors = (
+  actors: Actor[],
+  selectedMovie: Movie
+): AutocompleteItem[] => {
   if (actors.length === 0) {
     return [];
   }
@@ -222,8 +326,12 @@ const filterActors = (actors: Actor[], selectedMovie: Movie): AutocompleteItem[]
     return filteredActors;
   }
 
-  return filteredActors
-    .filter(actor => !selectedMovie.actors.some(movieActor => movieActor.fullname === actor.value));
+  return filteredActors.filter(
+    actor =>
+      !selectedMovie.actors.some(
+        movieActor => movieActor.fullname === actor.value
+      )
+  );
 };
 
 const sortMovies = (movies: Movie[]) => {
@@ -252,13 +360,39 @@ const compareGenres = (a: string, b: string) => {
 
 export const selectMovies = createFeatureSelector<State>('movies');
 
-export const getMovies = createSelector(selectMovies, (state: State) => state.filteredMovies);
-export const getMoviesCount = createSelector(selectMovies, (state: State) => state.movies.length);
-export const getSelectedMovie = createSelector(selectMovies, (state: State) => state.selectedMovie);
-export const getLoading = createSelector(selectMovies, (state: State) => state.loadingMovies || state.loadingActors);
-export const getFilterPattern = createSelector(selectMovies, (state: State) => state.filterPattern);
-export const getScrollPosition = createSelector(selectMovies, (state: State) => state.scrollPosition);
-export const getAllActors = createSelector(selectMovies, (state: State) => state.actors);
-export const getFilteredGenres = createSelector(selectMovies, (state: State) => state.filteredGenres);
-export const getFilteredActors = createSelector(selectMovies, (state: State) => state.filteredActors);
-
+export const getMovies = createSelector(
+  selectMovies,
+  (state: State) => state.filteredMovies
+);
+export const getMoviesCount = createSelector(
+  selectMovies,
+  (state: State) => state.movies.length
+);
+export const getSelectedMovie = createSelector(
+  selectMovies,
+  (state: State) => state.selectedMovie
+);
+export const getLoading = createSelector(
+  selectMovies,
+  (state: State) => state.loadingMovies || state.loadingActors
+);
+export const getFilterPattern = createSelector(
+  selectMovies,
+  (state: State) => state.filterPattern
+);
+export const getScrollPosition = createSelector(
+  selectMovies,
+  (state: State) => state.scrollPosition
+);
+export const getAllActors = createSelector(
+  selectMovies,
+  (state: State) => state.actors
+);
+export const getFilteredGenres = createSelector(
+  selectMovies,
+  (state: State) => state.filteredGenres
+);
+export const getFilteredActors = createSelector(
+  selectMovies,
+  (state: State) => state.filteredActors
+);

@@ -16,9 +16,7 @@ import { MoviesModule } from './movies/movies.module';
 import { metaReducers, StoreDevtoolsModule } from './state';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -35,4 +33,4 @@ import { metaReducers, StoreDevtoolsModule } from './state';
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

@@ -13,5 +13,4 @@ export class SpinnerDirective implements OnInit {
   ngOnInit() {
     console.log('val:' + this.shrSpinner);
   }
-
 }

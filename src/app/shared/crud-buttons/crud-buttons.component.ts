@@ -10,10 +10,9 @@ export class CrudButtonsComponent implements OnInit {
   @Output() cancel = new EventEmitter<any>();
   @Output() delete = new EventEmitter<any>();
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   _save() {
     this.save.emit();
@@ -26,5 +25,4 @@ export class CrudButtonsComponent implements OnInit {
   _delete() {
     this.delete.emit();
   }
-
 }

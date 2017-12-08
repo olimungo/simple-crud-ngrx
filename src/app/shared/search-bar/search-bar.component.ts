@@ -9,10 +9,9 @@ export class SearchBarComponent implements OnInit {
   @Input() pattern: string;
   @Output() patternChange = new EventEmitter<string>();
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   change(pattern: string) {
     this.patternChange.emit(pattern);

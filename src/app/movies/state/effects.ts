@@ -17,16 +17,22 @@ export class Effects {
   private moviesLoaded = false;
   private actorsLoaded = false;
 
-  constructor(private actions: Actions, private http: Http, private moviesService: MoviesService) { }
+  constructor(
+    private actions: Actions,
+    private http: Http,
+    private moviesService: MoviesService
+  ) {}
 
   @Effect()
-  create: Observable<Action> = this.actions.ofType(MovieActions.CREATE)
+  create: Observable<Action> = this.actions
+    .ofType(MovieActions.CREATE)
     .map((action: MovieActions.Create) => action.payload)
     .mergeMap(movie => this.moviesService.create(movie))
     .map(movie => new MovieActions.CreateDone(movie));
 
   @Effect()
-  retrieve: Observable<Action> = this.actions.ofType(MovieActions.GET_LIST)
+  retrieve: Observable<Action> = this.actions
+    .ofType(MovieActions.GET_LIST)
     .map(() => {
       if (this.moviesLoaded && this.actorsLoaded) {
         return new MovieActions.NoAction();
@@ -42,7 +48,8 @@ export class Effects {
     });
 
   @Effect()
-  retrieveForced: Observable<Action> = this.actions.ofType(MovieActions.GET_LIST_FORCED)
+  retrieveForced: Observable<Action> = this.actions
+    .ofType(MovieActions.GET_LIST_FORCED)
     .mergeMap(() => this.moviesService.retrieve())
     .map(retrieveResult => {
       this.moviesLoaded = true;
@@ -50,7 +57,8 @@ export class Effects {
     });
 
   @Effect()
-  retrieveActorsForced: Observable<Action> = this.actions.ofType(MovieActions.GET_LIST_FORCED)
+  retrieveActorsForced: Observable<Action> = this.actions
+    .ofType(MovieActions.GET_LIST_FORCED)
     .mergeMap(() => this.moviesService.retrieveActors())
     .map(actors => {
       this.moviesLoaded = true;
@@ -58,12 +66,14 @@ export class Effects {
     });
 
   @Effect({ dispatch: false })
-  update: Observable<Action> = this.actions.ofType(MovieActions.UPDATE)
+  update: Observable<Action> = this.actions
+    .ofType(MovieActions.UPDATE)
     .map((action: MovieActions.Update) => action.payload)
     .mergeMap(movie => this.moviesService.update(movie));
 
   @Effect({ dispatch: false })
-  delete = this.actions.ofType(MovieActions.DELETE)
+  delete = this.actions
+    .ofType(MovieActions.DELETE)
     .map((action: MovieActions.Delete) => action.payload)
     .mergeMap(id => this.moviesService.delete(id));
 }

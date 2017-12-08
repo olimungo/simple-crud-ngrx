@@ -1,4 +1,13 @@
-import { Component, OnInit, OnDestroy, EventEmitter, Input, Output, Renderer, ViewContainerRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  EventEmitter,
+  Input,
+  Output,
+  Renderer,
+  ViewContainerRef
+} from '@angular/core';
 import { AutocompleteItem } from '../../autocomplete-item.entity';
 import { Subject } from 'rxjs/Subject';
 import { Subscription } from 'rxjs/Subscription';
@@ -11,7 +20,10 @@ import { Subscription } from 'rxjs/Subscription';
 export class AutocompletePopUpItemComponent implements OnInit, OnDestroy {
   @Input() item: AutocompleteItem;
 
-  @Output() itemSelected: EventEmitter<AutocompleteItem> = new EventEmitter<AutocompleteItem>();
+  @Output()
+  itemSelected: EventEmitter<AutocompleteItem> = new EventEmitter<
+    AutocompleteItem
+  >();
 
   // This element in the DOM
   private element: any;
@@ -27,7 +39,9 @@ export class AutocompletePopUpItemComponent implements OnInit, OnDestroy {
 
     this.itemHighlightedSubscription = this.item.selected.subscribe(value => {
       if (value) {
-        this.renderer.invokeElementMethod(this.element, 'scrollIntoView', [false]);
+        this.renderer.invokeElementMethod(this.element, 'scrollIntoView', [
+          false
+        ]);
       }
     });
   }

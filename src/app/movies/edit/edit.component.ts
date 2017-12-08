@@ -32,12 +32,17 @@ export class MovieEditComponent implements OnInit, OnDestroy {
 
   private movieSubscrition: Subscription;
 
-  constructor(private router: Router, private route: ActivatedRoute, private store: Store<Reducer.State>) {
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private store: Store<Reducer.State>
+  ) {
     this.loading = this.store.select(Reducer.getLoading);
 
     // Cannot handle an HTML input field with an Observable. So, we need to subscribe to the element in the store...
     // ...and unsubscribe when component is destroyed (see ngOnDestroy)
-    this.movieSubscrition = this.store.select(Reducer.getSelectedMovie)
+    this.movieSubscrition = this.store
+      .select(Reducer.getSelectedMovie)
       .subscribe(movie => {
         this.movie = { ...movie };
       });

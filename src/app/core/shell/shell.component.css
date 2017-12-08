@@ -19,8 +19,8 @@
   color: #bbb;
   font-size: 3em;
   position: fixed;
-  bottom: .4em;
-  left: .4em;
+  bottom: 0.4em;
+  left: 0.4em;
 }
 
 .shell-github-clickable {
@@ -36,9 +36,9 @@
 }
 
 .shell-github-clickable:hover {
-  background: rgba(200, 200, 200, .3);
+  background: rgba(200, 200, 200, 0.3);
 }
 
 .shell-github-clickable:active {
-  background: rgba(200, 200, 200, .6);
+  background: rgba(200, 200, 200, 0.6);
 }

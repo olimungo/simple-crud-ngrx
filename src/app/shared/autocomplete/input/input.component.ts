@@ -1,4 +1,13 @@
-import { Component, ElementRef, EventEmitter, Input, Output, Renderer, ViewChild, OnInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  Output,
+  Renderer,
+  ViewChild,
+  OnInit
+} from '@angular/core';
 
 @Component({
   selector: 'shr-autocomplete-input',
@@ -20,7 +29,7 @@ export class AutocompleteInputComponent implements OnInit {
 
   @ViewChild('input') input: ElementRef;
 
-  constructor(private renderer: Renderer) { }
+  constructor(private renderer: Renderer) {}
 
   ngOnInit() {
     if (!this.pattern) {

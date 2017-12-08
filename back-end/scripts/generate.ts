@@ -1,17 +1,23 @@
-import { generateActorExternalId, generateActorInternalId } from './actors';
-import { generateMovieExternalId, generateMovieInternalId } from './movies';
-import { generateMoviesActorsExternalId, generateMoviesActorsInternalId } from './movies-actors';
+import { generateActorExternalId, generateActorInternalId } from "./actors";
+import { generateMovieExternalId, generateMovieInternalId } from "./movies";
+import {
+  generateMoviesActorsExternalId,
+  generateMoviesActorsInternalId
+} from "./movies-actors";
 
-const fs = require('fs');
-const faker = require('faker');
+const fs = require("fs");
+const faker = require("faker");
 
-enum Mode { InternalIds, ExternalIds }
+enum Mode {
+  InternalIds,
+  ExternalIds
+}
 
-const mode = Mode.ExternalIds;
+const mode = Mode.InternalIds;
 const COUNT = 30;
 let actors, movies, actorsId, moviesId, actorsMovies;
 
-if (mode === Mode.ExternalIds as Mode) {
+if (mode === (Mode.ExternalIds as Mode)) {
   actors = {};
   movies = {};
   actorsId = [];
@@ -49,8 +55,12 @@ if (mode === Mode.ExternalIds as Mode) {
   actorsMovies = generateMoviesActorsInternalId(actorsId, moviesId);
 }
 
-fs.writeFile('db.json', JSON.stringify({ actors, movies, 'movies-actors': actorsMovies  }), error => {
-  if (error) {
-    return console.log(error);
+fs.writeFile(
+  "db.json",
+  JSON.stringify({ actors, movies, "movies-actors": actorsMovies }),
+  error => {
+    if (error) {
+      return console.log(error);
+    }
   }
-});
+);

@@ -46,8 +46,7 @@
       <div class="form-group">
         <label></label>
         <div class="movie-edit-tag">
-          <shr-tag *ngFor="let actor of movie?.actors" [label]="actor.fullname" [color]="'#ffb74d'"
-          (closeClick)="removeActor(actor)"></shr-tag>
+          <shr-tag *ngFor="let actor of movie?.actors" [label]="actor.fullname" [color]="'#ffb74d'" (closeClick)="removeActor(actor)"></shr-tag>
         </div>
       </div>
     </form>

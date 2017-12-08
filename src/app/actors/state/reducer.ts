@@ -25,7 +25,10 @@ const defaultState: State = {
   selectedActor: null
 };
 
-export function reducer(state: State = defaultState, action: Actions.All): State {
+export function reducer(
+  state: State = defaultState,
+  action: Actions.All
+): State {
   switch (action.type) {
     case Actions.GET_LIST_FORCED:
       return { ...state, loading: true };
@@ -33,16 +36,25 @@ export function reducer(state: State = defaultState, action: Actions.All): State
       const actors = sortActors(action.payload);
 
       return {
-        ...state, filteredActors: actors, actors: actors, loading: false,
-        selectedActor: getActor(actors, state.selectedActorId), selectedActorId: null
+        ...state,
+        filteredActors: actors,
+        actors: actors,
+        loading: false,
+        selectedActor: getActor(actors, state.selectedActorId),
+        selectedActorId: null
       };
     case Actions.FILTER:
-      return { ...state, filterPattern: action.payload, filteredActors: filterActors(state.actors, action.payload) };
+      return {
+        ...state,
+        filterPattern: action.payload,
+        filteredActors: filterActors(state.actors, action.payload)
+      };
     case Actions.SAVE_SCROLL_POSITION:
       return { ...state, scrollPosition: action.payload };
     case Actions.EDIT:
       return {
-        ...state, selectedActor: getActor(state.actors, action.payload),
+        ...state,
+        selectedActor: getActor(state.actors, action.payload),
         selectedActorId: state.actors.length > 0 ? null : action.payload
       };
     case Actions.CREATE:
@@ -50,17 +62,23 @@ export function reducer(state: State = defaultState, action: Actions.All): State
       return state;
     case Actions.CREATE_DONE:
       return {
-        ...state, filteredActors: addActor(state.filteredActors, action.payload), actors: addActor(state.actors, action.payload)
+        ...state,
+        filteredActors: addActor(state.filteredActors, action.payload),
+        actors: addActor(state.actors, action.payload)
       };
     case Actions.UPDATE:
       return {
-        ...state, filteredActors: updateActor(state.filteredActors, action.payload), actors: updateActor(state.actors, action.payload)
+        ...state,
+        filteredActors: updateActor(state.filteredActors, action.payload),
+        actors: updateActor(state.actors, action.payload)
       };
     case Actions.CANCEL:
       return { ...state, selectedActor: null };
     case Actions.DELETE:
       return {
-        ...state, selectedActor: null, filteredActors: deleteActor(state.filteredActors, action.payload),
+        ...state,
+        selectedActor: null,
+        filteredActors: deleteActor(state.filteredActors, action.payload),
         actors: deleteActor(state.actors, action.payload)
       };
     default:
@@ -73,8 +91,11 @@ const getActor = (actors: Actor[], id: string) => {
 };
 
 const addActor = (actors: Actor[], actor: Actor) => {
-  const newActor = { ...actor, fullname: actor.lastname + ' ' + actor.firstname };
-  return ([...actors, newActor]).sort(compareActors);
+  const newActor = {
+    ...actor,
+    fullname: actor.lastname + ' ' + actor.firstname
+  };
+  return [...actors, newActor].sort(compareActors);
 };
 
 const updateActor = (actors: Actor[], actor: Actor) => {
@@ -103,10 +124,27 @@ const compareActors = (a: Actor, b: Actor) => {
 
 export const getState = createFeatureSelector<State>('actors');
 
-export const getActors = createSelector(getState, (state: State) => state.filteredActors);
-export const getActorsCount = createSelector(getState, (state: State) => state.actors.length);
-export const getLoading = createSelector(getState, (state: State) => state.loading);
-export const getFilterPattern = createSelector(getState, (state: State) => state.filterPattern);
-export const getScrollPosition = createSelector(getState, (state: State) => state.scrollPosition);
-export const getSelectedActor = createSelector(getState, (state: State) => state.selectedActor);
-
+export const getActors = createSelector(
+  getState,
+  (state: State) => state.filteredActors
+);
+export const getActorsCount = createSelector(
+  getState,
+  (state: State) => state.actors.length
+);
+export const getLoading = createSelector(
+  getState,
+  (state: State) => state.loading
+);
+export const getFilterPattern = createSelector(
+  getState,
+  (state: State) => state.filterPattern
+);
+export const getScrollPosition = createSelector(
+  getState,
+  (state: State) => state.scrollPosition
+);
+export const getSelectedActor = createSelector(
+  getState,
+  (state: State) => state.selectedActor
+);

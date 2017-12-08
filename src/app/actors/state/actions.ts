@@ -25,43 +25,43 @@ export class GetListForced implements Action {
 export class ListRetrieved implements Action {
   readonly type = LIST_RETRIEVED;
 
-  constructor(public payload: Actor[]) { }
+  constructor(public payload: Actor[]) {}
 }
 
 export class Filter implements Action {
   readonly type = FILTER;
 
-  constructor(public payload: string) { }
+  constructor(public payload: string) {}
 }
 
 export class SaveScrollPosition implements Action {
   readonly type = SAVE_SCROLL_POSITION;
 
-  constructor(public payload: number) { }
+  constructor(public payload: number) {}
 }
 
 export class Edit implements Action {
   readonly type = EDIT;
 
-  constructor(public payload: string) { }
+  constructor(public payload: string) {}
 }
 
 export class Create implements Action {
   readonly type = CREATE;
 
-  constructor(public payload: Actor) { }
+  constructor(public payload: Actor) {}
 }
 
 export class CreateDone implements Action {
   readonly type = CREATE_DONE;
 
-  constructor(public payload: Actor) { }
+  constructor(public payload: Actor) {}
 }
 
 export class Update implements Action {
   readonly type = UPDATE;
 
-  constructor(public payload: Actor) { }
+  constructor(public payload: Actor) {}
 }
 
 export class Cancel implements Action {
@@ -71,15 +71,15 @@ export class Cancel implements Action {
 export class Delete implements Action {
   readonly type = DELETE;
 
-  constructor(public payload: string) { }
+  constructor(public payload: string) {}
 }
 
 export class NoAction implements Action {
   readonly type = NO_ACTION;
 }
 
-export type All
-  = GetList
+export type All =
+  | GetList
   | GetListForced
   | ListRetrieved
   | Filter
@@ -91,4 +91,3 @@ export type All
   | Cancel
   | Delete
   | NoAction;
-

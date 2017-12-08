@@ -8,4 +8,3 @@ export interface Movie {
   director: string;
   actors?: Actor[];
 }
-
